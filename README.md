@@ -15,6 +15,7 @@
   Santiago Trochez Velasco -> https://github.com/Santiagokmids
 
 * Description:
+
   Aliens invaders is a game that consists of eliminating all the aliens that come from space, where the player is a ship that is in charge of shooting these invaders.
   As the aliens are eliminated, they go down in order to shoot the ship or reach the point that is protecting the ship to defeat it, therefore, the player has to avoid being hit     by the projectiles that shoot the aliens and also prevent them from reaching their safe point.
 
