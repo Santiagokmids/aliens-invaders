@@ -11,5 +11,11 @@ public class AliensInvadersGUI {
     @FXML
     private Button btnScores;
     
+    public AliensInvadersGUI() {
+    	
+    }
     
+    public void loadBanner() {
+    	
+    }
 }
