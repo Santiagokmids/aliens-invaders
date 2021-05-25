@@ -1,21 +1,31 @@
 package ui;
 
+import java.io.IOException;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
 
 public class AliensInvadersGUI {
-	
-	@FXML
-    private Button btnStart;
 
-    @FXML
-    private Button btnScores;
-    
+	@FXML
+	private BorderPane mainPane;
+	
     public AliensInvadersGUI() {
     	
     }
     
-    public void loadBanner() {
-    	
-    }
+    @FXML
+	public void loadBanner() throws IOException {
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("startGame.fxml"));
+		
+		loader.setController(this);
+		Parent load = loader.load();  
+
+		mainPane.getChildren().clear();
+		mainPane.setTop(load);
+
+	} 
 }

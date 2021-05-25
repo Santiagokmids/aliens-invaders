@@ -4,7 +4,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
-
+<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -18,7 +18,14 @@
             <Image url="@../../../../Downloads/Sin%20título.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnStart" layoutX="174.0" layoutY="276.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="205.0" style="-fx-background-image: \\Santiago.SANTIAGO.000\Downloads;" />
-      <Button fx:id="btnScores" layoutX="174.0" layoutY="357.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="205.0" style="-fx-background-image: \\Santiago.SANTIAGO.000\Downloads;" />
+      <Button layoutX="161.0" layoutY="353.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="240.0" style="-fx-background-color: black;" text="Scores" textFill="#57cbab">
+         <font>
+            <Font name="Malgun Gothic Bold" size="25.0" />
+         </font></Button>
+      <Button fx:id="btnScores1" layoutX="161.0" layoutY="262.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="240.0" style="-fx-background-color: black;" text="Iniciar Partida" textFill="#57cbab">
+         <font>
+            <Font name="Malgun Gothic Bold" size="25.0" />
+         </font>
+      </Button>
    </children>
 </Pane>
