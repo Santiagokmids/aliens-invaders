@@ -24,12 +24,14 @@ public class AliensInvadersGUI {
 	
     @FXML
     private ImageView paneStart;
+    
+    @FXML
+    private ImageView paneHall;
 
     @FXML
     private ImageView lblStart;
 
 	public AliensInvadersGUI() {
-		//lol
 	}
 
 	@FXML
@@ -51,7 +53,19 @@ public class AliensInvadersGUI {
 	} 
     
     @FXML
-    void btnScores(ActionEvent event) {
+    void btnScores(ActionEvent event) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("hallOfFame.fxml"));
+
+		loader.setController(this);
+		Parent load = loader.load();
+		
+		Image image = new Image("/images/fondos.png");
+		paneHall.setImage(image);
+		Image image2 = new Image("/images/halll.png");
+		lblHall.setImage(image2);
+		
+		mainPane.getChildren().clear();
+		mainPane.setTop(load);
 
     }
 
