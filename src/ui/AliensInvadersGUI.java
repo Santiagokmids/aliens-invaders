@@ -17,5 +17,11 @@ public class AliensInvadersGUI {
     
     public void loadBanner() {
     	
+    	
+    }
+    
+    public void loadBanner2() {
+    	
+    	
     }
 }
