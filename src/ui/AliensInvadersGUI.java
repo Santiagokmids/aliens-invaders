@@ -29,7 +29,7 @@ public class AliensInvadersGUI {
     private ImageView lblStart;
 
 	public AliensInvadersGUI() {
-
+		//lol
 	}
 
 	@FXML
