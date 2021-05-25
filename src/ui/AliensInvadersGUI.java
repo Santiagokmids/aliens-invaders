@@ -27,6 +27,9 @@ public class AliensInvadersGUI {
 
     @FXML
     private ImageView lblStart;
+    
+    @FXML
+    private ImageView imageBackGround;
 
 	public AliensInvadersGUI() {
 		//lol
@@ -48,16 +51,26 @@ public class AliensInvadersGUI {
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
 
-	} 
+	}
+	
+	@FXML
+    void btnStartGame(ActionEvent event) throws IOException {
+    	
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("game-pain.fxml"));
+    	
+    	loader.setController(this);
+    	Parent load = loader.load();
+    	
+    	Image image = new Image("images/backGroundGame.png");
+    	
+    	imageBackGround.setImage(image);
+    	
+    	mainPane.getChildren().clear();
+    	mainPane.setTop(load);
+    }
     
     @FXML
     void btnScores(ActionEvent event) {
 
-    }
-
-    @FXML
-    void btnStartGame(ActionEvent event) {
-    	
-    	
     }
 }
