@@ -31,12 +31,9 @@ public class AliensInvadersGUI {
     @FXML
     private ImageView lblStart;
     
-<<<<<<< HEAD
-=======
     @FXML
     private ImageView imageBackGround;
 
->>>>>>> f73fdfbbcdaed0990b75abac08407ef7eb0410cc
 	public AliensInvadersGUI() {
 	}
 
