@@ -34,4 +34,5 @@ public class Main extends Application{
 		primaryStage.show();
 		aliendsInvadersGUI.loadBanner();
 	}
+	
 }

@@ -2,6 +2,7 @@ package ui;
 
 import java.io.IOException;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,4 +29,15 @@ public class AliensInvadersGUI {
 		mainPane.setTop(load);
 
 	} 
+    
+    @FXML
+    void btnScores(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnStartGame(ActionEvent event) {
+    	
+    	
+    }
 }
