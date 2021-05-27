@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import model.Player;
 
 public class AliensInvadersGUI {
 
@@ -22,7 +23,7 @@ public class AliensInvadersGUI {
 	private ImageView lblHall;
 
 	@FXML
-	private TableView<?> tvHall;
+	private TableView<Player> tvHall;
 	
     @FXML
     private ImageView paneStart;
