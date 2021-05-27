@@ -16,14 +16,14 @@
             <Image url="@../../../../Downloads/fondos.png" />
          </image>
       </ImageView>
-      <TableView fx:id="tvHall" layoutX="49.0" layoutY="217.0" prefHeight="382.0" prefWidth="464.0" style="-fx-background-color: #042326;">
+      <TableView fx:id="tvHall" layoutX="50.0" layoutY="210.0" prefHeight="382.0" prefWidth="464.0" style="-fx-background-color: #042326;">
         <columns>
           <TableColumn prefWidth="195.0" text="Nombre" />
-          <TableColumn prefWidth="110.0" text="Score" />
-            <TableColumn prefWidth="158.0" text="Nivel" />
+          <TableColumn prefWidth="139.0" text="Score" />
+            <TableColumn prefWidth="129.0" text="Nivel" />
         </columns>
       </TableView>
-      <Button layoutX="224.0" layoutY="623.0" mnemonicParsing="false" onAction="#loadBanner" prefHeight="48.0" prefWidth="115.0" style="-fx-background-color: black;" text="ATRÁS" textFill="#57cbab">
+      <Button layoutX="224.0" layoutY="623.0" mnemonicParsing="false" onAction="#loadBanner" prefHeight="48.0" prefWidth="115.0" style="-fx-background-color: black;" text="INICIO" textFill="#57cbab">
          <font>
             <Font name="Malgun Gothic Bold" size="20.0" />
          </font>

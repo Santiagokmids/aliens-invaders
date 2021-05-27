@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="717.0" fitWidth="565.0" layoutX="-9.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Downloads/nombreReal.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="518.0" fitWidth="888.0" layoutX="-168.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Downloads/ingrese%20Nombre.png" />
+         </image>
+      </ImageView>
+      <TextField layoutX="125.0" layoutY="326.0" prefHeight="37.0" prefWidth="302.0" />
+      <ImageView fitHeight="384.0" fitWidth="653.0" layoutX="17.0" layoutY="-39.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Downloads/Sin%20título.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>
