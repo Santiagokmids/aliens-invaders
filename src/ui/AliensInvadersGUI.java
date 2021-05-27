@@ -57,6 +57,7 @@ public class AliensInvadersGUI {
     @FXML
     private ImageView imageShip2;
     
+    @FXML
     private ImageView paneSearch;
 
     @FXML
@@ -193,7 +194,7 @@ public class AliensInvadersGUI {
 		loader.setController(this);
 		Parent load = loader.load();
 		
-		Image image = new Image("/images/buscar.png");
+		Image image = new Image("/images/Buscar.png");
 		paneSearch.setImage(image);
 		Image image2 = new Image("/images/tituloBuscar.png");
 		titleSearch.setImage(image2);
