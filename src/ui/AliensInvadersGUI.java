@@ -46,6 +46,28 @@ public class AliensInvadersGUI {
 
     @FXML
     private TextField nickName;
+    
+    @FXML
+    private ImageView paneSearch;
+
+    @FXML
+    private ImageView titleSearch;
+
+    @FXML
+    private ImageView addNIck;
+
+    @FXML
+    private ImageView addScore;
+    
+    @FXML
+    private ImageView paneRealName;
+
+    @FXML
+    private ImageView addRealName;
+
+    @FXML
+    private ImageView titleRealName;
+
 
 	public AliensInvadersGUI() {
 	}
@@ -114,6 +136,46 @@ public class AliensInvadersGUI {
 		gameOver.setImage(image2);
 		Image image3 = new Image("/images/backGround.png");
 		backGround.setImage(image3);
+		
+		mainPane.getChildren().clear();
+		mainPane.setTop(load);
+
+    }
+    
+    @FXML
+    public void searchPlayers(ActionEvent event) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("searchPlayers.fxml"));
+
+		loader.setController(this);
+		Parent load = loader.load();
+		
+		Image image = new Image("/images/buscar.png");
+		paneSearch.setImage(image);
+		Image image2 = new Image("/images/tituloBuscar.png");
+		titleSearch.setImage(image2);
+		Image image3 = new Image("/images/nickPlayer.png");
+		addNIck.setImage(image3);
+		Image image4 = new Image("/images/puntaje.png");
+		addScore.setImage(image4);
+		
+		mainPane.getChildren().clear();
+		mainPane.setTop(load);
+
+    }
+    
+    @FXML
+    public void addRealName(ActionEvent event) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("real-name.fxml"));
+
+		loader.setController(this);
+		Parent load = loader.load();
+		
+		Image image = new Image("/images/nombreReal.png");
+		paneRealName.setImage(image);
+		Image image2 = new Image("/images/title.png");
+		titleRealName.setImage(image2);
+		Image image3 = new Image("/images/ingrese Nombre.png");
+		addRealName.setImage(image3);
 		
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
