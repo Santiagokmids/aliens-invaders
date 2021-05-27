@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="705.0" fitWidth="558.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/selectNave.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="104.0" fitWidth="117.0" layoutX="119.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../Escritorio/Universidad/Tercer%20Semestre/APO%202/Space%20invaders/New%20Piskel4.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="104.0" fitWidth="104.0" layoutX="323.0" layoutY="273.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../Escritorio/Universidad/Tercer%20Semestre/APO%202/Space%20invaders/New%20Piskel5.png" />
-         </image>
-      </ImageView>
+      <ImageView fx:id="imageBackgroundSelectShip" fitHeight="705.0" fitWidth="558.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imageShip1" fitHeight="104.0" fitWidth="117.0" layoutX="119.0" layoutY="272.0" onMouseClicked="#bottonShip1" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ImageView>
+      <ImageView fx:id="imageShip2" fitHeight="104.0" fitWidth="104.0" layoutX="323.0" layoutY="273.0" onMouseClicked="#bottonShip2" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ImageView>
       <Label layoutX="176.0" layoutY="379.0" prefHeight="79.0" prefWidth="70.0" text="Vidas: 1" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="22.0" />

@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 public class AliensInvadersGUI {
@@ -46,6 +47,15 @@ public class AliensInvadersGUI {
 
     @FXML
     private TextField nickName;
+    
+    @FXML
+    private ImageView imageBackgroundSelectShip;
+
+    @FXML
+    private ImageView imageShip1;
+
+    @FXML
+    private ImageView imageShip2;
 
 	public AliensInvadersGUI() {
 	}
@@ -71,7 +81,42 @@ public class AliensInvadersGUI {
 	@FXML
     public void btnStartGame(ActionEvent event) throws IOException {
     	
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("game-pain.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("selectShip-pane.fxml"));
+    	
+    	loader.setController(this);
+    	Parent load = loader.load();
+    	
+    	Image image = new Image("/images/selectNave.png");
+		imageBackgroundSelectShip.setImage(image);
+		Image image2 = new Image("/images/ship1.png");
+		imageShip1.setImage(image2);
+		Image image3 = new Image("/images/ship2.png");
+		imageShip2.setImage(image3);
+    	
+    	mainPane.getChildren().clear();
+    	mainPane.setTop(load);
+    }
+	
+	@FXML
+    void bottonShip1(MouseEvent event) throws IOException {
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("game-pane.fxml"));
+    	
+    	loader.setController(this);
+    	Parent load = loader.load();
+    	
+    	Image image = new Image("images/backGroundGame.png");
+    	
+    	imageBackGround.setImage(image);
+    	
+    	mainPane.getChildren().clear();
+    	mainPane.setTop(load);
+    }
+
+    @FXML
+    void bottonShip2(MouseEvent event) throws IOException {
+    	
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("game-pane.fxml"));
     	
     	loader.setController(this);
     	Parent load = loader.load();
@@ -103,7 +148,7 @@ public class AliensInvadersGUI {
     
     @FXML
     public void acept(ActionEvent event) throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("gameover-pain.fxml"));
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("gameover-pane.fxml"));
 
 		loader.setController(this);
 		Parent load = loader.load();
@@ -119,4 +164,6 @@ public class AliensInvadersGUI {
 		mainPane.setTop(load);
 
     }
+    
+    
 }
