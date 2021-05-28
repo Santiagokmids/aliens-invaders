@@ -260,7 +260,13 @@ public class AliensInvadersGUI {
 
     }
     
-    public void addRealName() {
-    	txtRealName.getText();
+    public void addName(ActionEvent event) throws IOException {
+    	aliensInvaders.addPeople(txtRealName.getText());
+    }
+    
+    public void addPlayer() {
+    	int score = (int)Math.floor(Math.random()*999);
+    	int level = (int)Math.floor(Math.random()*60);
+    	aliensInvaders.addPlayer(nickName.getText(), score, level);
     }
 }
