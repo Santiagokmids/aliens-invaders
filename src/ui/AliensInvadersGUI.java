@@ -149,6 +149,7 @@ public class AliensInvadersGUI {
     	
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
+    	addName();
     }
 	
 	@FXML
@@ -260,11 +261,16 @@ public class AliensInvadersGUI {
 
     }
     
-    public void addName(ActionEvent event) throws IOException {
+    public void addName() {
     	aliensInvaders.addPeople(txtRealName.getText());
     }
     
-    public void addPlayer() {
+    public void loadPlayers(ActionEvent event) throws IOException{
+    	addPlayer();
+    	loadBanner();
+    }
+    
+    public void addPlayer(){
     	int score = (int)Math.floor(Math.random()*999);
     	int level = (int)Math.floor(Math.random()*60);
     	aliensInvaders.addPlayer(nickName.getText(), score, level);

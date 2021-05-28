@@ -21,11 +21,10 @@ public class AliensInvaders {
 	}
 	
 	public boolean addPlayer(String nick, int score, int level) {
-		
 		Player player = new Player(realName, nick,score,level);
 		
 		if(first == null) {
-			player = first;
+			first = player;
 			
 		}else {
 			boolean stop = true;
@@ -94,7 +93,6 @@ public class AliensInvaders {
 				}
 			}
 		}
-		
 		return arrayPlayer;
 	}
 }
