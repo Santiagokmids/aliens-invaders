@@ -78,6 +78,9 @@ public class AliensInvadersGUI {
 
     @FXML
     private ImageView titleRealName;
+    
+    @FXML
+    private TextField txtRealName;
 
 
 	public AliensInvadersGUI() {
@@ -226,5 +229,9 @@ public class AliensInvadersGUI {
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
 
+    }
+    
+    public void addRealName() {
+    	txtRealName.getText();
     }
 }

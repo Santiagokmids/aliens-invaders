@@ -5,6 +5,8 @@ public class Player extends People{
 	private String nick;
 	private int score;
 	private int level;
+	private Player prev;
+	private Player next;
 	
 	public Player(String name, String nick,int score, int level) {
 		super(name);
@@ -35,6 +37,22 @@ public class Player extends People{
 
 	public void setNick(String nick) {
 		this.nick = nick;
+	}
+
+	public Player getNext() {
+		return next;
+	}
+
+	public void setNext(Player next) {
+		this.next = next;
+	}
+
+	public Player getPrev() {
+		return prev;
+	}
+
+	public void setPrev(Player prev) {
+		this.prev = prev;
 	}
 	
 	
