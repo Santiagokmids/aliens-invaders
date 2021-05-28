@@ -21,6 +21,7 @@ public class AliensInvaders {
 	}
 	
 	public boolean addPlayer(String nick, int score, int level) {
+		
 		Player player = new Player(realName, nick,score,level);
 		
 		if(first == null) {
@@ -72,6 +73,28 @@ public class AliensInvaders {
 	}
 	
 	public ArrayList<Player> toArrayList() {
-		return null;
+		
+		boolean verify = true;
+		
+		ArrayList<Player> arrayPlayer = new ArrayList<>();
+		
+		if(first != null) {
+			
+			arrayPlayer.add(first);
+			
+			Player current = first;
+			
+			while(verify) {
+				
+				if(current.getNext() != null) {
+					arrayPlayer.add(current.getNext());
+					current = current.getNext();
+				}else {
+					verify = false;
+				}
+			}
+		}
+		
+		return arrayPlayer;
 	}
 }

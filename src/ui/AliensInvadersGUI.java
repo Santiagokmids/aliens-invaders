@@ -203,6 +203,7 @@ public class AliensInvadersGUI {
     
     @FXML
     public void acept(ActionEvent event) throws IOException {
+    	
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("gameover-pane.fxml"));
 
 		loader.setController(this);
@@ -217,7 +218,6 @@ public class AliensInvadersGUI {
 		
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
-
     }
     
     @FXML
