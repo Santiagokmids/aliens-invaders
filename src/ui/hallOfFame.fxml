@@ -13,9 +13,9 @@
       <ImageView fx:id="paneHall" fitHeight="862.0" fitWidth="562.0" pickOnBounds="true" preserveRatio="true" />
       <TableView fx:id="tvHall" layoutX="50.0" layoutY="210.0" prefHeight="382.0" prefWidth="464.0" style="-fx-background-color: #042326;">
         <columns>
-          <TableColumn prefWidth="195.0" text="Nombre" />
-          <TableColumn prefWidth="139.0" text="Score" />
-            <TableColumn prefWidth="129.0" text="Nivel" />
+          <TableColumn fx:id="tcName" prefWidth="195.0" text="Nombre" />
+          <TableColumn fx:id="tcScore" prefWidth="139.0" text="Score" />
+            <TableColumn fx:id="tcLevel" prefWidth="129.0" text="Nivel" />
         </columns>
       </TableView>
       <Button layoutX="115.0" layoutY="623.0" mnemonicParsing="false" onAction="#loadBanner" prefHeight="48.0" prefWidth="115.0" style="-fx-background-color: black;" text="INICIO" textFill="#57cbab">

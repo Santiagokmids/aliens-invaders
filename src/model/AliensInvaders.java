@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class AliensInvaders {
 	
 	private Player first;
@@ -67,5 +69,9 @@ public class AliensInvaders {
 
 	public void setFirst(Player first) {
 		this.first = first;
+	}
+	
+	public ArrayList<Player> toArrayList() {
+		return null;
 	}
 }
