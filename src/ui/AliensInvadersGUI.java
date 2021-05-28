@@ -2,16 +2,21 @@ package ui;
 
 import java.io.IOException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import model.AliensInvaders;
 import model.Player;
 
 public class AliensInvadersGUI {
@@ -24,6 +29,15 @@ public class AliensInvadersGUI {
 
 	@FXML
 	private TableView<Player> tvHall;
+	
+	@FXML
+    private TableColumn<Player, String> tcName;
+
+    @FXML
+    private TableColumn<Player, Integer> tcScore;
+
+    @FXML
+    private TableColumn<Player, Integer> tcLevel;
 	
     @FXML
     private ImageView paneStart;
@@ -78,9 +92,23 @@ public class AliensInvadersGUI {
 
     @FXML
     private ImageView titleRealName;
+    
+    private AliensInvaders aliensInvaders;
+    
+    public ObservableList<Player> listPlayer;
 
-
-	public AliensInvadersGUI() {
+	public AliensInvadersGUI(AliensInvaders aliensInvaders) {
+		this.aliensInvaders = aliensInvaders;
+	}
+	
+	public void inicializateTableViewPlayer() {
+		
+		listPlayer = FXCollections.observableArrayList(aliensInvaders.toArrayList());
+		
+		tvHall.setItems(listPlayer);
+		tcName.setCellValueFactory(new PropertyValueFactory<Player,String>("nick"));
+		tcScore.setCellValueFactory(new PropertyValueFactory<Player,Integer>("score"));
+		tcLevel.setCellValueFactory(new PropertyValueFactory<Player,Integer>("level"));
 	}
 
 	@FXML
@@ -166,7 +194,8 @@ public class AliensInvadersGUI {
 		
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
-
+		
+		inicializateTableViewPlayer();
     }
     
     @FXML

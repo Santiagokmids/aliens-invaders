@@ -5,13 +5,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.AliensInvaders;
 
 public class Main extends Application{
 	
-	private AliensInvadersGUI aliendsInvadersGUI;
+	private AliensInvaders aliensInvaders;
+	private AliensInvadersGUI aliensInvadersGUI;
 	
 	public Main() {
-		aliendsInvadersGUI = new AliensInvadersGUI();
+		
+		aliensInvaders = new AliensInvaders();
+		aliensInvadersGUI = new AliensInvadersGUI(aliensInvaders);
 	}
 	
 	public static void main(String[] args) {
@@ -23,7 +27,7 @@ public class Main extends Application{
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-pane.fxml"));
 		
-		fxmlLoader.setController(aliendsInvadersGUI);
+		fxmlLoader.setController(aliensInvadersGUI);
 		
 		Parent root = fxmlLoader.load();
 		
@@ -32,7 +36,7 @@ public class Main extends Application{
 		primaryStage.setTitle("Aliens Invaders");
 		primaryStage.setResizable(false);
 		primaryStage.show();
-		aliendsInvadersGUI.loadBanner();
+		aliensInvadersGUI.loadBanner();
 	}
 	
 }

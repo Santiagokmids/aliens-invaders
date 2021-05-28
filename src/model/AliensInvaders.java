@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class AliensInvaders {
 
 	public AliensInvaders() {
@@ -35,5 +37,9 @@ public class AliensInvaders {
 	
 	public boolean verifyScores(int score) {
 		return true;
+	}
+	
+	public ArrayList<Player> toArrayList() {
+		return null;
 	}
 }
