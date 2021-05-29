@@ -116,4 +116,22 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	public void importData() {
 		
 	}
+
+	@Override
+	public int calculate() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int compareTo() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public People searchP() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
