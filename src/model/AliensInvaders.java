@@ -2,9 +2,14 @@ package model;
 
 import java.util.ArrayList;
 
-public class AliensInvaders {
+public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	
 	private Player first;
+	private Level normalLevel;
+	private Level easyLevel;
+	private Level hardLevel;
+	private Figures circle;
+	private Figures rectangle;
 	
 	private static String realName; 
 
