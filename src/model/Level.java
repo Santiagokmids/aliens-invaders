@@ -8,10 +8,10 @@ public class Level {
 		this.aliens = aliens;
 	}
 	
-	public int getAttackSpeed() {
+	public int getAlines() {
 		return aliens;
 	}
-	public void setAttackSpeed(int aliens) {
+	public void setAlines(int aliens) {
 		this.aliens = aliens;
 	}
 	

@@ -100,4 +100,20 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		}
 		return arrayPlayer;
 	}
+	
+	public boolean loadData() {
+		return true;
+	}
+	
+	public void saveData() {
+		
+	}
+	
+	public void exportData() {
+		
+	}
+	
+	public void importData() {
+		
+	}
 }
