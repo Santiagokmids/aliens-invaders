@@ -95,4 +95,20 @@ public class AliensInvaders {
 		}
 		return arrayPlayer;
 	}
+	
+	public boolean loadData() {
+		return true;
+	}
+	
+	public void saveData() {
+		
+	}
+	
+	public void exportData() {
+		
+	}
+	
+	public void importData() {
+		
+	}
 }

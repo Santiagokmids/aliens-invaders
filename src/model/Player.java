@@ -54,6 +54,4 @@ public class Player extends People{
 	public void setPrev(Player prev) {
 		this.prev = prev;
 	}
-	
-	
 }

@@ -275,4 +275,28 @@ public class AliensInvadersGUI {
     	int level = (int)Math.floor(Math.random()*60);
     	aliensInvaders.addPlayer(nickName.getText(), score, level);
     }
+    
+    public void searchScore() {
+    	
+    }
+    
+    public void removePlayer() {
+    	
+    }
+    
+    public void loadData() {
+    	
+	}
+	
+	public void saveData() {
+		
+	}
+	
+	public void exportData() {
+		
+	}
+	
+	public void importData() {
+		
+	}
 }
