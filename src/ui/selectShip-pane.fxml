@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -37,5 +38,6 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
+      <ComboBox layoutX="191.0" layoutY="519.0" prefWidth="150.0" />
    </children>
 </Pane>
