@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -96,6 +97,9 @@ public class AliensInvadersGUI {
     @FXML
     private TextField txtRealName;
     
+    @FXML
+    private ComboBox<String> comboBoxDificult;
+    
     private AliensInvaders aliensInvaders;
     
     public ObservableList<Player> listPlayer;
@@ -150,6 +154,10 @@ public class AliensInvadersGUI {
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
     	addName();
+    	
+    	comboBoxDificult.setPromptText("Dificultad");
+    	
+    	comboBoxDificult.getItems().addAll("Novato","Cadete","Leyenda");
     }
 	
 	@FXML

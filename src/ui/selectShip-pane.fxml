@@ -38,6 +38,6 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <ComboBox layoutX="191.0" layoutY="519.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboBoxDificult" layoutX="191.0" layoutY="519.0" prefWidth="150.0" />
    </children>
 </Pane>
