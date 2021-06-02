@@ -103,6 +103,9 @@ public class AliensInvadersGUI {
     private TextField txtRealName;
     
     @FXML
+    private ImageView mainShip;
+    
+    @FXML
     private ComboBox<String> comboBoxDificult;
     
     @FXML
@@ -196,6 +199,9 @@ public class AliensInvadersGUI {
     	imageBackGround.setImage(image);
     	alien1.setImage(image2);
     	
+    	Image imageShip = new Image("images/ship1.png");
+    	mainShip.setImage(imageShip);
+    	
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
     	
@@ -216,6 +222,9 @@ public class AliensInvadersGUI {
     	
     	imageBackGround.setImage(image);
     	alien1.setImage(image2);
+    	
+    	Image imageShip = new Image("images/ship2.png");
+    	mainShip.setImage(imageShip);
     	
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
