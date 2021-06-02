@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,13 +16,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import model.Alien;
 import model.AliensInvaders;
 import model.Player;
+import model.Spacecraft;
 
 public class AliensInvadersGUI {
 
@@ -120,22 +121,16 @@ public class AliensInvadersGUI {
     public ObservableList<Player> listPlayer;
     
     private Alien alien;
+    
+    private Spacecraft ship;
 
 	public AliensInvadersGUI(AliensInvaders aliensInvaders) {
 		this.aliensInvaders = aliensInvaders;
 	}
 	
 	public void initialize() {
-		alien = new Alien(alien1.getLayoutX(), alien1.getLayoutY());
+		//alien = new Alien(alien1.getLayoutX(), alien1.getLayoutY());
 		
-		window.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			
-			@Override
-			public void handle(WindowEvent event) {
-				bouncing = false;
-				System.out.println("Closing the window!");
-			}
-		});
 	}
 	
 	public void inicializateTableViewPlayer() {
@@ -208,11 +203,13 @@ public class AliensInvadersGUI {
     	Image imageShip = new Image("images/ship1.png");
     	mainShip.setImage(imageShip);
     	
+    	ship = new Spacecraft(null,mainShip.getLayoutX());
+    	
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
     	
-    	alien.moveAlien();
-    	alien1.setLayoutX(alien.getX());
+    	//alien.moveAlien();
+    	//alien1.setLayoutX(alien.getX());
     }
 
     @FXML
@@ -232,6 +229,8 @@ public class AliensInvadersGUI {
     	
     	Image imageShip = new Image("images/ship2.png");
     	mainShip.setImage(imageShip);
+    	
+    	ship = new Spacecraft(null,mainShip.getLayoutX());
     	
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
@@ -356,6 +355,19 @@ public class AliensInvadersGUI {
     	int level = (int)Math.floor(Math.random()*60);
     	aliensInvaders.addPlayer(nickName.getText(), score, level);
     }
+    
+    @FXML
+    public void moveShip(KeyEvent event) {
+    	
+    	if(event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) {
+    		ship.moveLeft();
+    		
+    	}else if(event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D){
+    		ship.moveRight();
+    	}
+    	mainShip.setLayoutX(ship.getPosX());
+    }
+
     
     public void searchScore() {
     	

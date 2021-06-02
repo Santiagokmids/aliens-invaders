@@ -4,8 +4,8 @@ public class AttackShip extends Spacecraft{
 	
 	private int attackSpeed;
 	
-	public AttackShip(TypeSpacecraft ship, int attackSpeed) {
-		super(ship);
+	public AttackShip(TypeSpacecraft ship,double x, int attackSpeed) {
+		super(ship,x);
 		this.attackSpeed = attackSpeed;
 	}
 
