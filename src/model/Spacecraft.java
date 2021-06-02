@@ -22,10 +22,10 @@ public class Spacecraft {
 	}
 	
 	public void moveLeft() {
-		posX = posX - 5;
+		posX = posX - 10;
 	}
 	
 	public void moveRight() {
-		posX = posX + 5;
+		posX = posX + 10;
 	}
 }
