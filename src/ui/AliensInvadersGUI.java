@@ -2,9 +2,11 @@ package ui;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +19,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import model.Alien;
 import model.AliensInvaders;
 import model.Player;
 
@@ -103,12 +108,34 @@ public class AliensInvadersGUI {
     @FXML
     private ComboBox<String> comboBoxDificult;
     
+    @FXML
+    private ImageView alien1;
+    
+    private Stage window;
+    
+    private boolean bouncing;
+    
     private AliensInvaders aliensInvaders;
     
     public ObservableList<Player> listPlayer;
+    
+    private Alien alien;
 
 	public AliensInvadersGUI(AliensInvaders aliensInvaders) {
 		this.aliensInvaders = aliensInvaders;
+	}
+	
+	public void initialize() {
+		alien = new Alien(alien1.getLayoutX(), alien1.getLayoutY());
+		
+		window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent event) {
+				bouncing = false;
+				System.out.println("Closing the window!");
+			}
+		});
 	}
 	
 	public void inicializateTableViewPlayer() {
@@ -173,13 +200,19 @@ public class AliensInvadersGUI {
     	
     	Image image = new Image("images/fondoGame.png");
     	
+    	Image image2 = new Image("images/firstAlien.png");
+    	
     	imageBackGround.setImage(image);
+    	alien1.setImage(image2);
     	
     	Image imageShip = new Image("images/ship1.png");
     	mainShip.setImage(imageShip);
     	
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
+    	
+    	alien.moveAlien();
+    	alien1.setLayoutX(alien.getX());
     }
 
     @FXML
@@ -192,13 +225,44 @@ public class AliensInvadersGUI {
     	
     	Image image = new Image("images/fondoGame.png");
     	
+    	Image image2 = new Image("images/firstAlien.png");
+    	
     	imageBackGround.setImage(image);
+    	alien1.setImage(image2);
     	
     	Image imageShip = new Image("images/ship2.png");
     	mainShip.setImage(imageShip);
     	
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
+    }
+    
+    public void moveAlien() {
+    	alien.setMax(window.getWidth());
+    	
+    	new Thread() {
+    		public void run() {
+    			while(bouncing) {
+    				alien.moveAlien();
+    				
+    				Platform.runLater(new Thread(){
+    					public void run() {
+    						updateAlien(alien.getX());
+    					}
+    				});
+    				
+    				try{
+    					Thread.sleep(10);
+    				}catch(InterruptedException e) {
+    					
+    				}
+    			}
+    		}
+    	}.start();
+    }
+    
+    public void updateAlien(double x) {
+    	alien1.setLayoutX(x);
     }
     
     @FXML
