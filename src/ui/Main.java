@@ -13,9 +13,7 @@ public class Main extends Application{
 	private AliensInvadersGUI aliensInvadersGUI;
 	
 	public Main() {
-		
 		aliensInvaders = new AliensInvaders();
-		aliensInvadersGUI = new AliensInvadersGUI(aliensInvaders);
 	}
 	
 	public static void main(String[] args) {
@@ -24,6 +22,8 @@ public class Main extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
+		aliensInvadersGUI = new AliensInvadersGUI(aliensInvaders, primaryStage);
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-pane.fxml"));
 		

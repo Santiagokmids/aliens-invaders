@@ -2,7 +2,7 @@ package model;
 
 public class Alien {
 	
-	public final static int MOVE = 1;
+	public final static int MOVE = 3;
 	
 	private double x;
 	private double y;
@@ -40,12 +40,10 @@ public class Alien {
 	
 	public void verify() {
 		
-		if(x + y >= max) {
-			x = max - y;
+		if(x >= max) {
 			changeDirection();
 		}
-		if(x - y <= 0) {
-			x = y;
+		if(x <= 0) {
 			changeDirection();
 		}
 	}
