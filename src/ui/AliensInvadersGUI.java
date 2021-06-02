@@ -172,7 +172,7 @@ public class AliensInvadersGUI {
     	loader.setController(this);
     	Parent load = loader.load();
     	
-    	Image image = new Image("images/backGroundGame.png");
+    	Image image = new Image("images/fondoGame.png");
     	
     	imageBackGround.setImage(image);
     	
@@ -188,7 +188,7 @@ public class AliensInvadersGUI {
     	loader.setController(this);
     	Parent load = loader.load();
     	
-    	Image image = new Image("images/backGroundGame.png");
+    	Image image = new Image("images/fondoGame.png");
     	
     	imageBackGround.setImage(image);
     	
