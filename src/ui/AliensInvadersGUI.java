@@ -124,8 +124,10 @@ public class AliensInvadersGUI {
     
     private Spacecraft ship;
 
-	public AliensInvadersGUI(AliensInvaders aliensInvaders) {
+	public AliensInvadersGUI(AliensInvaders aliensInvaders, Stage stage) {
 		this.aliensInvaders = aliensInvaders;
+		window = stage;
+		bouncing = true;
 	}
 	
 	public void initialize() {
@@ -210,6 +212,7 @@ public class AliensInvadersGUI {
     	
     	//alien.moveAlien();
     	//alien1.setLayoutX(alien.getX());
+    	move();
     }
 
     @FXML
@@ -234,14 +237,33 @@ public class AliensInvadersGUI {
     	
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
+    	
+    	move();
+    }
+    
+    public void move() {
+    	alien = new Alien(alien1.getLayoutX(), alien1.getLayoutY());
+    	
+    	window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent event) {
+				bouncing = false;
+			}
+		});
+		
+		moveAlien();
     }
     
     public void moveAlien() {
-    	alien.setMax(window.getWidth());
+    	
+    	alien.setMax(window.getWidth()-alien1.getLayoutX());
     	
     	new Thread() {
     		public void run() {
+    			
     			while(bouncing) {
+    				
     				alien.moveAlien();
     				
     				Platform.runLater(new Thread(){
