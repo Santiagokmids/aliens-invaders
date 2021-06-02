@@ -132,11 +132,6 @@ public class AliensInvadersGUI {
 		bouncing = true;
 	}
 	
-	public void initialize() {
-		alien = new Alien(alien1.getLayoutX(), alien1.getLayoutY());
-		
-	}
-	
 	public void inicializateTableViewPlayer() {
 		
 		listPlayer = FXCollections.observableArrayList(aliensInvaders.toArrayList());
