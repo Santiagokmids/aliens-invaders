@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +22,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.Alien;
 import model.AliensInvaders;
 import model.Player;
@@ -131,7 +133,7 @@ public class AliensInvadersGUI {
 	}
 	
 	public void initialize() {
-		//alien = new Alien(alien1.getLayoutX(), alien1.getLayoutY());
+		alien = new Alien(alien1.getLayoutX(), alien1.getLayoutY());
 		
 	}
 	
@@ -210,8 +212,6 @@ public class AliensInvadersGUI {
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
     	
-    	//alien.moveAlien();
-    	//alien1.setLayoutX(alien.getX());
     	move();
     }
 
@@ -242,6 +242,7 @@ public class AliensInvadersGUI {
     }
     
     public void move() {
+    	
     	alien = new Alien(alien1.getLayoutX(), alien1.getLayoutY());
     	
     	window.setOnCloseRequest(new EventHandler<WindowEvent>() {
