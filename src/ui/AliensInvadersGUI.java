@@ -108,6 +108,10 @@ public class AliensInvadersGUI {
 		this.aliensInvaders = aliensInvaders;
 	}
 	
+	public void initialize() {
+		
+	}
+	
 	public void inicializateTableViewPlayer() {
 		
 		listPlayer = FXCollections.observableArrayList(aliensInvaders.toArrayList());
