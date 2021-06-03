@@ -131,7 +131,9 @@ public class AliensInvadersGUI {
     
     private Spacecraft ship;
     
-    private Figures figure;
+    private double positionBallX;
+    
+    private double positionBallY;
 
 	public AliensInvadersGUI(AliensInvaders aliensInvaders, Stage stage) {
 		this.aliensInvaders = aliensInvaders;
@@ -214,6 +216,8 @@ public class AliensInvadersGUI {
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
     	circle.setVisible(false);
+    	positionBallX = circle.getLayoutX();
+    	positionBallY = circle.getLayoutY();
     	move();
     }
 
@@ -415,40 +419,33 @@ public class AliensInvadersGUI {
     		ship.moveRight();
     		
     	}else if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W){
-    		moveBall();
+    		Circle circles = new Circle();
+    		circles.setLayoutX(positionBallX);
+    		circles.setLayoutY(positionBallY);
+    		circles.setRadius(circle.getRadius());
+    		mainPane.getChildren().add(circles);
+    		moveBall(circles);
     	}
     	mainShip.setLayoutX(ship.getPosX());
     }
     
-    public void moveBall() {
+    public void moveBall(Circle circles) {
+    	circles.setVisible(true);
+    	circles.setFill(javafx.scene.paint.Color.RED);
+    	circles.setLayoutX(ship.getPosX()+38);
     	
-    	circle.setVisible(true);
-    	circle.setFill(javafx.scene.paint.Color.DARKGOLDENROD);
-    	circle.setLayoutX(ship.getPosX()+38);
-    	figure = new Figures("#d0b364",circle.getLayoutX(),circle.getLayoutY());
-    	
-    	window.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			
-			@Override
-			public void handle(WindowEvent event) {
-				bouncing = false;
-			}
-		});
-		
-		moveBalls();
+		moveBalls(circles);
     }
     
-    public void moveBalls() {
+    public void moveBalls(Circle circles) {
     	
     	new Thread() {
     		public void run() {
     			
-    			while(bouncing) {
-    				
+    			while(circles.getLayoutY() > -7) {
     				Platform.runLater(new Thread(){
     					public void run() {
-    						figure.setPosY(circle.getLayoutY()-5);
-    						circle.setLayoutY(circle.getLayoutY()-5);
+    						circles.setLayoutY(circles.getLayoutY()-5);
     					}
     				});
     				
