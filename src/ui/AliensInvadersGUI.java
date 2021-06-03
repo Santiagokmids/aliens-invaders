@@ -21,10 +21,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.Alien;
 import model.AliensInvaders;
+import model.Figures;
 import model.Player;
 import model.Spacecraft;
 
@@ -32,6 +34,9 @@ public class AliensInvadersGUI {
 
 	@FXML
 	private BorderPane mainPane;
+	
+	@FXML
+	private Circle circle;
 
 	@FXML
 	private ImageView lblHall;
@@ -125,6 +130,8 @@ public class AliensInvadersGUI {
     private Alien alien;
     
     private Spacecraft ship;
+    
+    private Figures figure;
 
 	public AliensInvadersGUI(AliensInvaders aliensInvaders, Stage stage) {
 		this.aliensInvaders = aliensInvaders;
@@ -206,7 +213,7 @@ public class AliensInvadersGUI {
     	
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
-    	
+    	circle.setVisible(false);
     	move();
     }
 
@@ -232,12 +239,12 @@ public class AliensInvadersGUI {
     	
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
+    	circle.setVisible(false);
     	
     	move();
     }
     
     public void move() {
-    	
     	alien = new Alien(alien1.getLayoutX(), alien1.getLayoutY());
     	
     	window.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -382,10 +389,54 @@ public class AliensInvadersGUI {
     		
     	}else if(event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D){
     		ship.moveRight();
+    		
+    	}else if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W){
+    		moveBall();
     	}
     	mainShip.setLayoutX(ship.getPosX());
     }
-
+    
+    public void moveBall() {
+    	
+    	circle.setVisible(true);
+    	circle.setFill(javafx.scene.paint.Color.DARKGOLDENROD);
+    	circle.setLayoutX(ship.getPosX()+38);
+    	figure = new Figures("#d0b364",circle.getLayoutX(),circle.getLayoutY());
+    	
+    	window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent event) {
+				bouncing = false;
+			}
+		});
+		
+		moveBalls();
+    }
+    
+    public void moveBalls() {
+    	
+    	new Thread() {
+    		public void run() {
+    			
+    			while(bouncing) {
+    				
+    				Platform.runLater(new Thread(){
+    					public void run() {
+    						figure.setPosY(circle.getLayoutY()-5);
+    						circle.setLayoutY(circle.getLayoutY()-5);
+    					}
+    				});
+    				
+    				try{
+    					Thread.sleep(20);
+    				}catch(InterruptedException e) {
+    					
+    				}
+    			}
+    		}
+    	}.start();
+    }
     
     public void searchScore() {
     	

@@ -5,9 +5,9 @@ public class Rectangle extends Figures{
 	private int weidth;
 	private int high;
 
-	public Rectangle(int weidth, int high, String color) {
+	public Rectangle(int weidth, int high, String color, double x, double y) {
 		
-		super(color);
+		super(color,x,y);
 		this.setWeidth(weidth);
 		this.setHigh(high);
 	}
