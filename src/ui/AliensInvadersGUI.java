@@ -26,7 +26,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.Alien;
 import model.AliensInvaders;
-import model.Figures;
 import model.Player;
 import model.Spacecraft;
 
