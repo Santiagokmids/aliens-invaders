@@ -263,6 +263,18 @@ public class AliensInvadersGUI {
     	Image image1 = new Image("images/firstAlien.png");
     	Image image2 = new Image("images/secondAlien.png");
     	
+    	ImageView alien3 = new ImageView();
+    	
+    	alien3.setImage(image2);
+    	
+    	mainPane.getChildren().add(alien3);
+    	
+    	alien3.setFitWidth(79);
+    	alien3.setFitHeight(62);
+    	
+    	alien3.setLayoutX(120);
+    	alien3.setLayoutY(72);
+    	
     	alien.setMax(window.getWidth()-alien1.getLayoutX());
     	
     	new Thread() {
@@ -291,6 +303,10 @@ public class AliensInvadersGUI {
     			}
     		}
     	}.start();
+    }
+    
+    public void moveImageAlien() {
+    	
     }
     
     public void updateAlien(double x) {
