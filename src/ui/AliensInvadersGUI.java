@@ -260,6 +260,9 @@ public class AliensInvadersGUI {
     
     public void moveAlien() {
     	
+    	Image image1 = new Image("images/firstAlien.png");
+    	Image image2 = new Image("images/secondAlien.png");
+    	
     	alien.setMax(window.getWidth()-alien1.getLayoutX());
     	
     	new Thread() {
@@ -272,11 +275,16 @@ public class AliensInvadersGUI {
     				Platform.runLater(new Thread(){
     					public void run() {
     						updateAlien(alien.getX());
+    						if(alien1.getImage() == image1) {
+    							alien1.setImage(image2);
+    						}else {
+    							alien1.setImage(image1);
+    						}
     					}
     				});
     				
     				try{
-    					Thread.sleep(20);
+    					Thread.sleep(200);
     				}catch(InterruptedException e) {
     					
     				}
