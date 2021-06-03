@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,10 +22,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import model.Alien;
 import model.AliensInvaders;
-import model.Figures;
 import model.Player;
 import model.Spacecraft;
 
@@ -116,9 +113,6 @@ public class AliensInvadersGUI {
     @FXML
     private ComboBox<String> comboBoxDificult;
     
-    @FXML
-    private ImageView alien1;
-    
     private Stage window;
     
     private boolean bouncing;
@@ -127,13 +121,15 @@ public class AliensInvadersGUI {
     
     public ObservableList<Player> listPlayer;
     
-    private Alien alien;
-    
     private Spacecraft ship;
     
     private double positionBallX;
     
     private double positionBallY;
+    
+    public final static int POSTITIONALIENTX = 79;
+    
+    public final static int POSTITIONALIENTY = 62;
 
 	public AliensInvadersGUI(AliensInvaders aliensInvaders, Stage stage) {
 		this.aliensInvaders = aliensInvaders;
@@ -203,10 +199,7 @@ public class AliensInvadersGUI {
     	
     	Image image = new Image("images/fondoGame.png");
     	
-    	Image image2 = new Image("images/firstAlien.png");
-    	
     	imageBackGround.setImage(image);
-    	alien1.setImage(image2);
     	
     	Image imageShip = new Image("images/ship1.png");
     	mainShip.setImage(imageShip);
@@ -218,6 +211,7 @@ public class AliensInvadersGUI {
     	circle.setVisible(false);
     	positionBallX = circle.getLayoutX();
     	positionBallY = circle.getLayoutY();
+    	
     	move();
     }
 
@@ -231,10 +225,7 @@ public class AliensInvadersGUI {
     	
     	Image image = new Image("images/fondoGame.png");
     	
-    	Image image2 = new Image("images/firstAlien.png");
-    	
     	imageBackGround.setImage(image);
-    	alien1.setImage(image2);
     	
     	Image imageShip = new Image("images/ship2.png");
     	mainShip.setImage(imageShip);
@@ -249,37 +240,39 @@ public class AliensInvadersGUI {
     }
     
     public void move() {
-    	alien = new Alien(alien1.getLayoutX(), alien1.getLayoutY());
     	
-    	window.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			
-			@Override
-			public void handle(WindowEvent event) {
-				bouncing = false;
-			}
-		});
-		
-		moveAlien();
+    	int contX = POSTITIONALIENTX;
+    	int contY = POSTITIONALIENTY;
+    	
+    	for(int i = 0; i<2; i++) {
+    		
+    		Alien alien = new Alien(POSTITIONALIENTX, POSTITIONALIENTY, contX, contY);
+    		System.out.println(contX);
+    		
+    		moveAlien(alien);
+    		
+    		contX += 100;
+    	}
     }
     
-    public void moveAlien() {
+    public void moveAlien(Alien alien) {
     	
     	Image image1 = new Image("images/firstAlien.png");
     	Image image2 = new Image("images/secondAlien.png");
     	
-    	ImageView alien3 = new ImageView();
+    	ImageView alienImageView = new ImageView();
     	
-    	alien3.setImage(image2);
+    	alienImageView.setImage(image1);
     	
-    	mainPane.getChildren().add(alien3);
+    	mainPane.getChildren().add(alienImageView);
     	
-    	alien3.setFitWidth(79);
-    	alien3.setFitHeight(62);
+    	alienImageView.setFitWidth(alien.getX());
+    	alienImageView.setFitHeight(alien.getY());
     	
-    	alien3.setLayoutX(120);
-    	alien3.setLayoutY(72);
+    	alienImageView.setLayoutX(alien.getPositionX());
+    	alienImageView.setLayoutY(alien.getPositionY());
     	
-    	alien.setMax(window.getWidth()-alien1.getLayoutX());
+    	alien.setMax(window.getWidth()-alienImageView.getLayoutX());
     	
     	new Thread() {
     		public void run() {
@@ -290,11 +283,11 @@ public class AliensInvadersGUI {
     				
     				Platform.runLater(new Thread(){
     					public void run() {
-    						updateAlien(alien.getX());
-    						if(alien1.getImage() == image1) {
-    							alien1.setImage(image2);
+    						updateAlien(alien.getX(), alienImageView);
+    						if(alienImageView.getImage() == image1) {
+    							alienImageView.setImage(image2);
     						}else {
-    							alien1.setImage(image1);
+    							alienImageView.setImage(image1);
     						}
     					}
     				});
@@ -313,8 +306,8 @@ public class AliensInvadersGUI {
     	
     }
     
-    public void updateAlien(double x) {
-    	alien1.setLayoutX(x);
+    public void updateAlien(double x, ImageView alienImageView) {
+    	alienImageView.setLayoutX(x);
     }
     
     @FXML

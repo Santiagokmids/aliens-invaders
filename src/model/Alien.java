@@ -7,11 +7,15 @@ public class Alien {
 	private double x;
 	private double y;
 	private double max;
+	private double positionX;
+	private double positionY;
 	private Direction direction;
 	
-	public Alien(double x, double y) {
+	public Alien(double x, double y, double positionX, double positionY) {
 		this.x = x;
 		this.y = y;
+		this.positionX = positionX;
+		this.positionY = positionY;
 		direction = Direction.LEFT;
 	}
 
@@ -55,5 +59,13 @@ public class Alien {
 		}else {
 			direction = Direction.LEFT;
 		}
+	}
+
+	public double getPositionX() {
+		return positionX;
+	}
+
+	public double getPositionY() {
+		return positionY;
 	}
 }
