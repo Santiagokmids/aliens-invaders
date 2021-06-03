@@ -2,7 +2,7 @@ package model;
 
 public class Alien {
 	
-	public final static int MOVE = 1;
+	public final static int MOVE = 10;
 	
 	private double x;
 	private double y;
