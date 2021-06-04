@@ -127,6 +127,10 @@ public class AliensInvadersGUI {
     
     private double positionBallY;
     
+    private long count;
+    
+    private long currentCount;
+    
     public final static int POSTITIONALIENTX = 79;
     
     public final static int POSTITIONALIENTY = 62;
@@ -162,6 +166,7 @@ public class AliensInvadersGUI {
 		
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
+		count = System.nanoTime();
 
 	}
 	
@@ -414,7 +419,8 @@ public class AliensInvadersGUI {
     	if((event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) && ship.getPosX() >= 12) {
     		ship.moveLeft();
     		
-    	}if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W ){
+    	}if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W && currentCount > count+1000000000){
+    		currentCount = count;
     		Circle circles = new Circle();
     		circles.setLayoutX(positionBallX);
     		circles.setLayoutY(positionBallY);
@@ -429,7 +435,7 @@ public class AliensInvadersGUI {
     	mainShip.setLayoutX(ship.getPosX());
     }
     
-    public void moveBall(Circle circles) {
+    public void moveBall(Circle circles) throws InterruptedException {
     	circles.setVisible(true);
     	circles.setFill(javafx.scene.paint.Color.RED);
     	circles.setLayoutX(ship.getPosX()+40);
