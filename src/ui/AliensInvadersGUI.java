@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,10 +23,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.Alien;
 import model.AliensInvaders;
 import model.Player;
 import model.Spacecraft;
+import thread.AlienThread;
 
 public class AliensInvadersGUI {
 
@@ -115,9 +118,9 @@ public class AliensInvadersGUI {
     
     private Stage window;
     
-    private boolean bouncing;
+    private boolean verify;
     
-    private AliensInvaders aliensInvaders;
+	private AliensInvaders aliensInvaders;
     
     public ObservableList<Player> listPlayer;
     
@@ -134,7 +137,6 @@ public class AliensInvadersGUI {
 	public AliensInvadersGUI(AliensInvaders aliensInvaders, Stage stage) {
 		this.aliensInvaders = aliensInvaders;
 		window = stage;
-		bouncing = true;
 	}
 	
 	public void inicializateTableViewPlayer() {
@@ -149,6 +151,8 @@ public class AliensInvadersGUI {
 
 	@FXML
 	public void loadBanner() throws IOException {
+		
+		verify = false;
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("startGame.fxml"));
 
@@ -162,7 +166,6 @@ public class AliensInvadersGUI {
 		
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
-
 	}
 	
 	@FXML
@@ -192,9 +195,11 @@ public class AliensInvadersGUI {
 	@FXML
     void bottonShip1(MouseEvent event) throws IOException {
 		
+		verify = true;
+		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("game-pane.fxml"));
-    	
-    	loader.setController(this);
+		
+		loader.setController(this);
     	Parent load = loader.load();
     	
     	Image image = new Image("images/fondoGame.png");
@@ -217,6 +222,8 @@ public class AliensInvadersGUI {
 
     @FXML
     void bottonShip2(MouseEvent event) throws IOException {
+    	
+    	verify = true;
     	
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("game-pane.fxml"));
     	
@@ -247,28 +254,28 @@ public class AliensInvadersGUI {
     
     public void move() {
     	
+    	Image image1 = new Image("images/firstAlien.png");
+    	Image image2 = new Image("images/secondAlien.png");
+    	
     	int contX = POSTITIONALIENTX;
     	int contY = POSTITIONALIENTY;
     	
     	for(int i = 0; i<2; i++) {
     		
-    		Alien alien = new Alien(POSTITIONALIENTX, POSTITIONALIENTY, contX, contY);
-    		System.out.println(contX);
+    		Alien alien = new Alien(POSTITIONALIENTX, POSTITIONALIENTY, contX, contY, image1, image2);
     		
     		moveAlien(alien);
     		
     		contX += 100;
     	}
+    	
     }
     
     public void moveAlien(Alien alien) {
     	
-    	Image image1 = new Image("images/firstAlien.png");
-    	Image image2 = new Image("images/secondAlien.png");
-    	
     	ImageView alienImageView = new ImageView();
     	
-    	alienImageView.setImage(image1);
+    	alienImageView.setImage(alien.getImageOne());
     	
     	mainPane.getChildren().add(alienImageView);
     	
@@ -280,32 +287,17 @@ public class AliensInvadersGUI {
     	
     	alien.setMax(window.getWidth()-alienImageView.getLayoutX());
     	
-    	new Thread() {
-    		public void run() {
-    			
-    			while(bouncing) {
-    				
-    				alien.moveAlien();
-    				
-    				Platform.runLater(new Thread(){
-    					public void run() {
-    						updateAlien(alien.getX(), alienImageView);
-    						if(alienImageView.getImage() == image1) {
-    							alienImageView.setImage(image2);
-    						}else {
-    							alienImageView.setImage(image1);
-    						}
-    					}
-    				});
-    				
-    				try{
-    					Thread.sleep(200);
-    				}catch(InterruptedException e) {
-    					
-    				}
-    			}
-    		}
-    	}.start();
+    	AlienThread thread = new AlienThread(this, alien, alienImageView, verify);
+    	
+    	thread.start();
+    	
+    	window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent event) {
+				verify = false;
+			}
+		});
     }
     
     public void moveImageAlien() {
@@ -481,5 +473,9 @@ public class AliensInvadersGUI {
 	
 	public void importData() {
 		
+	}
+	
+	public boolean getVerify() {
+		return verify;
 	}
 }
