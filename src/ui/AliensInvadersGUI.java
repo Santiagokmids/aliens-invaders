@@ -243,6 +243,12 @@ public class AliensInvadersGUI {
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
     	circle.setVisible(false);
+    	positionBallX = circle.getLayoutX();
+    	positionBallY = circle.getLayoutY();
+    	
+    	mainPane.getChildren().clear();
+    	mainPane.setTop(load);
+    	circle.setVisible(false);
     	
     	move();
     }
@@ -409,21 +415,22 @@ public class AliensInvadersGUI {
     }
     
     @FXML
-    public void moveShip(KeyEvent event) {
+    public void moveShip(KeyEvent event) throws InterruptedException {
     	
-    	if(event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) {
+    	if((event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) && ship.getPosX() >= 12) {
     		ship.moveLeft();
     		
-    	}else if(event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D){
-    		ship.moveRight();
-    		
-    	}else if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W){
+    	}if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W ){
     		Circle circles = new Circle();
     		circles.setLayoutX(positionBallX);
     		circles.setLayoutY(positionBallY);
     		circles.setRadius(circle.getRadius());
     		mainPane.getChildren().add(circles);
     		moveBall(circles);
+    		
+    	}else if((event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) && ship.getPosX() <= 462){
+    		ship.moveRight();
+    		
     	}
     	mainShip.setLayoutX(ship.getPosX());
     }
@@ -431,7 +438,7 @@ public class AliensInvadersGUI {
     public void moveBall(Circle circles) {
     	circles.setVisible(true);
     	circles.setFill(javafx.scene.paint.Color.RED);
-    	circles.setLayoutX(ship.getPosX()+38);
+    	circles.setLayoutX(ship.getPosX()+40);
     	
 		moveBalls(circles);
     }
@@ -441,13 +448,12 @@ public class AliensInvadersGUI {
     	new Thread() {
     		public void run() {
     			
-    			while(circles.getLayoutY() > -7) {
+    			while(circles.getLayoutY() > -15) {
     				Platform.runLater(new Thread(){
     					public void run() {
     						circles.setLayoutY(circles.getLayoutY()-5);
     					}
     				});
-    				
     				try{
     					Thread.sleep(20);
     				}catch(InterruptedException e) {
@@ -456,6 +462,7 @@ public class AliensInvadersGUI {
     			}
     		}
     	}.start();
+    	
     }
     
     public void searchScore() {
