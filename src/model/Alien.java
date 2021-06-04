@@ -1,5 +1,7 @@
 package model;
 
+import javafx.scene.image.Image;
+
 public class Alien {
 	
 	public final static int MOVE = 10;
@@ -10,13 +12,18 @@ public class Alien {
 	private double positionX;
 	private double positionY;
 	private Direction direction;
+	private Image imageOne;
+	private Image imageTwo;
 	
-	public Alien(double x, double y, double positionX, double positionY) {
+	public Alien(double x, double y, double positionX, double positionY, Image imageOne, Image imageTwo) {
+		
 		this.x = x;
 		this.y = y;
 		this.positionX = positionX;
 		this.positionY = positionY;
 		direction = Direction.LEFT;
+		this.imageOne = imageOne;
+		this.imageTwo = imageTwo;
 	}
 
 	public double getX() {
@@ -67,5 +74,13 @@ public class Alien {
 
 	public double getPositionY() {
 		return positionY;
+	}
+
+	public Image getImageOne() {
+		return imageOne;
+	}
+
+	public Image getImageTwo() {
+		return imageTwo;
 	}
 }
