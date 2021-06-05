@@ -23,7 +23,6 @@ public class AlienThread extends Thread{
 	public void run() {
 		
 		while(verify) {
-			System.out.println("xdxdxd");
 			
 			alien.moveAlien();
 			
@@ -46,9 +45,5 @@ public class AlienThread extends Thread{
 				
 			}
 		}
-	}
-	
-	public void setVerify(boolean verify) {
-		this.verify = verify;
 	}
 }

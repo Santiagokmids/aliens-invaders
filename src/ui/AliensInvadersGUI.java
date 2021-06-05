@@ -133,6 +133,8 @@ public class AliensInvadersGUI {
     public final static int POSTITIONALIENTX = 79;
     
     public final static int POSTITIONALIENTY = 62;
+    
+    public final static int NUMBERALIENS = 2;
 
 	public AliensInvadersGUI(AliensInvaders aliensInvaders, Stage stage) {
 		this.aliensInvaders = aliensInvaders;
@@ -260,13 +262,13 @@ public class AliensInvadersGUI {
     	int contX = POSTITIONALIENTX;
     	int contY = POSTITIONALIENTY;
     	
-    	for(int i = 0; i<2; i++) {
+    	for(int i = 0; i<NUMBERALIENS; i++) {
     		
     		Alien alien = new Alien(POSTITIONALIENTX, POSTITIONALIENTY, contX, contY, image1, image2);
     		
     		moveAlien(alien);
     		
-    		contX += 100;
+    		contX += 50;
     	}
     	
     }
@@ -277,6 +279,9 @@ public class AliensInvadersGUI {
     	
     	alienImageView.setImage(alien.getImageOne());
     	
+    	System.out.println(alien.getPositionX());
+    	System.out.println(alien.getPositionY());
+    	
     	mainPane.getChildren().add(alienImageView);
     	
     	alienImageView.setFitWidth(alien.getX());
@@ -285,7 +290,7 @@ public class AliensInvadersGUI {
     	alienImageView.setLayoutX(alien.getPositionX());
     	alienImageView.setLayoutY(alien.getPositionY());
     	
-    	alien.setMax(window.getWidth()-alienImageView.getLayoutX());
+    	alien.setMax(window.getWidth());
     	
     	AlienThread thread = new AlienThread(this, alien, alienImageView, verify);
     	
