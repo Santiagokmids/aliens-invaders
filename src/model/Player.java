@@ -1,15 +1,7 @@
 package model;
 
-<<<<<<< HEAD
 import java.io.Serializable;
 
-public class Player extends People implements Serializable{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1;
-=======
 /**
  * This class contains methods, attributes,  and relations of a aliens invaders.
  * @version 1
@@ -17,9 +9,10 @@ public class Player extends People implements Serializable{
  * @author Luis Miguel Ossa Arias, https://github.com/Itsumohitoride <br>
  */
 
-public class Player extends People{
->>>>>>> a89991f4d91b14837e8954bbe593cb69e55faa90
+public class Player extends People implements Serializable{
 	
+	private static final long serialVersionUID = 1;
+
 	private String nick;
 	private int score;
 	private int level;

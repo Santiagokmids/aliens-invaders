@@ -1,10 +1,7 @@
 package model;
 
-<<<<<<< HEAD
 import java.io.Serializable;
 
-public class People implements Serializable{
-=======
 /**
  * This class contains methods, attributes,  and relations of a aliens invaders.
  * @version 1
@@ -12,12 +9,8 @@ public class People implements Serializable{
  * @author Luis Miguel Ossa Arias, https://github.com/Itsumohitoride <br>
  */
 
-public class People {
->>>>>>> a89991f4d91b14837e8954bbe593cb69e55faa90
-	
-	/**
-	 * 
-	 */
+public class People implements Serializable{
+
 	private static final long serialVersionUID = 1L;
 	private String name;
 	
