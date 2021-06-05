@@ -237,7 +237,7 @@ public class AliensInvadersGUI {
 				alert.setContentText("El nombre no puede contener numeros");
 				alert.showAndWait();
 				
-				txtRealName.setText(null);
+				txtRealName.setText("");
 			}
 		}
 	}
@@ -281,37 +281,6 @@ public class AliensInvadersGUI {
 	@FXML
 	void bottonShip2(MouseEvent event) throws IOException {
 
-		verify = true;
-
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("game-pane.fxml"));
-
-		loader.setController(this);
-		Parent load = loader.load();
-
-		Image image = new Image("images/fondoGame.png");
-
-		imageBackGround.setImage(image);
-
-		Image imageShip = new Image("images/ship2.png");
-		mainShip.setImage(imageShip);
-
-		ship = new RecognShip(TypeSpacecraft.RECOGNITION_SHIP,mainShip.getLayoutX(),2);
-
-		mainPane.getChildren().clear();
-		mainPane.setTop(load);
-		circle.setVisible(false);
-		positionBallX = circle.getLayoutX();
-		positionBallY = circle.getLayoutY();
-
-		mainPane.getChildren().clear();
-		mainPane.setTop(load);
-		circle.setVisible(false);
-
-		move();
-	}
-
-	public void move() throws IOException {
-		
 		if(comboBoxDificult.getValue() == null) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
@@ -348,6 +317,11 @@ public class AliensInvadersGUI {
 
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
 		}
+	}
+
+	public void move() throws IOException {
+		
+		
 	}
 
 	public void createMatrix(int x, int y) {
@@ -394,9 +368,6 @@ public class AliensInvadersGUI {
 		ImageView alienImageView = new ImageView();
 
 		alienImageView.setImage(alien.getImageOne());
-
-		System.out.println(alien.getPositionX());
-		System.out.println(alien.getPositionY());
 
 		mainPane.getChildren().add(alienImageView);
 
