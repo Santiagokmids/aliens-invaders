@@ -430,7 +430,7 @@ public class AliensInvadersGUI {
     		
     	}if(ship.getShip() == TypeSpacecraft.ATTACK_SHIP) {
     		
-    		if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W && currentCount < count-VELOCITY){
+    		if((event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) && currentCount < count-VELOCITY){
         		currentCount = count;
         		Circle circles = new Circle();
         		circles.setLayoutX(positionBallX);
@@ -442,7 +442,7 @@ public class AliensInvadersGUI {
     		
     	}else if(ship.getShip() == TypeSpacecraft.RECOGNITION_SHIP) {
     		
-    		if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W && currentCount < count-VELOCITYSLOW){
+    		if((event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) && currentCount < count-VELOCITYSLOW){
         		currentCount = count;
         		Circle circles = new Circle();
         		circles.setLayoutX(positionBallX);
