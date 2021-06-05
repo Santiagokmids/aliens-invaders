@@ -135,11 +135,8 @@ public class AliensInvadersGUI {
 
 	private Spacecraft ship;
 
-<<<<<<< HEAD
-=======
 	private Alien firstAlien;
 
->>>>>>> 34fb8c8edf2e42e6ed454dee8a35d1b614cf3f5c
 	private double positionBallX;
 
 	private double positionBallY;
@@ -152,11 +149,7 @@ public class AliensInvadersGUI {
 
 	public final static int POSTITIONALIENTY = 62;
 
-<<<<<<< HEAD
-	public final static int NUMBERALIENS = 2;
-=======
 	public final static int NUMBERALIENS = 5;
->>>>>>> 34fb8c8edf2e42e6ed454dee8a35d1b614cf3f5c
 
 	public final static int VELOCITY = 1000;
 
@@ -201,29 +194,7 @@ public class AliensInvadersGUI {
 
 	@FXML
 	public void btnStartGame(ActionEvent event) throws IOException {
-<<<<<<< HEAD
 
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("selectShip-pane.fxml"));
-
-		loader.setController(this);
-		Parent load = loader.load();
-
-		Image image = new Image("/images/selectNave.png");
-		imageBackgroundSelectShip.setImage(image);
-		Image image2 = new Image("/images/ship1.png");
-		imageShip1.setImage(image2);
-		Image image3 = new Image("/images/ship2.png");
-		imageShip2.setImage(image3);
-
-		mainPane.getChildren().clear();
-		mainPane.setTop(load);
-		addName();
-
-		comboBoxDificult.setPromptText("Dificultad");
-
-		comboBoxDificult.getItems().addAll("Novato","Cadete","Leyenda");
-=======
-		
 		if(txtRealName.getText().isEmpty()) {
 			
 			Alert alert = new Alert(AlertType.ERROR);
@@ -269,37 +240,11 @@ public class AliensInvadersGUI {
 				txtRealName.setText(null);
 			}
 		}
->>>>>>> 34fb8c8edf2e42e6ed454dee8a35d1b614cf3f5c
 	}
 
 	@FXML
 	void bottonShip1(MouseEvent event) throws IOException {
-<<<<<<< HEAD
 
-		verify = true;
-
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("game-pane.fxml"));
-
-		loader.setController(this);
-		Parent load = loader.load();
-
-		Image image = new Image("images/fondoGame.png");
-
-		imageBackGround.setImage(image);
-
-		Image imageShip = new Image("images/ship1.png");
-		mainShip.setImage(imageShip);
-
-		ship = new AttackShip(TypeSpacecraft.ATTACK_SHIP,mainShip.getLayoutX(), VELOCITY);
-		mainPane.getChildren().clear();
-		mainPane.setTop(load);
-		circle.setVisible(false);
-		positionBallX = circle.getLayoutX();
-		positionBallY = circle.getLayoutY();
-
-		move();
-=======
-		
 		if(comboBoxDificult.getValue() == null) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
@@ -331,12 +276,10 @@ public class AliensInvadersGUI {
 
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
 		}
->>>>>>> 34fb8c8edf2e42e6ed454dee8a35d1b614cf3f5c
 	}
 
 	@FXML
 	void bottonShip2(MouseEvent event) throws IOException {
-<<<<<<< HEAD
 
 		verify = true;
 
@@ -367,8 +310,7 @@ public class AliensInvadersGUI {
 		move();
 	}
 
-	public void move() {
-=======
+	public void move() throws IOException {
 		
 		if(comboBoxDificult.getValue() == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -409,25 +351,10 @@ public class AliensInvadersGUI {
 	}
 
 	public void createMatrix(int x, int y) {
->>>>>>> 34fb8c8edf2e42e6ed454dee8a35d1b614cf3f5c
 
 		Image image1 = new Image("images/firstAlien.png");
 		Image image2 = new Image("images/secondAlien.png");
 
-<<<<<<< HEAD
-		int contX = POSTITIONALIENTX;
-		int contY = POSTITIONALIENTY;
-
-		for(int i = 0; i<NUMBERALIENS; i++) {
-
-			Alien alien = new Alien(POSTITIONALIENTX, POSTITIONALIENTY, contX, contY, image1, image2);
-
-			moveAlien(alien);
-
-			contX += 50;
-		}
-
-=======
 		int contX = x;
 		int contY = y;
 		int i = 0;
@@ -460,7 +387,6 @@ public class AliensInvadersGUI {
 			createMatrix(x, y, contX, contY+100, image1, image2, current.getNext(), ++i);
 			
 		}
->>>>>>> 34fb8c8edf2e42e6ed454dee8a35d1b614cf3f5c
 	}
 
 	public void moveAlien(Alien alien) {
@@ -469,12 +395,9 @@ public class AliensInvadersGUI {
 
 		alienImageView.setImage(alien.getImageOne());
 
-<<<<<<< HEAD
 		System.out.println(alien.getPositionX());
 		System.out.println(alien.getPositionY());
 
-=======
->>>>>>> 34fb8c8edf2e42e6ed454dee8a35d1b614cf3f5c
 		mainPane.getChildren().add(alienImageView);
 
 		alienImageView.setFitWidth(alien.getX());
@@ -484,15 +407,9 @@ public class AliensInvadersGUI {
 		alienImageView.setLayoutY(alien.getPositionY());
 
 		alien.setMax(window.getWidth());
-<<<<<<< HEAD
 
 		AlienThread thread = new AlienThread(this, alien, alienImageView, verify);
-
-=======
 		
-		AlienThread thread = new AlienThread(this, alien, alienImageView, verify);
-		
->>>>>>> 34fb8c8edf2e42e6ed454dee8a35d1b614cf3f5c
 		thread.start();
 
 		window.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -694,7 +611,6 @@ public class AliensInvadersGUI {
 
 	}
 
-<<<<<<< HEAD
 	@FXML
 	public void exportData(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
@@ -741,14 +657,13 @@ public class AliensInvadersGUI {
 				alert.showAndWait();
 			}
 		}
-=======
+	}
 	public void exportData() {
 
 	}
 
 	public void importData() {
 
->>>>>>> 34fb8c8edf2e42e6ed454dee8a35d1b614cf3f5c
 	}
 
 	public boolean getVerify() {
