@@ -54,4 +54,12 @@ public class Player extends People{
 	public void setPrev(Player prev) {
 		this.prev = prev;
 	}
+	
+	public String toString() {
+		String message = "";
+		
+		message = nick+"-"+score+"-"+ level;
+		
+		return message;
+	}
 }

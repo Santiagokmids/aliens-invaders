@@ -1,44 +1,49 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class AliensInvaders implements SearchP, CompareTo, Calculate {
-	
+
 	private Player first;
 	private Level normalLevel;
 	private Level easyLevel;
 	private Level hardLevel;
 	private Figures circle;
 	private Figures rectangle;
-	
+
 	private static String realName; 
 
 	public AliensInvaders() {
 	}
-	
+
 	public Player searchPlayers(String name) {
 		return null;
 	}
-	
+
 	public boolean addPeople(String name) {
 		realName = name;
 		return true;
 	}
-	
+
 	public boolean addPlayer(String nick, int score, int level) {
 		Player player = new Player(realName, nick,score,level);
-		
+
 		if(first == null) {
 			first = player;
-			
+
 		}else {
 			boolean stop = true;
 			Player current = first;
-			
+
 			while(stop) {
 				if(current.getNext() != null) {
 					current.getNext();
-					
+
 				}else {
 					current.setNext(player);
 					stop = false;
@@ -47,23 +52,23 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		}
 		return true;
 	}
-	
+
 	public Player searchScore(int score) {
 		return null;
 	}
-	
+
 	public boolean removePlayer(String name, int score) {
 		return true;
 	}
-	
+
 	public int calculateScore(int score, int level) {
 		return 0;
 	}
-	
+
 	public boolean verifyName(String name) {
 		return true;
 	}
-	
+
 	public boolean verifyScores(int score) {
 		return true;
 	}
@@ -75,21 +80,21 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	public void setFirst(Player first) {
 		this.first = first;
 	}
-	
+
 	public ArrayList<Player> toArrayList() {
-		
+
 		boolean verify = true;
-		
+
 		ArrayList<Player> arrayPlayer = new ArrayList<>();
-		
+
 		if(first != null) {
-			
+
 			arrayPlayer.add(first);
-			
+
 			Player current = first;
-			
+
 			while(verify) {
-				
+
 				if(current.getNext() != null) {
 					arrayPlayer.add(current.getNext());
 					current = current.getNext();
@@ -100,21 +105,52 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		}
 		return arrayPlayer;
 	}
-	
+
 	public boolean loadData() {
 		return true;
 	}
-	
+
 	public void saveData() {
-		
+
 	}
-	
-	public void exportData() {
-		
+
+	public void exportData(String fileName) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(fileName);
+		String message = searchPlayers(first);
+		pw.println(message);
+		pw.close();
 	}
-	
-	public void importData() {
-		
+
+	public String searchPlayers(Player player) {
+		String message = "";
+
+		if(player != null) {
+			message += searchPlayers(player.getPrev());
+			message += player.toString();
+			message += searchPlayers(player.getNext());
+		}
+		return message;
+	}
+
+	public void importData(String fileName) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		String line = br.readLine();
+
+		while(line != null) {
+
+			String[] parts = line.split(",");
+			try {
+
+				int score = Integer.parseInt(parts[1]);
+				int level = Integer.parseInt(parts[2]);
+				addPlayer(parts[0], score, level);
+				line = br.readLine();
+			} catch (NumberFormatException nfe) {
+				
+			}
+
+			br.close();
+		}
 	}
 
 	@Override
