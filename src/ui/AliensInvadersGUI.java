@@ -291,6 +291,7 @@ public class AliensInvadersGUI {
     	ImageView alienImageView = new ImageView();
     	
     	alienImageView.setImage(alien.getImageOne());
+    	alienImageView.setImage(alien.getImageTwo());
     	
     	System.out.println(alien.getPositionX());
     	System.out.println(alien.getPositionY());
