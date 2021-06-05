@@ -50,8 +50,6 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		return true;
 	}
 
-	//Character.toString(name.charAt(i)
-
 	public void isNumeric(String message) throws NumberInNameException {
 
 		boolean verify = true;
