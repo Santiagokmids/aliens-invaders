@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.AliensInvaders;
 
@@ -14,6 +16,15 @@ public class Main extends Application{
 	
 	public Main() {
 		aliensInvaders = new AliensInvaders();
+		boolean loadInformation = aliensInvaders.loadData();
+		if(!loadInformation) {
+			
+			Alert alert = new Alert(AlertType.INFORMATION);
+			
+		    alert.setTitle("Aliens Invaders");
+		    alert.setContentText("Error cargando el archivo");
+		    alert.showAndWait();
+		}
 	}
 	
 	public static void main(String[] args) {

@@ -1,7 +1,13 @@
 package model;
 
-public class People {
+import java.io.Serializable;
+
+public class People implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 
 	public People(String name) {

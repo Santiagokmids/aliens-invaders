@@ -1,6 +1,13 @@
 package model;
 
-public class Player extends People{
+import java.io.Serializable;
+
+public class Player extends People implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1;
 	
 	private String nick;
 	private int score;
@@ -58,7 +65,7 @@ public class Player extends People{
 	public String toString() {
 		String message = "";
 		
-		message = nick+"-"+score+"-"+ level;
+		message = "Nickname: "+nick+" | Score : "+score+" | Level "+ level+"\n";
 		
 		return message;
 	}

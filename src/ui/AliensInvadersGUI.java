@@ -161,7 +161,7 @@ public class AliensInvadersGUI {
 	}
 
 	public void inicializateTableViewPlayer() {
-
+		
 		listPlayer = FXCollections.observableArrayList(aliensInvaders.toArrayList());
 
 		tvHall.setItems(listPlayer);
@@ -486,7 +486,7 @@ public class AliensInvadersGUI {
 		loadBanner();
 	}
 
-	public void addPlayer(){
+	public void addPlayer() throws FileNotFoundException, IOException{
 		int score = (int)Math.floor(Math.random()*999);
 		int level = (int)Math.floor(Math.random()*60);
 		aliensInvaders.addPlayer(nickName.getText(), score, level);
@@ -616,19 +616,21 @@ public class AliensInvadersGUI {
 
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Importar Jugadores");
-
+			
 			try {
 
 				aliensInvaders.importData(f.getAbsolutePath());
 				alert.setContentText("Los jugadores han sido importados correctamente.");
 				alert.showAndWait();
-
+				
 			} catch (IOException e) {
 				alert.setContentText("Los jugadores no pudieron ser importados.");
 				alert.showAndWait();
 			}
 		}
+		inicializateTableViewPlayer();
 	}
+	
 	public void exportData() {
 
 	}

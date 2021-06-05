@@ -1,15 +1,22 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import exceptions.NumberInNameException;
 
 public class AliensInvaders implements SearchP, CompareTo, Calculate {
+
+	public final static String SAVE_PATH_FILE_PEOPLE = "data/dataPlayer.txt";
 
 	private Player first;
 	private Level normalLevel;
@@ -32,9 +39,10 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		return true;
 	}
 
-	public boolean addPlayer(String nick, int score, int level) {
+	public boolean addPlayer(String nick, int score, int level) throws FileNotFoundException, IOException {
+		loadData();
+		realName = "chupapo";
 		Player player = new Player(realName, nick,score,level);
-
 		if(first == null) {
 			first = player;
 
@@ -43,16 +51,30 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 			Player current = first;
 
 			while(stop) {
-				if(current.getNext() != null) {
-					current.getNext();
+
+				if(player.getScore() < current.getScore()) {
+
+					if(current.getPrev() == null) {
+						current.setPrev(player);
+						stop = false;
+
+					}else {
+						current = current.getPrev();
+					}
 
 				}else {
-					current.setNext(player);
-					stop = false;
+					if(current.getNext() == null) {
+						current.setNext(player);
+						stop = false;
+					}
+					else {
+						current = current.getNext();
+					}
 				}
 			}
 		}
-		return true;
+		saveData();
+		return false;
 	}
 
 	public void isNumeric(String message) throws NumberInNameException {
@@ -62,7 +84,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		for (int i = 0; i < message.length() && verify; i++) {
 			verify = charOneByOne(Character.toString(message.charAt(i)));
 		}
-		
+
 		if(!verify) {
 			throw new NumberInNameException();
 		}
@@ -71,7 +93,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	public boolean charOneByOne(String message) {
 
 		boolean verify = true;
-		
+
 		try {
 			Integer.parseInt(message);
 			verify = false;
@@ -111,42 +133,59 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 
 	public ArrayList<Player> toArrayList() {
 
-		boolean verify = true;
-
 		ArrayList<Player> arrayPlayer = new ArrayList<>();
 
 		if(first != null) {
 
-			arrayPlayer.add(first);
-
 			Player current = first;
 
-			while(verify) {
+			searchPlayers(current, arrayPlayer);
 
-				if(current.getNext() != null) {
-					arrayPlayer.add(current.getNext());
-					current = current.getNext();
-				}else {
-					verify = false;
-				}
-			}
 		}
 		return arrayPlayer;
 	}
 
 	public boolean loadData() {
-		return true;
+		boolean verify = true;
+
+		File players = new File(SAVE_PATH_FILE_PEOPLE);
+
+		if(players.exists()){
+			
+			try {
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(players));
+				first = (Player) ois.readObject();
+
+				ois.close();
+			}catch(ClassNotFoundException | IOException r) {
+				r.printStackTrace();
+				verify = false;
+			}
+		}
+		return verify;
 	}
 
-	public void saveData() {
+	public void saveData() throws FileNotFoundException, IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SAVE_PATH_FILE_PEOPLE));
+		oos.writeObject(first);
 
+		oos.close();
 	}
 
 	public void exportData(String fileName) throws FileNotFoundException {
-		PrintWriter pw = new PrintWriter(fileName);
+		PrintWriter pw = new PrintWriter(fileName+".txt");
 		String message = searchPlayers(first);
 		pw.println(message);
 		pw.close();
+	}
+
+	public void searchPlayers(Player player, ArrayList<Player> arrayPlayer) {
+
+		if(player != null) {
+			searchPlayers(player.getPrev(),arrayPlayer);
+			arrayPlayer.add(player);
+			searchPlayers(player.getNext(),arrayPlayer);
+		}
 	}
 
 	public String searchPlayers(Player player) {
@@ -161,26 +200,27 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	}
 
 	public void importData(String fileName) throws IOException {
+
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		String line = br.readLine();
 
 		while(line != null) {
 
 			String[] parts = line.split(",");
-			try {
 
+			try {
 				int score = Integer.parseInt(parts[1]);
 				int level = Integer.parseInt(parts[2]);
 				addPlayer(parts[0], score, level);
 				line = br.readLine();
-			} catch (NumberFormatException nfe) {
-				
-			}
 
-			br.close();
+			}catch (NumberFormatException nfe) {
+				line = br.readLine();
+			}
 		}
+		br.close();
 	}
-	
+
 	@Override
 	public int calculate() {
 		// TODO Auto-generated method stub
