@@ -26,8 +26,11 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.Alien;
 import model.AliensInvaders;
+import model.AttackShip;
 import model.Player;
+import model.RecognShip;
 import model.Spacecraft;
+import model.TypeSpacecraft;
 import thread.AlienThread;
 
 public class AliensInvadersGUI {
@@ -130,11 +133,19 @@ public class AliensInvadersGUI {
     
     private double positionBallY;
     
+    private long count;
+    
+    private long currentCount;
+    
     public final static int POSTITIONALIENTX = 79;
     
     public final static int POSTITIONALIENTY = 62;
     
     public final static int NUMBERALIENS = 2;
+    
+    public final static int VELOCITY = 1000;
+    
+    public final static int VELOCITYSLOW = 2600;
 
 	public AliensInvadersGUI(AliensInvaders aliensInvaders, Stage stage) {
 		this.aliensInvaders = aliensInvaders;
@@ -168,6 +179,9 @@ public class AliensInvadersGUI {
 		
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
+		count = System.nanoTime();
+		currentCount = 0;
+
 	}
 	
 	@FXML
@@ -211,8 +225,7 @@ public class AliensInvadersGUI {
     	Image imageShip = new Image("images/ship1.png");
     	mainShip.setImage(imageShip);
     	
-    	ship = new Spacecraft(null,mainShip.getLayoutX());
-    	
+    	ship = new AttackShip(TypeSpacecraft.ATTACK_SHIP,mainShip.getLayoutX(), VELOCITY);
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
     	circle.setVisible(false);
@@ -239,7 +252,7 @@ public class AliensInvadersGUI {
     	Image imageShip = new Image("images/ship2.png");
     	mainShip.setImage(imageShip);
     	
-    	ship = new Spacecraft(null,mainShip.getLayoutX());
+    	ship = new RecognShip(TypeSpacecraft.RECOGNITION_SHIP,mainShip.getLayoutX(),2);
     	
     	mainPane.getChildren().clear();
     	mainPane.setTop(load);
@@ -407,29 +420,53 @@ public class AliensInvadersGUI {
     
     @FXML
     public void moveShip(KeyEvent event) throws InterruptedException {
-    	
+    	count = System.currentTimeMillis();
     	if((event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) && ship.getPosX() >= 12) {
     		ship.moveLeft();
     		
-    	}if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W ){
-    		Circle circles = new Circle();
-    		circles.setLayoutX(positionBallX);
-    		circles.setLayoutY(positionBallY);
-    		circles.setRadius(circle.getRadius());
-    		mainPane.getChildren().add(circles);
-    		moveBall(circles);
-    		
-    	}else if((event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) && ship.getPosX() <= 462){
+    	}if((event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) && ship.getPosX() <= 462){
     		ship.moveRight();
     		
+    	}if(ship.getShip() == TypeSpacecraft.ATTACK_SHIP) {
+    		
+    		if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W && currentCount < count-VELOCITY){
+        		currentCount = count;
+        		Circle circles = new Circle();
+        		circles.setLayoutX(positionBallX);
+        		circles.setLayoutY(positionBallY);
+        		circles.setRadius(circle.getRadius());
+        		mainPane.getChildren().add(circles);
+        		moveBall(circles);
+    		}
+    		
+    	}else if(ship.getShip() == TypeSpacecraft.RECOGNITION_SHIP) {
+    		
+    		if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W && currentCount < count-VELOCITYSLOW){
+        		currentCount = count;
+        		Circle circles = new Circle();
+        		circles.setLayoutX(positionBallX);
+        		circles.setLayoutY(positionBallY);
+        		circles.setRadius(circle.getRadius());
+        		mainPane.getChildren().add(circles);
+        		moveBall(circles);
+    		}
     	}
+    	
     	mainShip.setLayoutX(ship.getPosX());
     }
     
-    public void moveBall(Circle circles) {
+    public void moveBall(Circle circles) throws InterruptedException {
     	circles.setVisible(true);
     	circles.setFill(javafx.scene.paint.Color.RED);
     	circles.setLayoutX(ship.getPosX()+40);
+    	
+    	window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent event) {
+				verify = false;
+			}
+		});
     	
 		moveBalls(circles);
     }
@@ -438,8 +475,7 @@ public class AliensInvadersGUI {
     	
     	new Thread() {
     		public void run() {
-    			
-    			while(circles.getLayoutY() > -15) {
+    			while(circles.getLayoutY() > -15 && verify) {
     				Platform.runLater(new Thread(){
     					public void run() {
     						circles.setLayoutY(circles.getLayoutY()-5);
