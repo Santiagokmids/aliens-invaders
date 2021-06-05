@@ -6,6 +6,7 @@ public class Spacecraft {
 	private Double posX;
 	
 	public Spacecraft(TypeSpacecraft ship, double x) {
+		this.ship = ship;
 		setPosX(x);
 	}
 
