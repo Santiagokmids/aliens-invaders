@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import exceptions.NumberInNameException;
+
 public class AliensInvaders implements SearchP, CompareTo, Calculate {
 
 	private Player first;
@@ -51,6 +53,32 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 			}
 		}
 		return true;
+	}
+
+	public void isNumeric(String message) throws NumberInNameException {
+
+		boolean verify = true;
+
+		for (int i = 0; i < message.length() && verify; i++) {
+			verify = charOneByOne(Character.toString(message.charAt(i)));
+		}
+		
+		if(!verify) {
+			throw new NumberInNameException();
+		}
+	}
+
+	public boolean charOneByOne(String message) {
+
+		boolean verify = true;
+		
+		try {
+			Integer.parseInt(message);
+			verify = false;
+		} catch (NumberFormatException nfe) {
+		}
+
+		return verify;
 	}
 
 	public Player searchScore(int score) {
@@ -152,7 +180,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 			br.close();
 		}
 	}
-
+	
 	@Override
 	public int calculate() {
 		// TODO Auto-generated method stub

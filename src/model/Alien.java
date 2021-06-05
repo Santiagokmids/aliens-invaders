@@ -14,6 +14,10 @@ public class Alien {
 	private Direction direction;
 	private Image imageOne;
 	private Image imageTwo;
+	private Alien down;
+	private Alien up;
+	private Alien next;
+	private Alien prev;
 	
 	public Alien(double x, double y, double positionX, double positionY, Image imageOne, Image imageTwo) {
 		
@@ -54,7 +58,7 @@ public class Alien {
 		if(x >= max) {
 			changeDirection();
 		}
-		if(x <= 0) {
+		if(x <= -79) {
 			changeDirection();
 		}
 	}
@@ -67,7 +71,7 @@ public class Alien {
 			direction = Direction.LEFT;
 		}
 	}
-
+	
 	public double getPositionX() {
 		return positionX;
 	}
@@ -82,5 +86,37 @@ public class Alien {
 
 	public Image getImageTwo() {
 		return imageTwo;
+	}
+
+	public Alien getDown() {
+		return down;
+	}
+
+	public void setDown(Alien down) {
+		this.down = down;
+	}
+
+	public Alien getUp() {
+		return up;
+	}
+
+	public void setUp(Alien up) {
+		this.up = up;
+	}
+
+	public Alien getNext() {
+		return next;
+	}
+
+	public void setNext(Alien next) {
+		this.next = next;
+	}
+
+	public Alien getPrev() {
+		return prev;
+	}
+
+	public void setPrev(Alien prev) {
+		this.prev = prev;
 	}
 }

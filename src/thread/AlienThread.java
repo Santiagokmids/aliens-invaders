@@ -28,7 +28,9 @@ public class AlienThread extends Thread{
 			
 			Platform.runLater(new Thread(){
 				public void run() {
-					aliensInvadersGUI.updateAlien(alien.getX(), alienImageView);
+					
+					aliensInvadersGUI.updateAlien(alien.getPositionX()+alien.getX(), alienImageView);
+					
 					if(alienImageView.getImage() == alien.getImageOne()) {
 						alienImageView.setImage(alien.getImageTwo());
 					}else {
