@@ -2,6 +2,13 @@ package model;
 
 import javafx.scene.image.Image;
 
+/**
+ * This class contains methods, attributes,  and relations of a aliens invaders.
+ * @version 1
+ * @author Santiago Trochez Velasco, https://github.com/Santiagokmids <br>
+ * @author Luis Miguel Ossa Arias, https://github.com/Itsumohitoride <br>
+ */
+
 public class Alien {
 	
 	public final static int MOVE = 10;
@@ -18,6 +25,18 @@ public class Alien {
 	private Alien up;
 	private Alien next;
 	private Alien prev;
+	
+	/**
+	 * <b>name:</b> Alien. <br>
+	 * Create an object alien. <br>
+	 * <b>post:</b> An object alien has created. <br>
+	 * @param x is the size of the alien. x != null. 
+	 * @param y is the size of the alien. y != null.
+	 * @param positionX is the initial position of the alien in the game. positionX != null.
+	 * @param positionY is the initial position of the alien in the game. positionY != null.
+	 * @param imageOne is the first image of an alien. imageOne != "" y imageOne != null.
+	 * @param imageTwo is the second image of an alien. imageTwo != "" y imageTwo != null.
+	 */
 	
 	public Alien(double x, double y, double positionX, double positionY, Image imageOne, Image imageTwo) {
 		
@@ -42,6 +61,12 @@ public class Alien {
 		this.max = max;
 	}
 	
+	/**
+	 * <b>name:</b> moveAlien. <br>
+	 * Move the alien. <br>
+	 * <b>post:</b> The alien has been moved. <br>
+	 */
+	
 	public void moveAlien() {
 		
 		if(direction == Direction.LEFT) {
@@ -53,6 +78,12 @@ public class Alien {
 		verify();
 	}
 	
+	/**
+	 * <b>name:</b> verify. <br>
+	 * Verify the direction of an alien. <br>
+	 * <b>post:</b> The direction of an alien has been verified. 
+	 */
+	
 	public void verify() {
 		
 		if(x >= max) {
@@ -62,6 +93,12 @@ public class Alien {
 			changeDirection();
 		}
 	}
+	
+	/**
+	 * <b>name:</b> changeDirection. <br>
+	 * Change the direction of an alien. <br>
+	 * <b>post:</b> The direction of an alien has been changed. <br>
+	 */
 	
 	public void changeDirection() {
 		
