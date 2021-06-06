@@ -331,18 +331,13 @@ public class AliensInvadersGUI {
 		}
 	}
 
-	public void move() throws IOException {
-
-
-	}
-
 	public void createMatrix(int x, int y) {
 
 		Image image1 = new Image("images/firstAlien.png");
 		Image image2 = new Image("images/secondAlien.png");
 
-		int contX = x;
-		int contY = y;
+		int contX = -79;
+		int contY = 62;
 		int i = 0;
 
 		if(firstAlien == null) {
@@ -404,12 +399,9 @@ public class AliensInvadersGUI {
 		});
 	}
 
-	public void moveImageAlien() {
-
-	}
-
-	public void updateAlien(double x, ImageView alienImageView) {
+	public void updateAlien(double y, double x, ImageView alienImageView) {
 		alienImageView.setLayoutX(x);
+		alienImageView.setLayoutY(y);
 	}
 
 	@FXML

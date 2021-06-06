@@ -44,7 +44,7 @@ public class Alien {
 		this.y = y;
 		this.positionX = positionX;
 		this.positionY = positionY;
-		direction = Direction.LEFT;
+		direction = Direction.RIGHT;
 		this.imageOne = imageOne;
 		this.imageTwo = imageTwo;
 	}
@@ -86,10 +86,12 @@ public class Alien {
 	
 	public void verify() {
 		
-		if(x >= max) {
+		if(x >= 150) {
+			positionY += MOVE;
 			changeDirection();
 		}
-		if(x <= -79) {
+		if(x <= 79) {
+			positionY += MOVE;
 			changeDirection();
 		}
 	}
