@@ -399,11 +399,13 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	 * @return <code>People</code> specifying people is the player that has searched.
 	 */
 		
+
 	@Override
-	public Player SearchP(int score) {
-
+	public Player searchP(String toSearch) {
+		
 		ArrayList<Player> listPlayers = toArrayList();
-
+		int score = Integer.parseInt(toSearch);
+		
 		int pos = -1;
 		int i = 0;
 		int j = listPlayers.size()-1;

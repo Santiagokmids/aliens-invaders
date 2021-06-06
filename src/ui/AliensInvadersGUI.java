@@ -653,6 +653,7 @@ public class AliensInvadersGUI {
 		if(!searchByScore.getText().isEmpty()) {
 
 			long start = System.nanoTime();
+			int 
 			Player player = aliensInvaders.searchP(searchByScore.getText());
 			long end = System.nanoTime();
 
