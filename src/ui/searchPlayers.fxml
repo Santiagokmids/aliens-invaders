@@ -18,7 +18,7 @@
             <Font name="Bodoni MT" size="17.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" layoutX="128.0" layoutY="443.0" prefHeight="39.0" prefWidth="307.0" promptText="Puntaje">
+      <TextField fx:id="searchByScore" alignment="CENTER" layoutX="128.0" layoutY="443.0" prefHeight="39.0" prefWidth="307.0" promptText="Puntaje">
          <font>
             <Font name="Bodoni MT" size="17.0" />
          </font>

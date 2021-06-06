@@ -398,10 +398,32 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	 * <b>post:</b> A player has searched. <br>
 	 * @return <code>People</code> specifying people is the player that has searched.
 	 */
-
+		
 	@Override
-	public People searchP() {
-		// TODO Auto-generated method stub
-		return null;
+	public Player SearchP(int score) {
+
+		ArrayList<Player> listPlayers = toArrayList();
+
+		int pos = -1;
+		int i = 0;
+		int j = listPlayers.size()-1;
+		Player player = null;
+
+		while(i <= j && pos < 0) {
+			int m = (i+j)/2;
+
+			if(listPlayers.get(m).getScore() == score) {
+				pos = m;
+
+				player = listPlayers.get(pos);
+			}
+			else if(listPlayers.get(m).getScore() > score) {
+				j = m-1;
+			}
+			else {
+				i = m+1;
+			}
+		}
+		return player;
 	}
 }

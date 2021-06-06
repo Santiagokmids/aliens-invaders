@@ -33,6 +33,7 @@ import javafx.stage.WindowEvent;
 import model.Alien;
 import model.AliensInvaders;
 import model.AttackShip;
+import model.Client;
 import model.Player;
 import model.RecognShip;
 import model.Spacecraft;
@@ -121,6 +122,9 @@ public class AliensInvadersGUI {
 
 	@FXML
 	private ImageView mainShip;
+	
+	@FXML
+	private TextField searchByScore;
 
 	@FXML
 	private ComboBox<String> comboBoxDificult;
@@ -642,4 +646,40 @@ public class AliensInvadersGUI {
 	public boolean getVerify() {
 		return verify;
 	}
+	
+	@FXML
+	public void searchPlayerByScore(ActionEvent event) {
+
+		if(!searchByScore.getText().isEmpty()) {
+
+			long start = System.nanoTime();
+			Player player = aliensInvaders.searchP(searchByScore.getText());
+			long end = System.nanoTime();
+
+			if(client == null) {
+
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("ERROR");
+				alert.setHeaderText("No se encontró el cliente");
+				alert.setContentText("El Cliente que está buscando no se encuentra registrado");
+				alert.showAndWait();
+			}
+			else {
+
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+				alert1.setHeaderText("Búsqueda realizada en "+(end-start)+" nanosegundos");
+				alert1.setContentText("Cliente encontrado: \n"+"Nombre: "+client.getName()+"\nApellido: "+client.getLastName()+"\nNo. Identificación: "+client.getId()+"\nDirección: "+client.getAddress()+"\nTeléfono: "+client.getTelephone()+"\nObservaciones: "+client.getFieldOfObservations());
+				alert1.showAndWait();
+
+				nameSearchClient.setText("");
+				lastNameSearchClient.setText("");
+			}
+		}else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("ERROR");
+			alert.setHeaderText("No se pudo buscar el cliente");
+			alert.setContentText("Debe llenar los campos para buscar el cliente");
+			alert.showAndWait();
+		}
+	
 }

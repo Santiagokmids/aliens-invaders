@@ -16,5 +16,5 @@ public interface SearchP {
 	 * @return <code>People</code> specifying people is the player that has searched.
 	 */
 	
-	public People searchP();
+	public Player searchP(String toSearch);
 }
