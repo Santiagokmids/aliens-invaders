@@ -16,5 +16,5 @@ public interface CompareTo {
 	 * @return <code>int</code> specifying comparison is the result of the comparison between two integers.
 	 */
 	
-	public int compareTo();
+	public int compareTo(String nick);
 }

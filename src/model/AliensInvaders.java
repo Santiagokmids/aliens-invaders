@@ -379,18 +379,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		return 0;
 	}
 	
-	/**
-	 * <b>name:</b> compareTo. <br>
-	 * Compare two integers. <br>
-	 * <b>post:</b> the comparison between two integers has been made.  
-	 * @return <code>int</code> specifying comparison is the result of the comparison between two integers.
-	 */
-
-	@Override
-	public int compareTo() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 	
 	/**
 	 * <b>name:</b> searchP. <br>
@@ -398,7 +387,6 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	 * <b>post:</b> A player has searched. <br>
 	 * @return <code>People</code> specifying people is the player that has searched.
 	 */
-		
 
 	@Override
 	public Player searchP(String toSearch) {
@@ -420,6 +408,33 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 				player = listPlayers.get(pos);
 			}
 			else if(listPlayers.get(m).getScore() > score) {
+				j = m-1;
+			}
+			else {
+				i = m+1;
+			}
+		}
+		return player;
+	}
+	
+	public Player binarySearchByName(String nick) {
+
+		ArrayList<Player> listPlayers = toArrayList();
+
+		int pos = -1;
+		int i = 0;
+		int j = listPlayers.size()-1;
+		Player player = null;
+
+		while(i <= j && pos < 0) {
+			int m = (i+j)/2;
+
+			if(listPlayers.get(m).compareTo(nick) == 0) {
+				pos = m;
+
+				player = listPlayers.get(pos);
+			}
+			else if(listPlayers.get(m).compareTo(nick) > 0) {
 				j = m-1;
 			}
 			else {
