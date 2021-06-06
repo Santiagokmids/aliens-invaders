@@ -13,7 +13,7 @@
       <ImageView fx:id="titleSearch" fitHeight="320.0" fitWidth="581.0" layoutX="68.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="addNIck" fitHeight="450.0" fitWidth="926.0" layoutX="-119.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="addScore" fitHeight="431.0" fitWidth="761.0" layoutX="-99.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" />
-      <TextField alignment="CENTER" layoutX="127.0" layoutY="313.0" prefHeight="39.0" prefWidth="307.0" promptText="NickName">
+      <TextField fx:id="searchByName" alignment="CENTER" layoutX="127.0" layoutY="313.0" prefHeight="39.0" prefWidth="307.0" promptText="NickName">
          <font>
             <Font name="Bodoni MT" size="17.0" />
          </font>

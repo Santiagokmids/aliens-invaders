@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Luis Miguel Ossa Arias, https://github.com/Itsumohitoride <br>
  */
 
-public class Player extends People implements Serializable{
+public class Player extends People implements Serializable, CompareTo{
 	
 	private static final long serialVersionUID = 1;
 
@@ -88,5 +88,20 @@ public class Player extends People implements Serializable{
 		message = "Nickname: "+nick+" | Score : "+score+" | Level "+ level+"\n";
 		
 		return message;
+	}
+	
+	/**
+	 * <b>name:</b> compareTo. <br>
+	 * Compare two integers. <br>
+	 * <b>post:</b> the comparison between two integers has been made.  
+	 * @return <code>int</code> specifying comparison is the result of the comparison between two integers.
+	 */
+
+	@Override
+	public int compareTo(String nick) {
+		
+		int verify = getNick().compareTo(nick);
+		
+		return verify;
 	}
 }
