@@ -648,39 +648,62 @@ public class AliensInvadersGUI {
 	}
 	
 	@FXML
-	public void searchPlayerByScore(ActionEvent event) {
+	public void searchPlayer(ActionEvent event) {
 
-		if(!searchByScore.getText().isEmpty()) {
+		if(!searchByScore.getText().isEmpty() && searchByName.getText().isEmpty()) {
 
 			long start = System.nanoTime();
-			int 
-			Player player = aliensInvaders.searchP(searchByScore.getText());
+			Player player = aliensInvaders.binarySearchByScore(searchByScore.getText());
 			long end = System.nanoTime();
 
-			if(client == null) {
+			if(player == null) {
 
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("ERROR");
-				alert.setHeaderText("No se encontró el cliente");
-				alert.setContentText("El Cliente que está buscando no se encuentra registrado");
+				alert.setHeaderText("No se encontró el jugador");
+				alert.setContentText("El jugador que está buscando no se encuentra en el hall of fame");
 				alert.showAndWait();
 			}
 			else {
 
 				Alert alert1 = new Alert(AlertType.INFORMATION);
 				alert1.setHeaderText("Búsqueda realizada en "+(end-start)+" nanosegundos");
-				alert1.setContentText("Cliente encontrado: \n"+"Nombre: "+client.getName()+"\nApellido: "+client.getLastName()+"\nNo. Identificación: "+client.getId()+"\nDirección: "+client.getAddress()+"\nTeléfono: "+client.getTelephone()+"\nObservaciones: "+client.getFieldOfObservations());
+				alert1.setContentText("Jugador encontrado: \n"+player.toString());
 				alert1.showAndWait();
 
-				nameSearchClient.setText("");
-				lastNameSearchClient.setText("");
+				searchByScore.setText("");
 			}
-		}else {
+		}else if(searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()){
+			
+			long start = System.nanoTime();
+			Player player = aliensInvaders.binarySearchByName(searchByName.getText());
+			long end = System.nanoTime();
+
+			if(player == null) {
+
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("ERROR");
+				alert.setHeaderText("No se encontró el jugador");
+				alert.setContentText("El jugador que está buscando no se encuentra en el hall of fame");
+				alert.showAndWait();
+			}
+			else {
+
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+				alert1.setHeaderText("Búsqueda realizada en "+(end-start)+" nanosegundos");
+				alert1.setContentText("Jugador encontrado: \n"+player.toString());
+				alert1.showAndWait();
+
+				searchByScore.setText("");
+			}
+		}
+		else if(!searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()){
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("ERROR");
-			alert.setHeaderText("No se pudo buscar el cliente");
-			alert.setContentText("Debe llenar los campos para buscar el cliente");
+			alert.setHeaderText("No se pudo buscar el jugador");
+			alert.setContentText("Solo llene uno de los dos campos, ya sea el campo del nickname o el puntaje.");
 			alert.showAndWait();
 		}
+	}
 	
 }

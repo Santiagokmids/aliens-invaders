@@ -400,8 +400,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	 */
 		
 
-	@Override
-	public Player searchP(String toSearch) {
+	public Player binarySearchByScore(String toSearch) {
 		
 		ArrayList<Player> listPlayers = toArrayList();
 		int score = Integer.parseInt(toSearch);
