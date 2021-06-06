@@ -644,10 +644,10 @@ public class AliensInvadersGUI {
 	@FXML
 	public void searchPlayer(ActionEvent event) {
 
-		if(!searchByScore.getText().isEmpty() && searchByName.getText().isEmpty()) {
+		if(!searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()) {
 
 			long start = System.nanoTime();
-			Player player = aliensInvaders.binarySearchByScore(searchByScore.getText());
+			Player player = aliensInvaders.binarySearchByScore(searchByScore.getText(),searchByName.getText());
 			long end = System.nanoTime();
 
 			if(player == null) {
@@ -657,6 +657,8 @@ public class AliensInvadersGUI {
 				alert.setHeaderText("No se encontró el jugador");
 				alert.setContentText("El jugador que está buscando no se encuentra en el hall of fame");
 				alert.showAndWait();
+				searchByName.setText("");
+				searchByScore.setText("");
 			}
 			else {
 
@@ -664,11 +666,12 @@ public class AliensInvadersGUI {
 				alert1.setHeaderText("Búsqueda realizada en "+(end-start)+" nanosegundos");
 				alert1.setContentText("Jugador encontrado: \n"+player.toString());
 				alert1.showAndWait();
-
+				
+				searchByName.setText("");
 				searchByScore.setText("");
 			}
 		}
-		if(searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()){
+		else if(searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()){
 
 			long start = System.nanoTime();
 			Player player = aliensInvaders.binarySearchByName(searchByName.getText());
@@ -681,6 +684,8 @@ public class AliensInvadersGUI {
 				alert.setHeaderText("No se encontró el jugador");
 				alert.setContentText("El jugador que está buscando no se encuentra en el hall of fame");
 				alert.showAndWait();
+				searchByName.setText("");
+				searchByScore.setText("");
 			}
 			else {
 
@@ -689,15 +694,17 @@ public class AliensInvadersGUI {
 				alert1.setContentText("Jugador encontrado: \n"+player.toString());
 				alert1.showAndWait();
 
+				searchByName.setText("");
 				searchByScore.setText("");
 			}
 		}
-		else if(!searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()){
+		else if(searchByScore.getText().isEmpty() && searchByName.getText().isEmpty() || searchByName.getText().isEmpty()){
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("ERROR");
 			alert.setHeaderText("No se pudo buscar el jugador");
-			alert.setContentText("Solo llene uno de los dos campos, ya sea el campo del nickname o el puntaje.");
+			alert.setContentText("Ingrese solo el campo de nickname o los dos campos para poder buscar.");
 			alert.showAndWait();
+			searchByScore.setText("");
 		}
 	}
 
