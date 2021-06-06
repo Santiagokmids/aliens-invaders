@@ -33,7 +33,6 @@ import javafx.stage.WindowEvent;
 import model.Alien;
 import model.AliensInvaders;
 import model.AttackShip;
-import model.Client;
 import model.Player;
 import model.RecognShip;
 import model.Spacecraft;
@@ -122,12 +121,15 @@ public class AliensInvadersGUI {
 
 	@FXML
 	private ImageView mainShip;
-	
+
 	@FXML
 	private TextField searchByScore;
 
 	@FXML
 	private ComboBox<String> comboBoxDificult;
+
+	@FXML
+	private TextField searchByName;
 
 	private Stage window;
 
@@ -165,7 +167,7 @@ public class AliensInvadersGUI {
 	}
 
 	public void inicializateTableViewPlayer() {
-		
+
 		listPlayer = FXCollections.observableArrayList(aliensInvaders.toArrayList());
 
 		tvHall.setItems(listPlayer);
@@ -200,19 +202,19 @@ public class AliensInvadersGUI {
 	public void btnStartGame(ActionEvent event) throws IOException {
 
 		if(txtRealName.getText().isEmpty()) {
-			
+
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("No se puede continuar");
 			alert.setContentText("Necesita ingresar un nombre para continuar");
 			alert.showAndWait();
 		}else {
-			
+
 			String name = txtRealName.getText();
-			
+
 			try {
 				aliensInvaders.isNumeric(name);
-				
+
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("selectShip-pane.fxml"));
 
 				loader.setController(this);
@@ -232,15 +234,15 @@ public class AliensInvadersGUI {
 				comboBoxDificult.setPromptText("Dificultad");
 
 				comboBoxDificult.getItems().addAll("Novato","Cadete","Leyenda");
-				
+
 			} catch (NumberInNameException nne) {
-				
+
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error");
 				alert.setHeaderText("No se puede continuar");
 				alert.setContentText("El nombre no puede contener numeros");
 				alert.showAndWait();
-				
+
 				txtRealName.setText("");
 			}
 		}
@@ -256,7 +258,7 @@ public class AliensInvadersGUI {
 			alert.setContentText("Debe selecionar una dificultad");
 			alert.showAndWait();
 		}else {
-			
+
 			verify = true;
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("game-pane.fxml"));
@@ -292,7 +294,7 @@ public class AliensInvadersGUI {
 			alert.setContentText("Debe selecionar una dificultad");
 			alert.showAndWait();
 		}else {
-			
+
 			verify = true;
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("game-pane.fxml"));
@@ -324,8 +326,8 @@ public class AliensInvadersGUI {
 	}
 
 	public void move() throws IOException {
-		
-		
+
+
 	}
 
 	public void createMatrix(int x, int y) {
@@ -356,14 +358,14 @@ public class AliensInvadersGUI {
 			current.setDown(alien);
 			current.getDown().setUp(current);
 			createMatrix(x, y, contX+100, contY-100, image1, image2, current, i);
-			
+
 		}else if(current != null && current.getNext() == null && i < NUMBERALIENS){
 
 			moveAlien(alien);
 			current.setNext(alien);
 			current.getNext().setPrev(current);
 			createMatrix(x, y, contX, contY+100, image1, image2, current.getNext(), ++i);
-			
+
 		}
 	}
 
@@ -384,7 +386,7 @@ public class AliensInvadersGUI {
 		alien.setMax(window.getWidth());
 
 		AlienThread thread = new AlienThread(this, alien, alienImageView, verify);
-		
+
 		thread.start();
 
 		window.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -620,13 +622,13 @@ public class AliensInvadersGUI {
 
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Importar Jugadores");
-			
+
 			try {
 
 				aliensInvaders.importData(f.getAbsolutePath());
 				alert.setContentText("Los jugadores han sido importados correctamente.");
 				alert.showAndWait();
-				
+
 			} catch (IOException e) {
 				alert.setContentText("Los jugadores no pudieron ser importados.");
 				alert.showAndWait();
@@ -634,7 +636,7 @@ public class AliensInvadersGUI {
 		}
 		inicializateTableViewPlayer();
 	}
-	
+
 	public void exportData() {
 
 	}
@@ -646,7 +648,7 @@ public class AliensInvadersGUI {
 	public boolean getVerify() {
 		return verify;
 	}
-	
+
 	@FXML
 	public void searchPlayer(ActionEvent event) {
 
@@ -673,8 +675,9 @@ public class AliensInvadersGUI {
 
 				searchByScore.setText("");
 			}
-		}else if(searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()){
-			
+		}
+		if(searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()){
+
 			long start = System.nanoTime();
 			Player player = aliensInvaders.binarySearchByName(searchByName.getText());
 			long end = System.nanoTime();
@@ -705,5 +708,5 @@ public class AliensInvadersGUI {
 			alert.showAndWait();
 		}
 	}
-	
+
 }

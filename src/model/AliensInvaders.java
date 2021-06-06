@@ -11,6 +11,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 import exceptions.NumberInNameException;
 
@@ -33,7 +36,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	private Figures rectangle;
 
 	private static String realName; 
-	
+
 	/**
 	 * <b>name:</b> AliensInvaders. <br>
 	 * Create an object aliensInvaders. <br>
@@ -42,7 +45,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 
 	public AliensInvaders() {
 	}
-	
+
 	/**
 	 * <b>name:</b> searchPlayers. <br>
 	 * Search a player. <br>
@@ -54,7 +57,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	public Player searchPlayers(String name) {
 		return null;
 	}
-	
+
 	/**
 	 * <b>name:</b> addPeople. <br>
 	 * Add an object people into the program. <br>
@@ -67,7 +70,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		realName = name;
 		return true;
 	}
-	
+
 	/**
 	 * <b>name:</b> addPlayer. <br>
 	 * Add an object player into the program. <br>
@@ -115,7 +118,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		saveData();
 		return false;
 	}
-	
+
 	/**
 	 * <b>name:</b> isNumeric. <br>
 	 * Convert all the parts of the string into a single char. <br>
@@ -137,7 +140,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 			throw new NumberInNameException();
 		}
 	}
-	
+
 	/**
 	 * <b>name:</b> charOneByOne. <br>
 	 * Verify if a string is a number. <br>
@@ -158,7 +161,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 
 		return verify;
 	}
-	
+
 	/**
 	 * <b>name:</b> searchScore. <br>
 	 * Search an player by the score. <br>
@@ -170,7 +173,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	public Player searchScore(int score) {
 		return null;
 	}
-	
+
 	/**
 	 * <b>name:</b> removePlayer. <br>
 	 * Remove a player from the program. <br>
@@ -183,7 +186,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	public boolean removePlayer(String name, int score) {
 		return true;
 	}
-	
+
 	/**
 	 * <b>name:</b> calculateScore. <br>
 	 * Calculate the score of a player. <br>
@@ -196,7 +199,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	public int calculateScore(int score, int level) {
 		return 0;
 	}
-	
+
 	/**
 	 * <b>name:</b> verifyName. <br>
 	 * Verify the name of a player. <br>
@@ -208,7 +211,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	public boolean verifyName(String name) {
 		return true;
 	}
-	
+
 	/**
 	 * <b>name:</b> verifyScores. <br>
 	 * Verify the score of a player. <br>
@@ -228,7 +231,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	public void setFirst(Player first) {
 		this.first = first;
 	}
-	
+
 	/**
 	 * <b>name:</b> toArrayList. <br>
 	 * Convert the players into an arraylist. <br>
@@ -249,7 +252,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		}
 		return arrayPlayer;
 	}
-	
+
 	/**
 	 * <b>name:</b> loadData. <br>
 	 * Load the information of a player from a file. <br>
@@ -263,7 +266,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		File players = new File(SAVE_PATH_FILE_PEOPLE);
 
 		if(players.exists()){
-			
+
 			try {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(players));
 				first = (Player) ois.readObject();
@@ -276,7 +279,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		}
 		return verify;
 	}
-	
+
 	/**
 	 * <b>name:</b> saveData. <br>
 	 * Save the information of the program. <br>
@@ -289,7 +292,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 
 		oos.close();
 	}
-	
+
 	/**
 	 * <b>name:</b> exportData. <br>
 	 * Export the information of the players. <br>
@@ -305,7 +308,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		pw.println(message);
 		pw.close();
 	}
-	
+
 	/**
 	 * <b>name:</b> searchPlayers. <br>
 	 * Convert the information of the players into a message. <br>
@@ -333,7 +336,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		}
 		return message;
 	}
-	
+
 	/**
 	 * <b>name:</b> importData. <br>
 	 * Import the information of players. <br>
@@ -365,22 +368,22 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		br.close();
 	}
 
-	
+
 	/**
 	 * <b>name:</b> calculate. <br>
 	 * Calculate the score of a player. <br>
 	 * <b>post:</b> The score of a player has been calculated. <br>
 	 * @return <code>int</code> specifying calculated is the score of the player.
 	 */
-	
+
 	@Override
 	public int calculate() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * <b>name:</b> searchP. <br>
 	 * Search a player. <br>
@@ -389,37 +392,44 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	 */
 
 	public Player binarySearchByScore(String toSearch) {
-		
+
 		ArrayList<Player> listPlayers = toArrayList();
-		int score = Integer.parseInt(toSearch);
-		
-		int pos = -1;
-		int i = 0;
-		int j = listPlayers.size()-1;
 		Player player = null;
+		
+		try {
+			int score = Integer.parseInt(toSearch);
+			
+			int pos = -1;
+			int i = 0;
+			int j = listPlayers.size()-1;
 
-		while(i <= j && pos < 0) {
-			int m = (i+j)/2;
+			while(i <= j && pos < 0) {
+				int m = (i+j)/2;
 
-			if(listPlayers.get(m).getScore() == score) {
-				pos = m;
+				if(listPlayers.get(m).getScore() == score) {
+					pos = m;
 
-				player = listPlayers.get(pos);
+					player = listPlayers.get(pos);
+				}
+				else if(listPlayers.get(m).getScore() > score) {
+					j = m-1;
+				}
+				else {
+					i = m+1;
+				}
 			}
-			else if(listPlayers.get(m).getScore() > score) {
-				j = m-1;
-			}
-			else {
-				i = m+1;
-			}
+			
+		}catch(NumberFormatException nfe){
+			
 		}
+		
 		return player;
 	}
-	
+
 	public Player binarySearchByName(String nick) {
 
-		ArrayList<Player> listPlayers = toArrayList();
-
+		ArrayList<Player> listPlayers = bubbleSort(toArrayList());
+		
 		int pos = -1;
 		int i = 0;
 		int j = listPlayers.size()-1;
@@ -427,6 +437,8 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 
 		while(i <= j && pos < 0) {
 			int m = (i+j)/2;
+
+			System.out.println(listPlayers.get(m).compareTo(nick)+" "+listPlayers.get(m).getNick()+" "+m);
 
 			if(listPlayers.get(m).compareTo(nick) == 0) {
 				pos = m;
@@ -441,5 +453,38 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 			}
 		}
 		return player;
+	}
+	
+	public ArrayList<Player> bubbleSort(ArrayList<Player> listPlayers){
+		
+		int changes = 1;
+		
+		for(int i=1;i<listPlayers.size()-1 && changes > 0;i++) {
+			
+			changes = 0;
+			
+			for(int j=0;j<listPlayers.size()-i-1;j++) {
+
+				if(listPlayers.get(j).compareTo(listPlayers.get(j+1).getNick()) > 0) {
+					Player tem = listPlayers.get(j);
+					listPlayers.set(j,listPlayers.get(j+1));
+					listPlayers.set(j+1,tem);
+					changes++;
+				}
+			}
+		}
+		return listPlayers;
+	}
+
+	@Override
+	public int compareTo(String nick) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Player searchP(String toSearch) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
