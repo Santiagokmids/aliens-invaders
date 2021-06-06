@@ -391,7 +391,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	 * @return <code>People</code> specifying people is the player that has searched.
 	 */
 
-	public Player binarySearchByScore(String toSearch) {
+	public Player binarySearchByScore(String toSearch, String nick) {
 
 		ArrayList<Player> listPlayers = toArrayList();
 		Player player = null;
@@ -406,7 +406,7 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 			while(i <= j && pos < 0) {
 				int m = (i+j)/2;
 
-				if(listPlayers.get(m).getScore() == score) {
+				if(listPlayers.get(m).getScore() == score && listPlayers.get(m).getNick().equalsIgnoreCase(nick)) {
 					pos = m;
 
 					player = listPlayers.get(pos);
@@ -437,8 +437,6 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 
 		while(i <= j && pos < 0) {
 			int m = (i+j)/2;
-
-			System.out.println(listPlayers.get(m).compareTo(nick)+" "+listPlayers.get(m).getNick()+" "+m);
 
 			if(listPlayers.get(m).compareTo(nick) == 0) {
 				pos = m;
