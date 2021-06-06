@@ -55,6 +55,9 @@ public class AliensInvadersGUI {
 
 	@FXML
 	private TableColumn<Player, String> tcName;
+	
+	@FXML
+	private TableColumn<Player, String> tcNick;
 
 	@FXML
 	private TableColumn<Player, Integer> tcScore;
@@ -171,7 +174,8 @@ public class AliensInvadersGUI {
 		listPlayer = FXCollections.observableArrayList(aliensInvaders.toArrayList());
 
 		tvHall.setItems(listPlayer);
-		tcName.setCellValueFactory(new PropertyValueFactory<Player,String>("nick"));
+		tcName.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
+		tcNick.setCellValueFactory(new PropertyValueFactory<Player,String>("nick"));
 		tcScore.setCellValueFactory(new PropertyValueFactory<Player,Integer>("score"));
 		tcLevel.setCellValueFactory(new PropertyValueFactory<Player,Integer>("level"));
 	}
@@ -216,10 +220,12 @@ public class AliensInvadersGUI {
 				aliensInvaders.isNumeric(name);
 
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("selectShip-pane.fxml"));
-
+				
+				aliensInvaders.addPeople(txtRealName.getText());
+				
 				loader.setController(this);
 				Parent load = loader.load();
-
+				
 				Image image = new Image("/images/selectNave.png");
 				imageBackgroundSelectShip.setImage(image);
 				Image image2 = new Image("/images/ship1.png");
@@ -710,6 +716,71 @@ public class AliensInvadersGUI {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("ERROR");
 			alert.setHeaderText("No se pudo buscar el jugador");
+			alert.setContentText("Ingrese solo el campo de nickname o los dos campos para poder buscar.");
+			alert.showAndWait();
+			searchByScore.setText("");
+		}
+	}
+	
+	@FXML
+	public void removePlayer(ActionEvent event) throws FileNotFoundException, IOException {
+
+		if(!searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()) {
+
+			Player player = aliensInvaders.binarySearchByScore(searchByScore.getText(),searchByName.getText());
+
+			if(player == null) {
+				
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("ERROR");
+				alert.setHeaderText("No se encontró el jugador");
+				alert.setContentText("El jugador que está buscando no se encuentra en el hall of fame");
+				alert.showAndWait();
+				searchByName.setText("");
+				searchByScore.setText("");
+			}
+			else {
+				
+				aliensInvaders.removePlayer(searchByName.getText());
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+				alert1.setHeaderText("Se ha eliminado a: ");
+				alert1.setContentText(player.toString());
+				alert1.showAndWait();
+				
+				searchByName.setText("");
+				searchByScore.setText("");
+			}
+		}
+		else if(searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()){
+
+			Player player = aliensInvaders.binarySearchByName(searchByName.getText());
+
+			if(player == null) {
+
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("ERROR");
+				alert.setHeaderText("No se encontró el jugador");
+				alert.setContentText("El jugador que está buscando no se encuentra en el hall of fame");
+				alert.showAndWait();
+				searchByName.setText("");
+				searchByScore.setText("");
+			}
+			else {
+				
+				aliensInvaders.removePlayer(searchByName.getText());
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+				alert1.setHeaderText("Se ha eliminado a: ");
+				alert1.setContentText(player.toString());
+				alert1.showAndWait();
+
+				searchByName.setText("");
+				searchByScore.setText("");
+			}
+		}
+		else if(searchByScore.getText().isEmpty() && searchByName.getText().isEmpty() || searchByName.getText().isEmpty()){
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("ERROR");
+			alert.setHeaderText("No se pudo eliminar el jugador");
 			alert.setContentText("Ingrese solo el campo de nickname o los dos campos para poder buscar.");
 			alert.showAndWait();
 			searchByScore.setText("");

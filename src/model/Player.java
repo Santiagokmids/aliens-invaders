@@ -18,6 +18,7 @@ public class Player extends People implements Serializable, CompareTo{
 	private int level;
 	private Player prev;
 	private Player next;
+	private Player parent;
 	
 	/**
 	 * <b>name:</b> Player. <br>
@@ -74,6 +75,14 @@ public class Player extends People implements Serializable, CompareTo{
 
 	public void setPrev(Player prev) {
 		this.prev = prev;
+	}
+	
+	public Player getParent() {
+		return parent;
+	}
+
+	public void setParent(Player parent) {
+		this.parent = parent;
 	}
 	
 	/**

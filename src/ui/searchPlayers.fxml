@@ -32,7 +32,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="296.0" layoutY="533.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="117.0" style="-fx-background-color: black;" text="ELIMINAR" textFill="#57cbab">
+      <Button layoutX="296.0" layoutY="533.0" mnemonicParsing="false" onAction="#removePlayer" prefHeight="48.0" prefWidth="117.0" style="-fx-background-color: black;" text="ELIMINAR" textFill="#57cbab">
          <font>
             <Font name="Malgun Gothic Bold" size="16.0" />
          </font>
