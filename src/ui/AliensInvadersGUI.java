@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import exceptions.NumberInNameException;
+import exceptions.SpaceInNickException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -265,9 +267,9 @@ public class AliensInvadersGUI {
 
 			String name = txtRealName.getText();
 
-			boolean verifyName = aliensInvaders.addPeople(name);
-			
-			if(verifyName) {
+			try {
+				aliensInvaders.addPeople(name);
+
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("selectShip-pane.fxml"));
 
 				aliensInvaders.addPeople(txtRealName.getText());
@@ -289,7 +291,7 @@ public class AliensInvadersGUI {
 
 				comboBoxDificult.getItems().addAll("Novato","Cadete","Leyenda");
 				
-			}else {
+			} catch (NumberInNameException e) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error");
 				alert.setHeaderText("No se puede continuar");
@@ -298,6 +300,7 @@ public class AliensInvadersGUI {
 
 				txtRealName.setText("");
 			}
+
 		}
 	}
 
@@ -543,14 +546,45 @@ public class AliensInvadersGUI {
 	}
 
 	public void loadPlayers(ActionEvent event) throws IOException{
-		addPlayer();
-		loadBanner();
-	}
 
-	public void addPlayer() throws FileNotFoundException, IOException{
-		int score = (int)Math.floor(Math.random()*999);
-		int level = (int)Math.floor(Math.random()*60);
-		aliensInvaders.addPlayer(nickName.getText(), score, level);
+		if(nickName.getText().isEmpty()) {
+
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("No se puede continuar");
+			alert.setContentText("Necesita ingresar un nickname para continuar");
+			alert.showAndWait();
+			
+		}else {
+			
+			try {
+				
+				int scores = 0;
+				int levels = 0;
+				try {
+					
+					scores = Integer.parseInt(score.getText());
+					levels = Integer.parseInt(level.getText());
+					
+				} catch (NumberFormatException e) {
+				}
+				
+				aliensInvaders.spaceIn(nickName.getText());
+				
+				aliensInvaders.addPlayer(nickName.getText(), scores, levels);
+				loadBanner();
+				
+			} catch (SpaceInNickException e) {
+				
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("No se puede continuar");
+				alert.setContentText("El nickname no puede contener espacios");
+				alert.showAndWait();
+
+				nickName.setText("");
+			}
+		}
 	}
 
 	@FXML
@@ -717,7 +751,7 @@ public class AliensInvadersGUI {
 	}
 
 	@FXML
-	public void importData(ActionEvent event) {
+	public void importData(ActionEvent event) throws SpaceInNickException {
 
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Abrir un archivo");

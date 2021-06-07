@@ -8,7 +8,6 @@ import model.Player;
 public class SelectionSearchThread extends Sorting{
 
 	private AliensInvaders aliensInvaders;
-	private ArrayList<Player> listPlayers;
 	private String score;
 	private String message;
 
@@ -22,23 +21,23 @@ public class SelectionSearchThread extends Sorting{
 	@Override
 	public void run() {
 
-		for (int i = 0; i < listPlayers.size(); i++) {
+		for (int i = 0; i < getListPlayers().size(); i++) {
 
-			Player min = listPlayers.get(i);
+			Player min = getListPlayers().get(i);
 
-			for (int j = i+1; j < listPlayers.size(); j++) {
+			for (int j = i+1; j < getListPlayers().size(); j++) {
 
-				if(listPlayers.get(j).compare(String.valueOf(min.getScore())) < 0){
+				if(getListPlayers().get(j).compare(String.valueOf(min.getScore())) < 0){
 
-					Player temp = listPlayers.get(j);
-					listPlayers.set(j, min);
+					Player temp = getListPlayers().get(j);
+					getListPlayers().set(j, min);
 					min = temp;
 				}
 			}
-			listPlayers.set(i, min);
+			getListPlayers().set(i, min);
 		}
 
-		message = aliensInvaders.binarySearchByScore(listPlayers, score);
+		message = aliensInvaders.binarySearchByScore(getListPlayers(), score);
 	}
 
 	public String getMessage() {

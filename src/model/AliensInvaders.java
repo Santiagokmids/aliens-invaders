@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import exceptions.NumberInNameException;
+import exceptions.SpaceInNickException;
 
 /**
  * This class contains methods, attributes,  and relations of a aliens invaders.
@@ -30,7 +31,7 @@ public class AliensInvaders implements SearchP, Calculate {
 	//private Level easyLevel;
 	//private Level hardLevel;
 
-	private static String realName; 
+	private String realName;
 
 	/**
 	 * <b>name:</b> AliensInvaders. <br>
@@ -59,21 +60,12 @@ public class AliensInvaders implements SearchP, Calculate {
 	 * <b>post:</b> An object people has been added into the program. <br>
 	 * @param name is the name of the new people. name != "" y name != null.
 	 * @return <code>boolean</code> specifying verify is the result of the process.  
+	 * @throws NumberInNameException 
 	 */
 
-	public boolean addPeople(String name) {
-		boolean good = false;
-		
-		try {
-			isNumeric(name);
-			realName = name;
-			good = true;
-			
-		} catch (NumberInNameException e) {
-
-		}
-		
-		return good;
+	public void addPeople(String name) throws NumberInNameException {
+		isNumeric(name);
+		realName = name;
 	}
 
 	/**
@@ -84,10 +76,13 @@ public class AliensInvaders implements SearchP, Calculate {
 	 * @param score is the score of a player. score != null.
 	 * @param level is the level of the game the player arrived at. level != null.
 	 * @return <code><boolean</code> specifying verify is the result of the process.
+	 * @throws SpaceInNickException 
 	 */
 
-	public void addPlayer(String nick, int score, int level) throws FileNotFoundException, IOException {
+	public void addPlayer(String nick, int score, int level) throws FileNotFoundException, IOException, SpaceInNickException {
 		loadData();
+		
+		spaceIn(nick);
 
 		Player player = new Player(realName, nick,score,level);
 
@@ -125,7 +120,7 @@ public class AliensInvaders implements SearchP, Calculate {
 		}
 		saveData();
 	}
-
+	
 	/**
 	 * <b>name:</b> isNumeric. <br>
 	 * Convert all the parts of the string into a single char. <br>
@@ -147,7 +142,21 @@ public class AliensInvaders implements SearchP, Calculate {
 			throw new NumberInNameException();
 		}
 	}
-
+	
+	public void spaceIn(String message) throws SpaceInNickException{
+		
+		
+		boolean verify = true;
+		
+		for (int i = 0; i < message.length() && verify; i++) {
+			
+			if(Character.toString(message.charAt(i)).equals(" ")) {
+				verify = false;
+				throw new SpaceInNickException();
+			}
+		}
+	}
+	
 	/**
 	 * <b>name:</b> charOneByOne. <br>
 	 * Verify if a string is a number. <br>
@@ -313,9 +322,10 @@ public class AliensInvaders implements SearchP, Calculate {
 	 * @param fileName is the name of the URL for the file. fileName != "" y fileName != null.
 	 * @throws IOException <br>
 	 *         thrown if an exceptions produced by failed or interrupted I/O operations.
+	 * @throws SpaceInNickException 
 	 */
 
-	public void importData(String fileName) throws IOException {
+	public void importData(String fileName) throws IOException, SpaceInNickException {
 
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		String line = br.readLine();
@@ -323,7 +333,7 @@ public class AliensInvaders implements SearchP, Calculate {
 		while(line != null) {
 
 			String[] parts = line.split(",");
-			
+
 			try {
 				int score = Integer.parseInt(parts[2]);
 				int level = Integer.parseInt(parts[3]);
@@ -378,7 +388,7 @@ public class AliensInvaders implements SearchP, Calculate {
 				pos = m;
 
 				player = listPlayers.get(pos);
-				
+
 				if(player != null) {
 					message += player.toString();
 					newList.remove(pos);
@@ -433,27 +443,27 @@ public class AliensInvaders implements SearchP, Calculate {
 	public Player searchP(String toSearch) {
 		return null;
 	}
-	
+
 	public Player removePlayer(String nick, String score) {
-		
+
 		ArrayList<Player> listPlayer = toArrayList();
 		boolean verify = false;
 		int playerScore = 0;
 		Player player = null;
-		
+
 		try {
 			playerScore = Integer.parseInt(score);
 		} catch (NumberFormatException e) {
 		}
-		
+
 		for (int i = 0; i < listPlayer.size() && !verify; i++) {
-			
+
 			if(listPlayer.get(i).getNick().equals(nick) && listPlayer.get(i).getScore() == playerScore) {
 				verify = true;
 				player = listPlayer.get(i); 
 			}
 		}
-		
+
 		return player;
 	}
 
@@ -521,5 +531,13 @@ public class AliensInvaders implements SearchP, Calculate {
 
 	public void shootMonster(){
 
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 }

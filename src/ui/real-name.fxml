@@ -11,7 +11,6 @@
    <children>
       <ImageView fx:id="paneRealName" fitHeight="717.0" fitWidth="565.0" layoutX="-9.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="addRealName" fitHeight="518.0" fitWidth="888.0" layoutX="-168.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" />
-      <TextField fx:id="txtRealName" layoutX="125.0" layoutY="326.0" prefHeight="37.0" prefWidth="302.0" />
       <ImageView fx:id="titleRealName" fitHeight="384.0" fitWidth="653.0" layoutX="17.0" layoutY="-39.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="125.0" layoutY="394.0" mnemonicParsing="false" onAction="#btnStartGame" prefHeight="48.0" prefWidth="138.0" style="-fx-background-color: BLACK;" text="CONTINUAR" textFill="#57cbab">
          <font>
@@ -29,5 +28,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <TextField fx:id="txtRealName" layoutX="125.0" layoutY="326.0" prefHeight="37.0" prefWidth="302.0" />
    </children>
 </Pane>
