@@ -62,8 +62,18 @@ public class AliensInvaders implements SearchP, Calculate {
 	 */
 
 	public boolean addPeople(String name) {
-		realName = name;
-		return true;
+		boolean good = false;
+		
+		try {
+			isNumeric(name);
+			realName = name;
+			good = true;
+			
+		} catch (NumberInNameException e) {
+
+		}
+		
+		return good;
 	}
 
 	/**

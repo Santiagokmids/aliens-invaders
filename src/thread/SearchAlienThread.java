@@ -47,15 +47,16 @@ public class SearchAlienThread extends Thread {
 			
 			while(!shoot && verify) {
 				
-				if(alienImageView.getLayoutX() == x && (posBallX >= alienImageView.getLayoutX() && posBallX <= alienImageView.getLayoutX()+75) 
-						&& knowShoot &&	(alienImageView.getLayoutY() == y && (posBallY >= alienImageView.getLayoutY()-62 && posBallY <= alienImageView.getLayoutY()))
-						&& circle.isVisible() && alienImageView.isVisible()) {
+				if(alienImageView.getLayoutX() == x && (posBallX >= alienImageView.getLayoutX() && posBallX <= alienImageView.getLayoutX()+72) 
+						&& knowShoot &&	(alienImageView.getLayoutY() == y && (posBallY >= alienImageView.getLayoutY()-60 && posBallY <= alienImageView.getLayoutY()) && 
+								alienImageView.isVisible() && circle.isVisible())) {
 					
 					Platform.runLater(new Thread(){
 						public void run() {
 							aliensInvadersGUI.setImage(alienImageView);
 							aliensInvadersGUI.setCircle(circle);
 							aliensInvadersGUI.setScores(1);
+							aliensInvadersGUI.setLevels();
 						}
 							
 					});

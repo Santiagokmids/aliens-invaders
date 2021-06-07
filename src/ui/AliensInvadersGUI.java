@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import exceptions.NumberInNameException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,7 +62,7 @@ public class AliensInvadersGUI {
 
 	@FXML
 	private TableColumn<Player, String> tcName;
-	
+
 	@FXML
 	private TableColumn<Player, String> tcNick;
 
@@ -138,25 +137,27 @@ public class AliensInvadersGUI {
 
 	@FXML
 	private ComboBox<String> comboBoxDificult;
-	
+
 	@FXML
-    private ComboBox<String> comboBoxSorting;
+	private ComboBox<String> comboBoxSorting;
 
 	@FXML
 	private TextField searchByName;
-	
+
 	@FXML
 	private Label scoreOver;
-	
+
 	@FXML
 	private Label level;
-	
+
 	@FXML
 	private Label score;
 
 	private Stage window;
 
 	private boolean verify;
+
+	private int velocityLevel;
 
 	private AliensInvaders aliensInvaders;
 
@@ -169,21 +170,21 @@ public class AliensInvadersGUI {
 	private double positionBallX;
 
 	private double positionBallY;
-	
+
 	private int scores;
-	
+
 	private int levels;
-	
+
 	private double ballInMoveX;
-	
+
 	private double ballInMoveY;
-	
+
 	private int shootAliens;
-	
+
 	private Circle currentCircle;
 
 	private long count;
-	
+
 	private boolean knowShoot;
 
 	private long currentCount;
@@ -197,9 +198,9 @@ public class AliensInvadersGUI {
 	public final static int VELOCITY = 1000;
 
 	public final static int VELOCITYSLOW = 2600;
-	
+
 	public final static String COMBOBOX = "Ordenar por: ";
-	
+
 	public final static String A = "Puntaje";
 	public final static String B = "NickName/Puntaje";
 	public final static String C = "Nivel/Puntaje";
@@ -247,6 +248,7 @@ public class AliensInvadersGUI {
 		scores = 0;
 		levels = 1;
 		shootAliens = 0;
+		velocityLevel = 200;
 	}
 
 	@FXML
@@ -263,16 +265,16 @@ public class AliensInvadersGUI {
 
 			String name = txtRealName.getText();
 
-			try {
-				aliensInvaders.isNumeric(name);
-
+			boolean verifyName = aliensInvaders.addPeople(name);
+			
+			if(verifyName) {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("selectShip-pane.fxml"));
-				
+
 				aliensInvaders.addPeople(txtRealName.getText());
-				
+
 				loader.setController(this);
 				Parent load = loader.load();
-				
+
 				Image image = new Image("/images/selectNave.png");
 				imageBackgroundSelectShip.setImage(image);
 				Image image2 = new Image("/images/ship1.png");
@@ -282,14 +284,12 @@ public class AliensInvadersGUI {
 
 				mainPane.getChildren().clear();
 				mainPane.setTop(load);
-				addName();
 
 				comboBoxDificult.setPromptText("Dificultad");
 
 				comboBoxDificult.getItems().addAll("Novato","Cadete","Leyenda");
-
-			} catch (NumberInNameException nne) {
-
+				
+			}else {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error");
 				alert.setHeaderText("No se puede continuar");
@@ -433,7 +433,7 @@ public class AliensInvadersGUI {
 		alienImageView.setLayoutX(alien.getPositionX());
 		alienImageView.setLayoutY(alien.getPositionY());
 
-		AlienThread thread = new AlienThread(this, alien, alienImageView, verify);
+		AlienThread thread = new AlienThread(this, alien, alienImageView, verify,velocityLevel);
 
 		thread.start();
 
@@ -450,9 +450,9 @@ public class AliensInvadersGUI {
 		alienImageView.setLayoutX(x);
 		alienImageView.setLayoutY(y);
 	}
-	
+
 	public void validationPosition(Alien alien, ImageView alienImageView) throws IOException {
-		
+
 		if(alien.getPositionY() >= window.getHeight()-105 && alienImageView.isVisible()) {
 			verify = false;
 			gameOver();
@@ -473,9 +473,9 @@ public class AliensInvadersGUI {
 
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
-		
+
 		comboBoxSorting.setPromptText(COMBOBOX);
-		
+
 		comboBoxSorting.getItems().addAll(A,B,C,D);
 
 		inicializateTableViewPlayer(aliensInvaders.toArrayList());
@@ -498,7 +498,7 @@ public class AliensInvadersGUI {
 
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
-		
+
 		scoreOver.setText(String.valueOf(scores));
 	}
 
@@ -540,10 +540,6 @@ public class AliensInvadersGUI {
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
 
-	}
-
-	public void addName() {
-		aliensInvaders.addPeople(txtRealName.getText());
 	}
 
 	public void loadPlayers(ActionEvent event) throws IOException{
@@ -635,30 +631,36 @@ public class AliensInvadersGUI {
 		}.start();
 
 	}
-	
+
 	public void searchAlien(double x, double y, ImageView image) {
 		SearchAlienThread alien = new SearchAlienThread(this,firstAlien, x, y, ballInMoveX, ballInMoveY, image,verify,knowShoot,currentCircle);
 		alien.start();
-		
+
 	}
-	
+
 	public void setScores(int aliens) {
 		shootAliens += aliens;
 		scores += 5;
 		score.setText(String.valueOf(scores));
 	}
-	
+
 	public void setLevels() {
 		if(shootAliens == 10){
 			levels += 1;
 			level.setText(String.valueOf(levels));
+			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
+			velocityLevel += 100;
 		}
 	}
-	
+
+	public int getVelocity() {
+		return velocityLevel;
+	}
+
 	public void setImage(ImageView image) {
 		image.setVisible(false);
 	}
-	
+
 	public void setCircle(Circle circ) {
 		circ.setVisible(false);
 	}
@@ -754,9 +756,9 @@ public class AliensInvadersGUI {
 
 	@FXML
 	public void searchPlayer(ActionEvent event) throws InterruptedException {
-		
+
 		if(searchByScore.getText().isEmpty() && searchByName.getText().isEmpty()) {
-			
+
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("ERROR");
 			alert.setHeaderText("No se pudo eliminar el jugador");
@@ -792,7 +794,7 @@ public class AliensInvadersGUI {
 				alert1.setHeaderText("Búsqueda realizada en "+(end-start)+" nanosegundos");
 				alert1.setContentText("Jugador encontrado: \n"+message);
 				alert1.showAndWait();
-				
+
 				searchByName.setText("");
 				searchByScore.setText("");
 			}
@@ -825,12 +827,12 @@ public class AliensInvadersGUI {
 			}
 		}
 	}
-	
+
 	@FXML
 	public void removePlayer(ActionEvent event) throws FileNotFoundException, IOException, InterruptedException {
-		
+
 		if(searchByScore.getText().isEmpty() && searchByName.getText().isEmpty() || !searchByScore.getText().isEmpty() && searchByName.getText().isEmpty() || searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()) {
-			
+
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("ERROR");
 			alert.setHeaderText("No se pudo eliminar el jugador");
@@ -842,7 +844,7 @@ public class AliensInvadersGUI {
 			Player player = aliensInvaders.removePlayer(searchByName.getText(), searchByScore.getText());
 
 			if(player == null) {
-				
+
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("ERROR");
 				alert.setHeaderText("No se encontró el jugador");
@@ -851,19 +853,19 @@ public class AliensInvadersGUI {
 				searchByName.setText("");
 				searchByScore.setText("");
 			}else {
-				
+
 				Alert alert1 = new Alert(AlertType.INFORMATION);
 				alert1.setHeaderText("Se ha eliminado a: ");
 				alert1.setContentText(player.toString());
 				aliensInvaders.removePlayer(player);
 				alert1.showAndWait();
-				
+
 				searchByName.setText("");
 				searchByScore.setText("");
 			}
 		}
 	}
-	
+
 
 	public boolean getKnowShoot() {
 		return knowShoot;
@@ -874,52 +876,52 @@ public class AliensInvadersGUI {
 	}
 
 	public BubbleSearchThread bubbleSort(String nick) throws InterruptedException{
-		
+
 		BubbleSearchThread bubbleThread = new BubbleSearchThread(aliensInvaders, aliensInvaders.toArrayList(), nick);
-		
+
 		bubbleThread.start();
-		
+
 		bubbleThread.join();
-		
+
 		return bubbleThread;
 	}
-	
+
 	public SelectionSearchThread selectionSort(String score) throws InterruptedException{
-		
+
 		SelectionSearchThread selectionThread = new SelectionSearchThread(aliensInvaders, aliensInvaders.toArrayList(), score);
-		
+
 		selectionThread.start();
-		
+
 		selectionThread.join();
-		
+
 		return selectionThread;
 	}
-	
+
 	@FXML
-    void sortComboBox(ActionEvent event) {
-		
+	void sortComboBox(ActionEvent event) {
+
 		if(comboBoxSorting.getValue() == A) {
-			
+
 			tvHall.refresh();
 			inicializateTableViewPlayer(aliensInvaders.toArrayList());
-			
+
 		}else if(comboBoxSorting.getValue() == B) {
-			
+
 			InsertionThread insertionThread = new InsertionThread(this, aliensInvaders.toArrayList());
-			
+
 			insertionThread.start();
-			
+
 		}else if(comboBoxSorting.getValue() == C) {
-			
+
 			SelectionThread selectionThread = new SelectionThread(this, aliensInvaders.toArrayList());
-			
+
 			selectionThread.start();
-			
+
 		}else if(comboBoxSorting.getValue() == D) {
-			
+
 			BubbleThread bubbleThread = new BubbleThread(this, aliensInvaders.toArrayList());
-			
+
 			bubbleThread.start();	
 		}
-    }
+	}
 }

@@ -13,13 +13,15 @@ public class AlienThread extends Thread{
 	private Alien alien;
 	private ImageView alienImageView;
 	private boolean verify;
+	private int velocity;
 	
-	public AlienThread(AliensInvadersGUI aliensInvadersGUI, Alien alien, ImageView alienImageView, boolean verify) {
+	public AlienThread(AliensInvadersGUI aliensInvadersGUI, Alien alien, ImageView alienImageView, boolean verify, int velocity) {
 		
 		this.aliensInvadersGUI = aliensInvadersGUI;
 		this.alien = alien;
 		this.alienImageView = alienImageView;
 		this.verify = verify;
+		this.velocity = velocity;
 	}
 	
 	public void run() {
@@ -52,9 +54,10 @@ public class AlienThread extends Thread{
 			
 			
 			verify = aliensInvadersGUI.getVerify();
+			velocity = aliensInvadersGUI.getVelocity();
 			
 			try{
-				Thread.sleep(200);
+				Thread.sleep(velocity);
 			}catch(InterruptedException e) {
 				
 			}
