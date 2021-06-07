@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import model.AliensInvaders;
 import model.Player;
 
-public class SelectionSearchThread extends Thread{
+public class SelectionSearchThread extends Sorting{
 
 	private AliensInvaders aliensInvaders;
 	private ArrayList<Player> listPlayers;
@@ -13,12 +13,13 @@ public class SelectionSearchThread extends Thread{
 	private String message;
 
 	public SelectionSearchThread(AliensInvaders aliensInvaders, ArrayList<Player> listPlayers, String score) {
-
+		
+		super(listPlayers);
 		this.aliensInvaders = aliensInvaders;
-		this.listPlayers = listPlayers;
 		this.score = score;
 	}
-
+	
+	@Override
 	public void run() {
 
 		for (int i = 0; i < listPlayers.size(); i++) {
@@ -38,10 +39,6 @@ public class SelectionSearchThread extends Thread{
 		}
 
 		message = aliensInvaders.binarySearchByScore(listPlayers, score);
-	}
-
-	public ArrayList<Player> getListPlayers() {
-		return listPlayers;
 	}
 
 	public String getMessage() {

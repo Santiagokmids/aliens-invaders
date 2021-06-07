@@ -5,17 +5,18 @@ import java.util.ArrayList;
 import model.Player;
 import ui.AliensInvadersGUI;
 
-public class InsertionThread extends Thread{
+public class InsertionThread extends Sorting{
 	
 	private AliensInvadersGUI aliensInvadersGUI;
 	private ArrayList<Player> listPlayers;
 	
 	public InsertionThread(AliensInvadersGUI aliensInvadersGUI, ArrayList<Player> listPlayers) {
 		
-		this.aliensInvadersGUI = aliensInvadersGUI;
+		super(listPlayers);
 		this.listPlayers = listPlayers;
 	}
 	
+	@Override
 	public void run() {
 		
 		for (int i = 1; i < listPlayers.size(); i++) {

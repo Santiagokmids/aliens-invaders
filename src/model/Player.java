@@ -126,7 +126,13 @@ public class Player extends People implements Serializable, CompareTo{
 		int verify = getNick().compareTo(player.getNick());
 		
 		if(verify == 0) {
-			verify = String.valueOf(getLevel()).compareTo(String.valueOf(player.getLevel()));
+			if(getLevel() == player.getLevel()) {
+				verify = 0;
+			}else if(getLevel() > player.getLevel()){
+				verify = 1;
+			}else if(getLevel() < player.getLevel()) {
+				verify = -1;
+			}
 		}
 		
 		return verify;
@@ -137,7 +143,13 @@ public class Player extends People implements Serializable, CompareTo{
 		int verify = String.valueOf(getLevel()).compareTo(String.valueOf(player.getLevel()));
 		
 		if(verify == 0) {
-			verify = String.valueOf(getScore()).compareTo(String.valueOf(player.getScore()));
+			if(getScore() == player.getScore()) {
+				verify = 0;
+			}else if(getScore() > player.getScore()){
+				verify = 1;
+			}else if(getScore() < player.getScore()) {
+				verify = -1;
+			}
 		}
 		
 		return verify;
@@ -148,8 +160,14 @@ public class Player extends People implements Serializable, CompareTo{
 		int verify = getNick().compareTo(player.getNick());
 		
 		if(verify == 0) {
-			verify = String.valueOf(getScore()).compareTo(String.valueOf(player.getScore()));
-			System.out.println(getLevel()+" "+player.getLevel()+" "+verify);
+			
+			if(getScore() == player.getScore()) {
+				verify = 0;
+			}else if(getScore() > player.getScore()){
+				verify = 1;
+			}else if(getScore() < player.getScore()) {
+				verify = -1;
+			}
 		}
 		
 		return verify;
