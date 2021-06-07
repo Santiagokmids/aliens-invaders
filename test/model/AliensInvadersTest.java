@@ -1,5 +1,8 @@
 package model;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 
 public class AliensInvadersTest {
@@ -49,8 +52,15 @@ public class AliensInvadersTest {
 	}
 	
 	@Test
-	public boolean addPlayer(String nick, int score, int level) {
-		return true;
+	public void testAddPlayer() throws FileNotFoundException, IOException {
+		
+		setupScenary3();
+		
+		String realName = "Santiago Trochez";
+		int score = 652;
+		int level = 13;
+		
+		aliensInvaders.addPlayer(realName, score, level);
 	}
 	
 	@Test

@@ -76,7 +76,7 @@ public class AliensInvaders implements SearchP, Calculate {
 	 * @return <code><boolean</code> specifying verify is the result of the process.
 	 */
 
-	public boolean addPlayer(String nick, int score, int level) throws FileNotFoundException, IOException {
+	public void addPlayer(String nick, int score, int level) throws FileNotFoundException, IOException {
 		loadData();
 
 		Player player = new Player(realName, nick,score,level);
@@ -114,7 +114,6 @@ public class AliensInvaders implements SearchP, Calculate {
 			}
 		}
 		saveData();
-		return false;
 	}
 
 	/**
@@ -161,31 +160,6 @@ public class AliensInvaders implements SearchP, Calculate {
 	}
 
 	/**
-	 * <b>name:</b> searchScore. <br>
-	 * Search an player by the score. <br>
-	 * <b>post:</b> An player has been searched. <br>
-	 * @param score is the score that searched. score != null.
-	 * @return <code>Player</code> specifying is the Player of the result of the search. 
-	 */
-
-	public Player searchScore(int score) {
-		return null;
-	}
-
-	/**
-	 * <b>name:</b> removePlayer. <br>
-	 * Remove a player from the program. <br>
-	 * <b>post:</b> A player has been removed. <br> 
-	 * @param name is the name of the player. name != "" y name != null.
-	 * @param score is the score of the player. score != null.
-	 * @return <code>boolean</code> specifying verify is the result of the process.
-	 */
-
-	public boolean removePlayer(String name, int score) {
-		return true;
-	}
-
-	/**
 	 * <b>name:</b> calculateScore. <br>
 	 * Calculate the score of a player. <br>
 	 * <b>post:</b> The score of a player has been calculated. <br>
@@ -196,18 +170,6 @@ public class AliensInvaders implements SearchP, Calculate {
 
 	public int calculateScore(int score, int level) {
 		return 0;
-	}
-
-	/**
-	 * <b>name:</b> verifyName. <br>
-	 * Verify the name of a player. <br>
-	 * <b>post:</b> The name of a player has verified. <br>
-	 * @param name is the string to check.
-	 * @return <code>boolean</code> specifying verify is the result of the process.
-	 */
-
-	public boolean verifyName(String name) {
-		return true;
 	}
 
 	/**
