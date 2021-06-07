@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import model.AliensInvaders;
 import model.Player;
 
-public class BubbleSearchThread extends Thread{
+public class BubbleSearchThread extends Sorting{
 
 	private AliensInvaders aliensInvaders;
 	private ArrayList<Player> listPlayers;
@@ -14,11 +14,12 @@ public class BubbleSearchThread extends Thread{
 
 	public BubbleSearchThread(AliensInvaders aliensInvaders, ArrayList<Player> listPlayers, String nick) {
 
+		super(listPlayers);
 		this.aliensInvaders = aliensInvaders;
-		this.listPlayers = listPlayers;
 		this.nick = nick;
 	}
-
+	
+	@Override
 	public void run() {
 
 		int changes = 1;
@@ -39,10 +40,6 @@ public class BubbleSearchThread extends Thread{
 		}
 		
 		message = aliensInvaders.binarySearchByName(listPlayers, nick);
-	}
-
-	public ArrayList<Player> getListPlayers() {
-		return listPlayers;
 	}
 
 	public String getMessage() {

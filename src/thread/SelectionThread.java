@@ -5,17 +5,18 @@ import java.util.ArrayList;
 import model.Player;
 import ui.AliensInvadersGUI;
 
-public class SelectionThread extends Thread{
+public class SelectionThread extends Sorting{
 	
 	private AliensInvadersGUI aliensInvadersGUI;
 	private ArrayList<Player> listPlayers;
 
 	public SelectionThread(AliensInvadersGUI aliensInvadersGUI, ArrayList<Player> listPlayers) {
 		
+		super(listPlayers);
 		this.aliensInvadersGUI = aliensInvadersGUI;
-		this.listPlayers = listPlayers;
 	}
 	
+	@Override
 	public void run() {
 		
 		for (int i = 0; i < listPlayers.size(); i++) {

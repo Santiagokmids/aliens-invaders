@@ -5,17 +5,18 @@ import java.util.ArrayList;
 import model.Player;
 import ui.AliensInvadersGUI;
 
-public class BubbleThread extends Thread{
+public class BubbleThread extends Sorting{
 	
 	private AliensInvadersGUI aliensInvadersGUI;
 	private ArrayList<Player> listPlayers;
 	
 	public BubbleThread(AliensInvadersGUI aliensInvadersGUI, ArrayList<Player> listPlayers) {
 		
+		super(listPlayers);
 		this.aliensInvadersGUI = aliensInvadersGUI;
-		this.listPlayers = listPlayers;
 	}
 	
+	@Override
 	public void run() {
 		
 		int changes = 1;
