@@ -351,7 +351,7 @@ public class AliensInvaders implements SearchP, Calculate {
 		while(line != null) {
 
 			String[] parts = line.split(",");
-
+			
 			try {
 				int score = Integer.parseInt(parts[2]);
 				int level = Integer.parseInt(parts[3]);

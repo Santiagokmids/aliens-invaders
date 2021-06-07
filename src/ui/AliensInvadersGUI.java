@@ -3,6 +3,7 @@ package ui;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import exceptions.NumberInNameException;
 import javafx.application.Platform;
@@ -184,18 +185,18 @@ public class AliensInvadersGUI {
 	public final static String COMBOBOX = "Ordenar por: ";
 	
 	public final static String A = "Puntaje";
-	public final static String B = "Nombre/Puntaje";
+	public final static String B = "NickName/Puntaje";
 	public final static String C = "Nivel/Puntaje";
-	public final static String D = "Nombre/Nivel";
+	public final static String D = "NickName/Nivel";
 
 	public AliensInvadersGUI(AliensInvaders aliensInvaders, Stage stage) {
 		this.aliensInvaders = aliensInvaders;
 		window = stage;
 	}
 
-	public void inicializateTableViewPlayer() {
+	public void inicializateTableViewPlayer(ArrayList<Player> arrayListPlayers) { 
 
-		listPlayer = FXCollections.observableArrayList(aliensInvaders.toArrayList());
+		listPlayer = FXCollections.observableArrayList(arrayListPlayers);
 
 		tvHall.setItems(listPlayer);
 		tcName.setCellValueFactory(new PropertyValueFactory<Player,String>("name"));
@@ -458,7 +459,7 @@ public class AliensInvadersGUI {
 		
 		comboBoxSorting.getItems().addAll(A,B,C,D);
 
-		inicializateTableViewPlayer();
+		inicializateTableViewPlayer(aliensInvaders.toArrayList());
 	}
 
 	@FXML
@@ -694,7 +695,7 @@ public class AliensInvadersGUI {
 				alert.showAndWait();
 			}
 		}
-		inicializateTableViewPlayer();
+		inicializateTableViewPlayer(aliensInvaders.toArrayList());
 	}
 
 	public void exportData() {
@@ -857,23 +858,24 @@ public class AliensInvadersGUI {
 		
 		if(comboBoxSorting.getValue() == A) {
 			
-			
+			tvHall.refresh();
+			inicializateTableViewPlayer(aliensInvaders.toArrayList());
 			
 		}else if(comboBoxSorting.getValue() == B) {
 			
-			InsertionThread insertionThread = new InsertionThread();
+			InsertionThread insertionThread = new InsertionThread(this, aliensInvaders.toArrayList());
 			
 			insertionThread.start();
 			
 		}else if(comboBoxSorting.getValue() == C) {
 			
-			SelectionThread selectionThread = new SelectionThread();
+			SelectionThread selectionThread = new SelectionThread(this, aliensInvaders.toArrayList());
 			
 			selectionThread.start();
 			
 		}else if(comboBoxSorting.getValue() == D) {
 			
-			BubbleThread bubbleThread = new BubbleThread();
+			BubbleThread bubbleThread = new BubbleThread(this, aliensInvaders.toArrayList());
 			
 			bubbleThread.start();	
 		}

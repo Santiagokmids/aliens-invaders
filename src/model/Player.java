@@ -120,4 +120,38 @@ public class Player extends People implements Serializable, CompareTo{
 				
 		return verify;
 	}
+	
+	public int compareByNameLevel(Player player) {
+		
+		int verify = getNick().compareTo(player.getNick());
+		
+		if(verify == 0) {
+			verify = String.valueOf(getLevel()).compareTo(String.valueOf(player.getLevel()));
+		}
+		
+		return verify;
+	}
+	
+	public int compareByLevelScore(Player player) {
+		
+		int verify = String.valueOf(getLevel()).compareTo(String.valueOf(player.getLevel()));
+		
+		if(verify == 0) {
+			verify = String.valueOf(getScore()).compareTo(String.valueOf(player.getScore()));
+		}
+		
+		return verify;
+	}
+	
+	public int compareByNickScore(Player player) {
+		
+		int verify = getNick().compareTo(player.getNick());
+		
+		if(verify == 0) {
+			verify = String.valueOf(getScore()).compareTo(String.valueOf(player.getScore()));
+			System.out.println(getLevel()+" "+player.getLevel()+" "+verify);
+		}
+		
+		return verify;
+	}
 }
