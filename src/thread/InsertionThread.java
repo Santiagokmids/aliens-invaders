@@ -1,5 +1,5 @@
 package thread;
 
-public class InsertionThread {
+public class InsertionThread extends Thread{
 
 }

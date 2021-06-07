@@ -1,5 +1,5 @@
 package thread;
 
-public class SelectionThread {
+public class SelectionThread extends Thread{
 
 }

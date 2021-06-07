@@ -39,7 +39,10 @@ import model.Spacecraft;
 import model.TypeSpacecraft;
 import thread.AlienThread;
 import thread.BubbleSearchThread;
+import thread.BubbleThread;
+import thread.InsertionThread;
 import thread.SelectionSearchThread;
+import thread.SelectionThread;
 import thread.SearchAlienThread;
 
 public class AliensInvadersGUI {
@@ -133,6 +136,9 @@ public class AliensInvadersGUI {
 
 	@FXML
 	private ComboBox<String> comboBoxDificult;
+	
+	@FXML
+    private ComboBox<String> comboBoxSorting;
 
 	@FXML
 	private TextField searchByName;
@@ -172,6 +178,13 @@ public class AliensInvadersGUI {
 	public final static int VELOCITY = 1000;
 
 	public final static int VELOCITYSLOW = 2600;
+	
+	public final static String COMBOBOX = "Ordenar por: ";
+	
+	public final static String A = "Puntaje";
+	public final static String B = "Nombre/Puntaje";
+	public final static String C = "Nivel/Puntaje";
+	public final static String D = "Nombre/Nivel";
 
 	public AliensInvadersGUI(AliensInvaders aliensInvaders, Stage stage) {
 		this.aliensInvaders = aliensInvaders;
@@ -438,6 +451,10 @@ public class AliensInvadersGUI {
 
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
+		
+		comboBoxSorting.setPromptText(COMBOBOX);
+		
+		comboBoxSorting.getItems().addAll(A,B,C,D);
 
 		inicializateTableViewPlayer();
 	}
@@ -831,4 +848,31 @@ public class AliensInvadersGUI {
 		
 		return selectionThread;
 	}
+	
+	@FXML
+    void sortComboBox(ActionEvent event) {
+		
+		if(comboBoxSorting.getValue() == A) {
+			
+			
+			
+		}else if(comboBoxSorting.getValue() == B) {
+			
+			InsertionThread insertionThread = new InsertionThread();
+			
+			insertionThread.start();
+			
+		}else if(comboBoxSorting.getValue() == C) {
+			
+			SelectionThread selectionThread = new SelectionThread();
+			
+			selectionThread.start();
+			
+		}else if(comboBoxSorting.getValue() == D) {
+			
+			BubbleThread bubbleThread = new BubbleThread();
+			
+			bubbleThread.start();	
+		}
+    }
 }

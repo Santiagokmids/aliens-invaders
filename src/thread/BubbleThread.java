@@ -1,5 +1,5 @@
 package thread;
 
-public class BubbleThread {
+public class BubbleThread extends Thread{
 
 }
