@@ -30,11 +30,16 @@ public class AlienThread extends Thread{
 				public void run() {
 					
 					aliensInvadersGUI.updateAlien(alien.getPositionY(), alien.getPositionX()+alien.getX(), alienImageView);
+					aliensInvadersGUI.searchAlien(alienImageView.getLayoutX(), alienImageView.getLayoutY(),alienImageView);
 					
-					if(alienImageView.getImage() == alien.getImageOne()) {
-						alienImageView.setImage(alien.getImageTwo());
-					}else {
-						alienImageView.setImage(alien.getImageOne());
+					if(alienImageView.isVisible()) {
+						
+						if(alienImageView.getImage() == alien.getImageOne()) {
+							alienImageView.setImage(alien.getImageTwo());
+							
+						}else {
+							alienImageView.setImage(alien.getImageOne());
+						}
 					}
 					aliensInvadersGUI.validationPosition(alien, alienImageView);
 				}
