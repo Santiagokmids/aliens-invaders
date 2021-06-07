@@ -41,8 +41,10 @@ public class AlienThread extends Thread{
 							alienImageView.setImage(alien.getImageOne());
 						}
 					}
+					aliensInvadersGUI.validationPosition(alien, alienImageView);
 				}
 			});
+			
 			
 			verify = aliensInvadersGUI.getVerify();
 			

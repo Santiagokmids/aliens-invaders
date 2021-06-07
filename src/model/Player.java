@@ -113,4 +113,11 @@ public class Player extends People implements Serializable, CompareTo{
 		
 		return verify;
 	}
+	
+	public int compare(String score) {
+		
+		int verify = String.valueOf(getScore()).compareTo(score);
+				
+		return verify;
+	}
 }
