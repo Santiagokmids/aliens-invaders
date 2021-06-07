@@ -38,6 +38,7 @@ import model.RecognShip;
 import model.Spacecraft;
 import model.TypeSpacecraft;
 import thread.AlienThread;
+import thread.SearchAlienThread;
 
 public class AliensInvadersGUI {
 
@@ -149,8 +150,14 @@ public class AliensInvadersGUI {
 	private double positionBallX;
 
 	private double positionBallY;
+	
+	private double ballInMoveX;
+	
+	private double ballInMoveY;
 
 	private long count;
+	
+	private boolean knowShoot;
 
 	private long currentCount;
 
@@ -199,6 +206,10 @@ public class AliensInvadersGUI {
 		mainPane.setTop(load);
 		count = System.nanoTime();
 		currentCount = 0;
+		firstAlien = null;
+		ballInMoveX = 0;
+		ballInMoveY = 0;
+		knowShoot = false;
 
 	}
 
@@ -510,6 +521,7 @@ public class AliensInvadersGUI {
 			if((event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) && currentCount < count-VELOCITY){
 				currentCount = count;
 				Circle circles = new Circle();
+				knowShoot = true;
 				circles.setLayoutX(positionBallX);
 				circles.setLayoutY(positionBallY);
 				circles.setRadius(circle.getRadius());
@@ -521,6 +533,7 @@ public class AliensInvadersGUI {
 
 			if((event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) && currentCount < count-VELOCITYSLOW){
 				currentCount = count;
+				knowShoot = true;
 				Circle circles = new Circle();
 				circles.setLayoutX(positionBallX);
 				circles.setLayoutY(positionBallY);
@@ -557,6 +570,8 @@ public class AliensInvadersGUI {
 					Platform.runLater(new Thread(){
 						public void run() {
 							circles.setLayoutY(circles.getLayoutY()-5);
+							ballInMoveX = circles.getLayoutX();
+							ballInMoveY = circles.getLayoutY();
 						}
 					});
 					try{
@@ -569,9 +584,27 @@ public class AliensInvadersGUI {
 		}.start();
 
 	}
+	
+	public void searchAlien(double x, double y, ImageView image) {
+		SearchAlienThread alien = new SearchAlienThread(this,firstAlien, x, y, ballInMoveX, ballInMoveY, image,verify,knowShoot);
+		alien.start();
+		
+	}
 
-	public void searchScore() {
+	public double getBallInMoveX() {
+		return ballInMoveX;
+	}
 
+	public void setBallInMoveX(double ballInMoveX) {
+		this.ballInMoveX = ballInMoveX;
+	}
+
+	public double getBallInMoveY() {
+		return ballInMoveY;
+	}
+
+	public void setBallInMoveY(double ballInMoveY) {
+		this.ballInMoveY = ballInMoveY;
 	}
 
 	public void removePlayer() {
@@ -777,6 +810,14 @@ public class AliensInvadersGUI {
 			alert.showAndWait();
 			searchByScore.setText("");
 		}
+	}
+
+	public boolean getKnowShoot() {
+		return knowShoot;
+	}
+
+	public void setKnowShoot(boolean knowShoot) {
+		this.knowShoot = knowShoot;
 	}
 
 }
