@@ -11,6 +11,7 @@ public class Spacecraft {
 	
 	private TypeSpacecraft ship;
 	private Double posX;
+	private Double posY;
 	
 	/**
 	 * <b>name:</b> Spacecraft. <br>
@@ -55,5 +56,13 @@ public class Spacecraft {
 	
 	public void moveRight() {
 		posX = posX + 10;
+	}
+
+	public Double getPosY() {
+		return posY;
+	}
+
+	public void setPosY(Double posY) {
+		this.posY = posY;
 	}
 }

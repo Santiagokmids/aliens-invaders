@@ -1,5 +1,7 @@
 package thread;
 
+import java.io.IOException;
+
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
@@ -18,10 +20,10 @@ public class SearchAlienThread extends Thread {
 	private boolean verify;
 	private boolean knowShoot;
 	private Circle circle;
-	
+
 	public SearchAlienThread(AliensInvadersGUI aliensInvadersGUI,Alien first, double x, double y, double posBallX,double posBallY,
 			ImageView alienImageView,boolean verify,boolean knowShoot,Circle circle) {
-		
+
 		this.aliensInvadersGUI = aliensInvadersGUI;
 		this.first = first;
 		this.x = x;
@@ -33,62 +35,67 @@ public class SearchAlienThread extends Thread {
 		this.knowShoot = knowShoot;
 		this.circle = circle;
 	}
-	
+
 	public void run() {
-		
+
 		boolean direction = true;
 		boolean shoot = false;
-		
+
 		if(first == null) {
 			shoot = false;
 		}
 		else {
 			Alien current = first;
-			
+
 			while(!shoot && verify) {
-				
-				if(alienImageView.getLayoutX() == x && (posBallX >= alienImageView.getLayoutX() && posBallX <= alienImageView.getLayoutX()+72) 
-						&& knowShoot &&	(alienImageView.getLayoutY() == y && (posBallY >= alienImageView.getLayoutY()-60 && posBallY <= alienImageView.getLayoutY()) && 
-								alienImageView.isVisible() && circle.isVisible())) {
-					
+
+				if(alienImageView.getLayoutX() == x && (posBallX > alienImageView.getLayoutX() && posBallX < alienImageView.getLayoutX()+73) 
+						&& knowShoot &&	(alienImageView.getLayoutY() == y && (posBallY > alienImageView.getLayoutY()-60 && posBallY < alienImageView.getLayoutY()+60) && 
+						alienImageView.isVisible() && circle.isVisible())) {
+
 					Platform.runLater(new Thread(){
 						public void run() {
 							aliensInvadersGUI.setImage(alienImageView);
-							aliensInvadersGUI.setCircle(circle);
 							aliensInvadersGUI.setScores(1);
-							aliensInvadersGUI.setLevels();
+							try {
+								aliensInvadersGUI.setLevels();
+							} catch (IOException e) {
+							}
+							synchronized (aliensInvadersGUI) {
+								aliensInvadersGUI.setCircle(circle);
+							}
 						}
-							
+
 					});
 					shoot = true;
-					
+
 				}else {
-					
+
 					if(current.getNext() != null && direction) { 
 						current = current.getNext();
-						
+
 					}else if(current.getDown() != null) {
 						direction = false;
 						current = current.getDown();
-						
+
 					}else if(current.getPrev() != null && !direction) {
 						current = current.getPrev();
 					}
-					
+
 				}
-				
+
 				posBallX = aliensInvadersGUI.getBallInMoveX();
 				posBallY = aliensInvadersGUI.getBallInMoveY();
 				verify = aliensInvadersGUI.getVerify();
 				knowShoot = aliensInvadersGUI.getKnowShoot();
-				
+
 				try{
 					Thread.sleep(100);
 				}catch(InterruptedException e) {
-					
+
 				}
 			}
 		}
 	}
-	
+
 }

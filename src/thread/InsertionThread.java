@@ -13,7 +13,7 @@ public class InsertionThread extends Sorting{
 	public InsertionThread(AliensInvadersGUI aliensInvadersGUI, ArrayList<Player> listPlayers) {
 		
 		super(listPlayers);
-		this.listPlayers = listPlayers;
+		this.aliensInvadersGUI = aliensInvadersGUI;
 	}
 	
 	@Override

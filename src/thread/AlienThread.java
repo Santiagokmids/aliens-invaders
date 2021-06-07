@@ -13,15 +13,13 @@ public class AlienThread extends Thread{
 	private Alien alien;
 	private ImageView alienImageView;
 	private boolean verify;
-	private int velocity;
 	
-	public AlienThread(AliensInvadersGUI aliensInvadersGUI, Alien alien, ImageView alienImageView, boolean verify, int velocity) {
+	public AlienThread(AliensInvadersGUI aliensInvadersGUI, Alien alien, ImageView alienImageView, boolean verify) {
 		
 		this.aliensInvadersGUI = aliensInvadersGUI;
 		this.alien = alien;
 		this.alienImageView = alienImageView;
 		this.verify = verify;
-		this.velocity = velocity;
 	}
 	
 	public void run() {
@@ -46,18 +44,17 @@ public class AlienThread extends Thread{
 						}
 					}
 					try {
+						aliensInvadersGUI.validationShip(alien, alienImageView);
 						aliensInvadersGUI.validationPosition(alien, alienImageView);
 					} catch (IOException e) {
 					}
 				}
 			});
 			
-			
 			verify = aliensInvadersGUI.getVerify();
-			velocity = aliensInvadersGUI.getVelocity();
 			
 			try{
-				Thread.sleep(velocity);
+				Thread.sleep(200);
 			}catch(InterruptedException e) {
 				
 			}
