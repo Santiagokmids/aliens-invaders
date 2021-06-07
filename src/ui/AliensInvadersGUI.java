@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -143,6 +144,15 @@ public class AliensInvadersGUI {
 
 	@FXML
 	private TextField searchByName;
+	
+	@FXML
+	private Label scoreOver;
+	
+	@FXML
+	private Label level;
+	
+	@FXML
+	private Label score;
 
 	private Stage window;
 
@@ -160,9 +170,15 @@ public class AliensInvadersGUI {
 
 	private double positionBallY;
 	
+	private int scores;
+	
+	private int levels;
+	
 	private double ballInMoveX;
 	
 	private double ballInMoveY;
+	
+	private int shootAliens;
 	
 	private Circle currentCircle;
 
@@ -228,7 +244,9 @@ public class AliensInvadersGUI {
 		ballInMoveX = 0;
 		ballInMoveY = 0;
 		knowShoot = false;
-
+		scores = 0;
+		levels = 1;
+		shootAliens = 0;
 	}
 
 	@FXML
@@ -316,6 +334,7 @@ public class AliensInvadersGUI {
 			positionBallY = circle.getLayoutY();
 
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
+			level.setText(String.valueOf(levels));
 		}
 	}
 
@@ -357,6 +376,7 @@ public class AliensInvadersGUI {
 			circle.setVisible(false);
 
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
+			level.setText(String.valueOf(levels));
 		}
 	}
 
@@ -431,12 +451,11 @@ public class AliensInvadersGUI {
 		alienImageView.setLayoutY(y);
 	}
 	
-	public void validationPosition(Alien alien, ImageView alienImageView) {
+	public void validationPosition(Alien alien, ImageView alienImageView) throws IOException {
 		
 		if(alien.getPositionY() >= window.getHeight()-105 && alienImageView.isVisible()) {
-			System.out.println(window.getHeight());
-			System.out.println(alien.getPositionY());
 			verify = false;
+			gameOver();
 		}
 	}
 
@@ -463,7 +482,7 @@ public class AliensInvadersGUI {
 	}
 
 	@FXML
-	public void acept(ActionEvent event) throws IOException {
+	public void gameOver() throws IOException {
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("gameover-pane.fxml"));
 
@@ -479,6 +498,8 @@ public class AliensInvadersGUI {
 
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
+		
+		scoreOver.setText(String.valueOf(scores));
 	}
 
 	@FXML
@@ -619,6 +640,27 @@ public class AliensInvadersGUI {
 		SearchAlienThread alien = new SearchAlienThread(this,firstAlien, x, y, ballInMoveX, ballInMoveY, image,verify,knowShoot,currentCircle);
 		alien.start();
 		
+	}
+	
+	public void setScores(int aliens) {
+		shootAliens += aliens;
+		scores += 5;
+		score.setText(String.valueOf(scores));
+	}
+	
+	public void setLevels() {
+		if(shootAliens == 10){
+			levels += 1;
+			level.setText(String.valueOf(levels));
+		}
+	}
+	
+	public void setImage(ImageView image) {
+		image.setVisible(false);
+	}
+	
+	public void setCircle(Circle circ) {
+		circ.setVisible(false);
 	}
 
 	public double getBallInMoveX() {

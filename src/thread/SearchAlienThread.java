@@ -53,8 +53,9 @@ public class SearchAlienThread extends Thread {
 					
 					Platform.runLater(new Thread(){
 						public void run() {
-							circle.setVisible(false);
-							alienImageView.setVisible(false);
+							aliensInvadersGUI.setImage(alienImageView);
+							aliensInvadersGUI.setCircle(circle);
+							aliensInvadersGUI.setScores(1);
 						}
 							
 					});
@@ -88,4 +89,5 @@ public class SearchAlienThread extends Thread {
 			}
 		}
 	}
+	
 }

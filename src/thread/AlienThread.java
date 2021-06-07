@@ -1,5 +1,7 @@
 package thread;
 
+import java.io.IOException;
+
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 import model.Alien;
@@ -41,7 +43,10 @@ public class AlienThread extends Thread{
 							alienImageView.setImage(alien.getImageOne());
 						}
 					}
-					aliensInvadersGUI.validationPosition(alien, alienImageView);
+					try {
+						aliensInvadersGUI.validationPosition(alien, alienImageView);
+					} catch (IOException e) {
+					}
 				}
 			});
 			
