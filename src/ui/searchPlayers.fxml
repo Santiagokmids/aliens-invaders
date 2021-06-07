@@ -48,9 +48,9 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="112.0" layoutY="200.0" text="Ingrese solo nick o nick y puntaje" textFill="WHITE">
+      <Label layoutX="47.0" layoutY="183.0" prefHeight="64.0" prefWidth="459.0" text="Para buscar ingrese solo un campo, para elimiar llene ambos" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
-            <Font name="System Bold" size="21.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
    </children>
