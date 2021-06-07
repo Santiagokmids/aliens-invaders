@@ -11,9 +11,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 
 import exceptions.NumberInNameException;
 
@@ -24,16 +21,14 @@ import exceptions.NumberInNameException;
  * @author Luis Miguel Ossa Arias, https://github.com/Itsumohitoride <br>
  */
 
-public class AliensInvaders implements SearchP, CompareTo, Calculate {
+public class AliensInvaders implements SearchP, Calculate {
 
 	public final static String SAVE_PATH_FILE_PEOPLE = "data/dataPlayer.txt";
 
 	private Player first;
-	private Level normalLevel;
-	private Level easyLevel;
-	private Level hardLevel;
-	private Figures circle;
-	private Figures rectangle;
+	//private Level normalLevel;
+	//private Level easyLevel;
+	//private Level hardLevel;
 
 	private static String realName; 
 
@@ -80,32 +75,32 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	 * @param level is the level of the game the player arrived at. level != null.
 	 * @return <code><boolean</code> specifying verify is the result of the process.
 	 */
-	
+
 	public boolean addPlayer(String nick, int score, int level) throws FileNotFoundException, IOException {
 		loadData();
-	
+
 		Player player = new Player(realName, nick,score,level);
-		
+
 		if(first == null) {
 			first = player;
-	
+
 		}else {
 			boolean stop = true;
 			Player current = first;
-	
+
 			while(stop) {
-	
+
 				if(player.getScore() < current.getScore()) {
-	
+
 					if(current.getPrev() == null) {
 						current.setPrev(player);
 						player.setParent(current);
 						stop = false;
-	
+
 					}else {
 						current = current.getPrev();
 					}
-	
+
 				}else {
 					if(current.getNext() == null) {
 						current.setNext(player);
@@ -381,7 +376,6 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 
 	@Override
 	public int calculate() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -394,45 +388,108 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 	 * @return <code>People</code> specifying people is the player that has searched.
 	 */
 
-	public Player binarySearchByScore(String toSearch, String nick) {
+	public String binarySearchByScore(ArrayList<Player> newList, String toSearch) {
 
-		ArrayList<Player> listPlayers = toArrayList();
+		ArrayList<Player> listPlayers = newList;
 		Player player = null;
-		
-		try {
-			int score = Integer.parseInt(toSearch);
-			
-			int pos = -1;
-			int i = 0;
-			int j = listPlayers.size()-1;
 
-			while(i <= j && pos < 0) {
-				int m = (i+j)/2;
+		String message = "";
 
-				if(listPlayers.get(m).getScore() == score && listPlayers.get(m).getNick().equalsIgnoreCase(nick)) {
-					pos = m;
+		int pos = -1;
+		int i = 0;
+		int j = listPlayers.size()-1;
 
-					player = listPlayers.get(pos);
-				}
-				else if(listPlayers.get(m).getScore() > score) {
-					j = m-1;
-				}
-				else {
-					i = m+1;
+		while(i <= j && pos < 0) {
+			int m = (i+j)/2;
+
+			if(listPlayers.get(m).compare(toSearch) == 0) {
+				pos = m;
+
+				player = listPlayers.get(pos);
+				
+				System.out.println(player.toString());
+
+				if(player != null) {
+					message += player.toString();
+					newList.remove(pos);
+					message += binarySearchByScore(newList, toSearch);
 				}
 			}
-			
-		}catch(NumberFormatException nfe){
-			
+			else if(listPlayers.get(m).compare(toSearch) > 0) {
+				j = m-1;
+			}
+			else {
+				i = m+1;
+			}
 		}
-		
+		return message;
+	}
+
+	public Player binarySearchByScoreRemove(ArrayList<Player> newList, String toSearch) {
+
+		ArrayList<Player> listPlayers = newList;
+		Player player = null;
+
+		int pos = -1;
+		int i = 0;
+		int j = listPlayers.size()-1;
+
+		while(i <= j && pos < 0) {
+			int m = (i+j)/2;
+
+			if(listPlayers.get(m).compare(toSearch) == 0) {
+				pos = m;
+
+				player = listPlayers.get(pos);
+			}
+			else if(listPlayers.get(m).compare(toSearch) > 0) {
+				j = m-1;
+			}
+			else {
+				i = m+1;
+			}
+		}
 		return player;
 	}
 
-	public Player binarySearchByName(String nick) {
+	public String binarySearchByName(ArrayList<Player> newList, String nick) {
 
-		ArrayList<Player> listPlayers = bubbleSort(toArrayList());
-		
+		ArrayList<Player> listPlayers = newList;
+
+		String message = "";
+
+		int pos = -1;
+		int i = 0;
+		int j = listPlayers.size()-1;
+		Player player = null;
+
+		while(i <= j && pos < 0) {
+			int m = (i+j)/2;
+
+			if(listPlayers.get(m).compareTo(nick) == 0) {
+				pos = m;
+
+				player = listPlayers.get(pos);
+				message += player.toString();
+
+				if(player != null) {
+					message += binarySearchByScore(newList, nick);
+				}
+			}
+			else if(listPlayers.get(m).compareTo(nick) > 0) {
+				j = m-1;
+			}
+			else {
+				i = m+1;
+			}
+		}
+		return message;
+	}
+
+	public Player binarySearchByNameRemove(ArrayList<Player> newList, String nick) {
+
+		ArrayList<Player> listPlayers = newList;
+
 		int pos = -1;
 		int i = 0;
 		int j = listPlayers.size()-1;
@@ -455,109 +512,75 @@ public class AliensInvaders implements SearchP, CompareTo, Calculate {
 		}
 		return player;
 	}
-	
-	public ArrayList<Player> bubbleSort(ArrayList<Player> listPlayers){
-		
-		int changes = 1;
-		
-		for(int i=1;i<listPlayers.size()-1 && changes > 0;i++) {
-			
-			changes = 0;
-			
-			for(int j=0;j<listPlayers.size()-i-1;j++) {
-
-				if(listPlayers.get(j).compareTo(listPlayers.get(j+1).getNick()) > 0) {
-					Player tem = listPlayers.get(j);
-					listPlayers.set(j,listPlayers.get(j+1));
-					listPlayers.set(j+1,tem);
-					changes++;
-				}
-			}
-		}
-		return listPlayers;
-	}
-
-	@Override
-	public int compareTo(String nick) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public Player searchP(String toSearch) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public void removePlayer(String nick) throws FileNotFoundException, IOException{
-    	Player player = binarySearchByName(nick);
-    	removePlayer(player);
-    	saveData();
-    }
-	
-    private void removePlayer(Player player){
-    	
-    	if(player.getPrev() == null && player.getNext() == null){
-    		
-    		if(player == first){
-    			first = null;
-    			
-    		}else if(player.getParent() != null && player == player.getParent().getPrev()) {
-    			player.getParent().setPrev(null);
-    			
-    		}else{
-    			player.getParent().setNext(null);    		
-    		}
-    		player.setParent(null);
-    		
-    	}else if(player.getPrev() == null || player.getNext() == null){
-    		
-    		Player onlyChild;
-    		
-    		if(player.getPrev()!=null){
-    			onlyChild = player.getPrev();
-    			player.setNext(null);
-    			
-    		}else{
-    			onlyChild = player.getNext();
-    			player.setNext(null);
-    		}
-    		
-    		onlyChild.setParent(player.getParent());
-    		
-    		if(player == first){
-    			first = onlyChild;
-    			
-    		}else if(player == player.getParent().getPrev()){
-    			player.getParent().setPrev(onlyChild);
-    			
-    		}else{
-    			player.getParent().setNext(onlyChild);    		
-    		}
-    		player.setParent(null);
-    		
-    	}else{ 
-    		Player successor = min(player.getNext());
-    		
-    		player.setName(successor.getName());
-    		player.setNick(successor.getNick());
-    		player.setScore(successor.getScore());
-    		player.setLevel(successor.getLevel());
-    		
-    		removePlayer(successor);
-    	}
-    }
 
-    private Player min(Player current){
-    	if(current.getPrev() != null){
-    		return min(current.getPrev());
-    		
-    	}else{
-    		return current;
-    	}
-    }
-    
-    public void shootMonster(){
-    	
-    }
+	public void removePlayer(Player player){
+
+		if(player.getPrev() == null && player.getNext() == null){
+
+			if(player == first){
+				first = null;
+
+			}else if(player.getParent() != null && player == player.getParent().getPrev()) {
+				player.getParent().setPrev(null);
+
+			}else{
+				player.getParent().setNext(null);    		
+			}
+			player.setParent(null);
+
+		}else if(player.getPrev() == null || player.getNext() == null){
+
+			Player onlyChild;
+
+			if(player.getPrev()!=null){
+				onlyChild = player.getPrev();
+				player.setNext(null);
+
+			}else{
+				onlyChild = player.getNext();
+				player.setNext(null);
+			}
+
+			onlyChild.setParent(player.getParent());
+
+			if(player == first){
+				first = onlyChild;
+
+			}else if(player == player.getParent().getPrev()){
+				player.getParent().setPrev(onlyChild);
+
+			}else{
+				player.getParent().setNext(onlyChild);    		
+			}
+			player.setParent(null);
+
+		}else{ 
+			Player successor = min(player.getNext());
+
+			player.setName(successor.getName());
+			player.setNick(successor.getNick());
+			player.setScore(successor.getScore());
+			player.setLevel(successor.getLevel());
+
+			removePlayer(successor);
+		}
+	}
+
+	private Player min(Player current){
+		if(current.getPrev() != null){
+			return min(current.getPrev());
+
+		}else{
+			return current;
+		}
+	}
+
+	public void shootMonster(){
+
+	}
 }

@@ -12,10 +12,11 @@ import javafx.scene.image.Image;
 public class Alien {
 	
 	public final static int MOVE = 10;
+	public final static int MAXRIGHT = 150;
+	public final static int MAXLEFT = 79;
 	
 	private double x;
 	private double y;
-	private double max;
 	private double positionX;
 	private double positionY;
 	private Direction direction;
@@ -57,10 +58,6 @@ public class Alien {
 		return y;
 	}
 	
-	public void setMax(double max) {
-		this.max = max;
-	}
-	
 	/**
 	 * <b>name:</b> moveAlien. <br>
 	 * Move the alien. <br>
@@ -86,11 +83,11 @@ public class Alien {
 	
 	public void verify() {
 		
-		if(x >= 150) {
+		if(x >= MAXRIGHT) {
 			positionY += MOVE;
 			changeDirection();
 		}
-		if(x <= 79) {
+		if(x <= MAXLEFT) {
 			positionY += MOVE;
 			changeDirection();
 		}
