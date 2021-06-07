@@ -407,8 +407,6 @@ public class AliensInvaders implements SearchP, Calculate {
 
 				player = listPlayers.get(pos);
 				
-				System.out.println(player.toString());
-
 				if(player != null) {
 					message += player.toString();
 					newList.remove(pos);
@@ -423,33 +421,6 @@ public class AliensInvaders implements SearchP, Calculate {
 			}
 		}
 		return message;
-	}
-
-	public Player binarySearchByScoreRemove(ArrayList<Player> newList, String toSearch) {
-
-		ArrayList<Player> listPlayers = newList;
-		Player player = null;
-
-		int pos = -1;
-		int i = 0;
-		int j = listPlayers.size()-1;
-
-		while(i <= j && pos < 0) {
-			int m = (i+j)/2;
-
-			if(listPlayers.get(m).compare(toSearch) == 0) {
-				pos = m;
-
-				player = listPlayers.get(pos);
-			}
-			else if(listPlayers.get(m).compare(toSearch) > 0) {
-				j = m-1;
-			}
-			else {
-				i = m+1;
-			}
-		}
-		return player;
 	}
 
 	public String binarySearchByName(ArrayList<Player> newList, String nick) {
@@ -486,36 +457,32 @@ public class AliensInvaders implements SearchP, Calculate {
 		return message;
 	}
 
-	public Player binarySearchByNameRemove(ArrayList<Player> newList, String nick) {
-
-		ArrayList<Player> listPlayers = newList;
-
-		int pos = -1;
-		int i = 0;
-		int j = listPlayers.size()-1;
-		Player player = null;
-
-		while(i <= j && pos < 0) {
-			int m = (i+j)/2;
-
-			if(listPlayers.get(m).compareTo(nick) == 0) {
-				pos = m;
-
-				player = listPlayers.get(pos);
-			}
-			else if(listPlayers.get(m).compareTo(nick) > 0) {
-				j = m-1;
-			}
-			else {
-				i = m+1;
-			}
-		}
-		return player;
-	}
-
 	@Override
 	public Player searchP(String toSearch) {
 		return null;
+	}
+	
+	public Player removePlayer(String nick, String score) {
+		
+		ArrayList<Player> listPlayer = toArrayList();
+		boolean verify = false;
+		int playerScore = 0;
+		Player player = null;
+		
+		try {
+			playerScore = Integer.parseInt(score);
+		} catch (NumberFormatException e) {
+		}
+		
+		for (int i = 0; i < listPlayer.size() && !verify; i++) {
+			
+			if(listPlayer.get(i).getNick().equals(nick) && listPlayer.get(i).getScore() == playerScore) {
+				verify = true;
+				player = listPlayer.get(i); 
+			}
+		}
+		
+		return player;
 	}
 
 	public void removePlayer(Player player){

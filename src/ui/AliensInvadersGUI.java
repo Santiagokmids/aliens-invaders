@@ -38,8 +38,8 @@ import model.RecognShip;
 import model.Spacecraft;
 import model.TypeSpacecraft;
 import thread.AlienThread;
-import thread.BubbleThread;
-import thread.SelectionThread;
+import thread.BubbleSearchThread;
+import thread.SelectionSearchThread;
 
 public class AliensInvadersGUI {
 
@@ -659,8 +659,15 @@ public class AliensInvadersGUI {
 	@FXML
 	public void searchPlayer(ActionEvent event) throws InterruptedException {
 		
-		
-		if(searchByScore.getText().isEmpty() && searchByName.getText().isEmpty() || searchByName.getText().isEmpty()){
+		if(searchByScore.getText().isEmpty() && searchByName.getText().isEmpty()) {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("ERROR");
+			alert.setHeaderText("No se pudo eliminar el jugador");
+			alert.setContentText("Tiene que ingreasar uno de los dos campos.");
+			alert.showAndWait();
+			searchByScore.setText("");
+		}else if(!searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()){
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("ERROR");
 			alert.setHeaderText("No se pudo buscar el jugador");
@@ -725,10 +732,18 @@ public class AliensInvadersGUI {
 	
 	@FXML
 	public void removePlayer(ActionEvent event) throws FileNotFoundException, IOException, InterruptedException {
+		
+		if(searchByScore.getText().isEmpty() && searchByName.getText().isEmpty() || !searchByScore.getText().isEmpty() && searchByName.getText().isEmpty() || searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()) {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("ERROR");
+			alert.setHeaderText("No se pudo eliminar el jugador");
+			alert.setContentText("Tiene que ingresar los dos campos.");
+			alert.showAndWait();
+			searchByScore.setText("");
+		}else if(!searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()) {
 
-		if(!searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()) {
-
-			Player player = selectionSort(searchByScore.getText()).getPlayer();
+			Player player = aliensInvaders.removePlayer(searchByName.getText(), searchByScore.getText());
 
 			if(player == null) {
 				
@@ -739,62 +754,23 @@ public class AliensInvadersGUI {
 				alert.showAndWait();
 				searchByName.setText("");
 				searchByScore.setText("");
-			}
-			else {
-				
-				aliensInvaders.removePlayer(bubbleSort(searchByName.getText()).getPlayer());
+			}else {
 				
 				Alert alert1 = new Alert(AlertType.INFORMATION);
 				alert1.setHeaderText("Se ha eliminado a: ");
 				alert1.setContentText(player.toString());
+				aliensInvaders.removePlayer(player);
 				alert1.showAndWait();
 				
 				searchByName.setText("");
 				searchByScore.setText("");
 			}
 		}
-		else if(searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()){
-
-			Player player = bubbleSort(searchByName.getText()).getPlayer();
-			
-			if(player == null) {
-
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("ERROR");
-				alert.setHeaderText("No se encontró el jugador");
-				alert.setContentText("El jugador que está buscando no se encuentra en el hall of fame");
-				alert.showAndWait();
-				searchByName.setText("");
-				searchByScore.setText("");
-			}
-			else {
-				
-				Alert alert1 = new Alert(AlertType.INFORMATION);
-				alert1.setHeaderText("Se ha eliminado a: ");
-				alert1.setContentText(player.toString());
-				alert1.showAndWait();
-				
-				aliensInvaders.removePlayer(bubbleSort(searchByName.getText()).getPlayer());
-				
-				saveData();
-				
-				searchByName.setText("");
-				searchByScore.setText("");
-			}
-		}/*
-		else if(searchByScore.getText().isEmpty() && searchByName.getText().isEmpty() || searchByName.getText().isEmpty()){
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("ERROR");
-			alert.setHeaderText("No se pudo eliminar el jugador");
-			alert.setContentText("Ingrese solo el campo de nickname o los dos campos para poder buscar.");
-			alert.showAndWait();
-			searchByScore.setText("");
-		}*/
 	}
 	
-	public BubbleThread bubbleSort(String nick) throws InterruptedException{
+	public BubbleSearchThread bubbleSort(String nick) throws InterruptedException{
 		
-		BubbleThread bubbleThread = new BubbleThread(aliensInvaders, aliensInvaders.toArrayList(), nick);
+		BubbleSearchThread bubbleThread = new BubbleSearchThread(aliensInvaders, aliensInvaders.toArrayList(), nick);
 		
 		bubbleThread.start();
 		
@@ -803,9 +779,9 @@ public class AliensInvadersGUI {
 		return bubbleThread;
 	}
 	
-	public SelectionThread selectionSort(String score) throws InterruptedException{
+	public SelectionSearchThread selectionSort(String score) throws InterruptedException{
 		
-		SelectionThread selectionThread = new SelectionThread(aliensInvaders, aliensInvaders.toArrayList(), score);
+		SelectionSearchThread selectionThread = new SelectionSearchThread(aliensInvaders, aliensInvaders.toArrayList(), score);
 		
 		selectionThread.start();
 		
