@@ -2,6 +2,7 @@ package thread;
 
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 import model.Alien;
 import ui.AliensInvadersGUI;
 
@@ -16,9 +17,10 @@ public class SearchAlienThread extends Thread {
 	private ImageView alienImageView;
 	private boolean verify;
 	private boolean knowShoot;
+	private Circle circle;
 	
 	public SearchAlienThread(AliensInvadersGUI aliensInvadersGUI,Alien first, double x, double y, double posBallX,double posBallY,
-			ImageView alienImageView,boolean verify,boolean knowShoot) {
+			ImageView alienImageView,boolean verify,boolean knowShoot,Circle circle) {
 		
 		this.aliensInvadersGUI = aliensInvadersGUI;
 		this.first = first;
@@ -29,6 +31,7 @@ public class SearchAlienThread extends Thread {
 		this.verify = verify;
 		this.alienImageView = alienImageView;
 		this.knowShoot = knowShoot;
+		this.circle = circle;
 	}
 	
 	public void run() {
@@ -44,10 +47,13 @@ public class SearchAlienThread extends Thread {
 			
 			while(!shoot && verify) {
 				
-				if(alienImageView.getLayoutX() == x && (posBallX-62 == alienImageView.getLayoutX()) && knowShoot && 
-						alienImageView.getLayoutY() == y && (posBallY == alienImageView.getLayoutY())) {
+				if(alienImageView.getLayoutX() == x && (posBallX >= alienImageView.getLayoutX() && posBallX <= alienImageView.getLayoutX()+75) 
+						&& knowShoot &&	(alienImageView.getLayoutY() == y && (posBallY >= alienImageView.getLayoutY()-62 && posBallY <= alienImageView.getLayoutY()))
+						&& circle.isVisible() && alienImageView.isVisible()) {
+					
 					Platform.runLater(new Thread(){
 						public void run() {
+							circle.setVisible(false);
 							alienImageView.setVisible(false);
 						}
 							
@@ -75,7 +81,7 @@ public class SearchAlienThread extends Thread {
 				knowShoot = aliensInvadersGUI.getKnowShoot();
 				
 				try{
-					Thread.sleep(200);
+					Thread.sleep(100);
 				}catch(InterruptedException e) {
 					
 				}

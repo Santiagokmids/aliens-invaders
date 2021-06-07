@@ -11,9 +11,9 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#moveShip" prefHeight="705.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fx:id="imageBackGround" fitHeight="705.0" fitWidth="559.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="mainShip" fitHeight="84.0" fitWidth="114.0" layoutX="222.0" layoutY="607.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="mainShip" fitHeight="84.0" fitWidth="114.0" layoutX="222.0" layoutY="602.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="250.0" layoutY="353.0" mnemonicParsing="false" opacity="0.0" text="Button" />
-      <Circle fx:id="circle" disable="true" fill="WHITE" layoutX="269.0" layoutY="607.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="circle" disable="true" fill="WHITE" layoutX="269.0" layoutY="602.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
       <Button alignment="CENTER" layoutX="409.0" layoutY="14.0" mnemonicParsing="false" onAction="#loadBanner" prefHeight="33.0" prefWidth="129.0" style="-fx-background-color: BLACK;" text="ABANDONAR" textFill="#57cbab">
          <font>
             <Font name="Malgun Gothic Bold" size="15.0" />

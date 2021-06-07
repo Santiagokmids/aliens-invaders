@@ -156,6 +156,8 @@ public class AliensInvadersGUI {
 	private double ballInMoveX;
 	
 	private double ballInMoveY;
+	
+	private Circle currentCircle;
 
 	private long count;
 	
@@ -579,6 +581,7 @@ public class AliensInvadersGUI {
 					Platform.runLater(new Thread(){
 						public void run() {
 							circles.setLayoutY(circles.getLayoutY()-5);
+							currentCircle = circles;
 							ballInMoveX = circles.getLayoutX();
 							ballInMoveY = circles.getLayoutY();
 						}
@@ -595,7 +598,7 @@ public class AliensInvadersGUI {
 	}
 	
 	public void searchAlien(double x, double y, ImageView image) {
-		SearchAlienThread alien = new SearchAlienThread(this,firstAlien, x, y, ballInMoveX, ballInMoveY, image,verify,knowShoot);
+		SearchAlienThread alien = new SearchAlienThread(this,firstAlien, x, y, ballInMoveX, ballInMoveY, image,verify,knowShoot,currentCircle);
 		alien.start();
 		
 	}
