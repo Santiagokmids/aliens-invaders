@@ -90,7 +90,7 @@ public class SearchAlienThread extends Thread {
 				knowShoot = aliensInvadersGUI.getKnowShoot();
 
 				try{
-					Thread.sleep(100);
+					Thread.sleep(1200);
 				}catch(InterruptedException e) {
 
 				}

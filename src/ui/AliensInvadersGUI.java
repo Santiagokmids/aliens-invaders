@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import exceptions.NumberInNameException;
 import exceptions.SpaceInNickException;
@@ -30,6 +31,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -58,6 +60,9 @@ public class AliensInvadersGUI {
 
 	@FXML
 	private Circle circle;
+	
+	@FXML
+	private Rectangle bullet;
 
 	@FXML
 	private ImageView lblHall;
@@ -205,6 +210,10 @@ public class AliensInvadersGUI {
 	private HardLevel hard;
 	
 	private String dificult;
+	
+	private double posShipX;
+	
+	private double posShipY;
 
 	public final static int POSTITIONALIENTX = 79;
 
@@ -241,7 +250,7 @@ public class AliensInvadersGUI {
 	public void loadBanner() throws IOException {
 
 		verify = false;
-
+		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("startGame.fxml"));
 
 		loader.setController(this);
@@ -342,7 +351,7 @@ public class AliensInvadersGUI {
 	}
 
 	@FXML
-	void bottonShip1(MouseEvent event) throws IOException {
+	void bottonShip1(MouseEvent event) throws IOException{
 		
 		choiseDificult();
 		
@@ -374,6 +383,7 @@ public class AliensInvadersGUI {
 			mainPane.getChildren().clear();
 			mainPane.setTop(load);
 			circle.setVisible(false);
+			bullet.setVisible(false);
 			positionBallX = circle.getLayoutX();
 			positionBallY = circle.getLayoutY();
 
@@ -383,7 +393,7 @@ public class AliensInvadersGUI {
 	}
 
 	@FXML
-	void bottonShip2(MouseEvent event) throws IOException {
+	void bottonShip2(MouseEvent event) throws IOException{
 		
 		choiseDificult();
 
@@ -544,7 +554,7 @@ public class AliensInvadersGUI {
 	@FXML
 	public void btnScores(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("hallOfFame.fxml"));
-
+		
 		loader.setController(this);
 		Parent load = loader.load();
 
@@ -623,7 +633,7 @@ public class AliensInvadersGUI {
 		mainPane.setTop(load);
 
 	}
-
+	
 	public void loadPlayers(ActionEvent event) throws IOException{
 
 		if(nickName.getText().isEmpty()) {
@@ -671,9 +681,13 @@ public class AliensInvadersGUI {
 		count = System.currentTimeMillis();
 		if((event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) && ship.getPosX() >= 12) {
 			ship.moveLeft();
+			posShipX = ship.getPosX();
+			posShipY = ship.getPosY();
 
 		}if((event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) && ship.getPosX() <= 462){
 			ship.moveRight();
+			posShipX = ship.getPosX();
+			posShipY = ship.getPosY();
 
 		}if(ship.getShip() == TypeSpacecraft.ATTACK_SHIP) {
 
@@ -703,6 +717,8 @@ public class AliensInvadersGUI {
 		}
 
 		mainShip.setLayoutX(ship.getPosX());
+		posShipX = mainShip.getLayoutX();
+		posShipY = mainShip.getLayoutY();
 	}
 
 	public void moveBall(Circle circles) throws InterruptedException {
@@ -732,6 +748,69 @@ public class AliensInvadersGUI {
 							currentCircle = circles;
 							ballInMoveX = circles.getLayoutX();
 							ballInMoveY = circles.getLayoutY();
+						}
+					});
+					try{
+						Thread.sleep(20);
+					}catch(InterruptedException e) {
+
+					}
+				}
+			}
+		}.start();
+
+	}
+	
+	public void selectAlien() throws InterruptedException {
+		boolean down = false;
+		Alien current = null;
+		
+		if(firstAlien != null) {
+			current = firstAlien;
+			Random alienToSelect = new Random();
+			int aleatorio = (int)(alienToSelect.nextDouble() * 10);
+			
+			for (int i = 0; i < aleatorio; i++) {
+				if(current.getNext() != null && !down) {
+					current = current.getNext();
+					
+				}else if(current.getDown() != null && !down){
+					current = current.getDown();
+					down = true;
+					
+				}else if(current.getPrev() != null && down) {
+					current = current.getPrev();
+				}
+			}
+		}
+		moveBullet(bullet, current);
+	}
+	
+	public void moveBullet(Rectangle bullets, Alien alien) throws InterruptedException {
+		bullets.setVisible(true);
+		bullets.setFill(javafx.scene.paint.Color.ROYALBLUE);
+		bullets.setLayoutX(alien.getPositionX()+40);
+		bullets.setLayoutY(alien.getPositionY()+20);
+
+		window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+			@Override
+			public void handle(WindowEvent event) {
+				verify = false;
+			}
+		});
+
+		moveRectangles(bullets);
+	}
+
+	public synchronized void moveRectangles(Rectangle bullets) {
+
+		new Thread() {
+			public void run() {
+				while(bullets.getLayoutY() < window.getHeight()+20 && verify) {
+					Platform.runLater(new Thread(){
+						public void run() {
+							bullets.setLayoutY(bullets.getLayoutY()+5);
 						}
 					});
 					try{

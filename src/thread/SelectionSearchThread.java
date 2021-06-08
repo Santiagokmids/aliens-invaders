@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import model.AliensInvaders;
 import model.Player;
 
-public class SelectionSearchThread extends Sorting{
+public class SelectionSearchThread extends Sorting {
 
 	private AliensInvaders aliensInvaders;
 	private String score;
