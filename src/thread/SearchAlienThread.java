@@ -52,7 +52,8 @@ public class SearchAlienThread extends Thread {
 				if(alienImageView.getLayoutX() == x && (posBallX > alienImageView.getLayoutX() && posBallX < alienImageView.getLayoutX()+73) 
 						&& knowShoot &&	(alienImageView.getLayoutY() == y && (posBallY > alienImageView.getLayoutY()-60 && posBallY < alienImageView.getLayoutY()+60) && 
 						alienImageView.isVisible() && circle.isVisible())) {
-
+					
+					current.setVisible(false);
 					Platform.runLater(new Thread(){
 						public void run() {
 							aliensInvadersGUI.setImage(alienImageView);
