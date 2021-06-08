@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.sql.rowset.spi.SyncResolver;
+
 import exceptions.NumberInNameException;
 import exceptions.SpaceInNickException;
 import javafx.application.Platform;
@@ -390,6 +392,8 @@ public class AliensInvadersGUI {
 
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
 			level.setText(String.valueOf(levels));
+			BulletsThread bulletThread = new BulletsThread(this, firstAlien,verify);
+			bulletThread.start();
 		}
 	}
 
@@ -428,12 +432,12 @@ public class AliensInvadersGUI {
 			mainPane.getChildren().clear();
 			mainPane.setTop(load);
 			circle.setVisible(false);
+			bullet.setVisible(false);
 			positionBallX = circle.getLayoutX();
 			positionBallY = circle.getLayoutY();
 
 			mainPane.getChildren().clear();
 			mainPane.setTop(load);
-			circle.setVisible(false);
 
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
 			level.setText(String.valueOf(levels));
@@ -518,11 +522,7 @@ public class AliensInvadersGUI {
 		AlienThread thread = new AlienThread(this, alien, alienImageView, verify);
 
 		thread.start();
-
-		BulletsThread bulletThread = new BulletsThread(this, alienImageView,alien,verify);
-
-		bulletThread.start();
-
+		
 		window.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -766,37 +766,32 @@ public class AliensInvadersGUI {
 
 	}
 
-	public synchronized void selectAlien() throws InterruptedException {
-		boolean down = false;
-		Alien current = null;
+	public void selectAlien(Alien current) throws InterruptedException {
+		
+		Rectangle rectangles = new Rectangle();
+		rectangles.setLayoutX(bullet.getLayoutX());
+		rectangles.setLayoutY(bullet.getLayoutY());
+		rectangles.setWidth(bullet.getWidth());
+		rectangles.setHeight(bullet.getHeight());
 
-		if(firstAlien != null) {
-			current = firstAlien;
-			Random alienToSelect = new Random();
-			int aleatorio = (int)(alienToSelect.nextDouble() * 10);
+		mainPane.getChildren().add(rectangles);
 
-			for (int i = 0; i < aleatorio; i++) {
-				if(current.getNext() != null && !down) {
-					current = current.getNext();
-
-				}else if(current.getDown() != null && !down){
-					current = current.getDown();
-					down = true;
-
-				}else if(current.getPrev() != null && down) {
-					current = current.getPrev();
-				}
-			}
-		}
-		moveBullet(bullet, current);
+		rectangles.setVisible(true);
+		moveBullet(rectangles, current);
 	}
 
 	public void moveBullet(Rectangle bullets, Alien alien) throws InterruptedException {
+		
 		if(alien != null && alien.getVisible()) {
-			bullets.setVisible(true);
+			
+			bullets.setLayoutX(alien.getPositionX()+40);
+			bullets.setLayoutX(alien.getPositionY()-40);
+			
 			bullets.setFill(javafx.scene.paint.Color.ROYALBLUE);
 			bullets.setLayoutX(alien.getPositionX()+40);
 			bullets.setLayoutY(alien.getPositionY()+20);
+
+			moveRectangles(bullets,alien);
 		}
 
 		window.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -807,22 +802,24 @@ public class AliensInvadersGUI {
 			}
 		});
 
-		moveRectangles(bullets,alien);
 	}
 
 	public synchronized void moveRectangles(Rectangle bullets, Alien alien) {
 
 		if(alien.getVisible()) {
+			
 			new Thread() {
 				public void run() {
 					while(bullets.getLayoutY() < window.getHeight()+20 && verify) {
 						Platform.runLater(new Thread(){
 							public void run() {
-								bullets.setLayoutY((bullets.getLayoutY()+5));
+								synchronized (this) {
+									bullets.setLayoutY((bullets.getLayoutY()+5));
+								}
 							}
 						});
 						try{
-							Thread.sleep(170);
+							Thread.sleep(100);
 						}catch(InterruptedException e) {
 
 						}
@@ -884,6 +881,7 @@ public class AliensInvadersGUI {
 			mainPane.getChildren().clear();
 			mainPane.setTop(load);
 			circle.setVisible(false);
+			bullet.setVisible(false);
 			positionBallX = circle.getLayoutX();
 			positionBallY = circle.getLayoutY();
 			verify = true;
@@ -905,8 +903,9 @@ public class AliensInvadersGUI {
 		return velocityLevel;
 	}
 
-	public void setImage(ImageView image) {
+	public void setImage(ImageView image, Alien current) {
 		image.setVisible(false);
+		current.setVisible(false);
 	}
 
 	public synchronized void setCircle(Circle circ) {

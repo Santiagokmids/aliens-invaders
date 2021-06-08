@@ -12,6 +12,7 @@ public class SearchAlienThread extends Thread {
 
 	private AliensInvadersGUI aliensInvadersGUI;
 	private Alien first;
+	private Alien current;
 	private double x;
 	private double y;
 	private double posBallX;
@@ -34,6 +35,7 @@ public class SearchAlienThread extends Thread {
 		this.alienImageView = alienImageView;
 		this.knowShoot = knowShoot;
 		this.circle = circle;
+		current = null;
 	}
 
 	public void run() {
@@ -45,7 +47,7 @@ public class SearchAlienThread extends Thread {
 			shoot = false;
 		}
 		else {
-			Alien current = first;
+			current = first;
 
 			while(!shoot && verify) {
 
@@ -53,10 +55,10 @@ public class SearchAlienThread extends Thread {
 						&& knowShoot &&	(alienImageView.getLayoutY() == y && (posBallY > alienImageView.getLayoutY()-60 && posBallY < alienImageView.getLayoutY()+60) && 
 						alienImageView.isVisible() && circle.isVisible())) {
 					
-					current.setVisible(false);
 					Platform.runLater(new Thread(){
 						public void run() {
-							aliensInvadersGUI.setImage(alienImageView);
+							aliensInvadersGUI.setImage(alienImageView, current);
+							current.setVisible(false);
 							aliensInvadersGUI.setScores(1);
 							try {
 								aliensInvadersGUI.setLevels();
