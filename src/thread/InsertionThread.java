@@ -10,7 +10,6 @@ public class InsertionThread extends Sorting{
 	private AliensInvadersGUI aliensInvadersGUI;
 	
 	public InsertionThread(AliensInvadersGUI aliensInvadersGUI, ArrayList<Player> listPlayers) {
-		
 		super(listPlayers);
 		this.aliensInvadersGUI = aliensInvadersGUI;
 	}
@@ -27,7 +26,6 @@ public class InsertionThread extends Sorting{
 				getListPlayers().set(j-1, temp);
 			}
 		}
-		
 		aliensInvadersGUI.inicializateTableViewPlayer(getListPlayers());
 	}
 }

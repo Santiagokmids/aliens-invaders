@@ -1,8 +1,6 @@
 package model;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,12 +10,10 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.NumberInNameException;
 import exceptions.SpaceInNickException;
-import thread.SelectionSearchThread;
-import ui.AliensInvadersGUI;
 
 public class AliensInvadersTest {
 	
-	private static AliensInvaders aliensInvaders;
+	private AliensInvaders aliensInvaders;
 	
 	public void setupScenary1() {
 		aliensInvaders = new AliensInvaders();
@@ -33,20 +29,41 @@ public class AliensInvadersTest {
 		aliensInvaders.addPeople(realName);
 	}
 	
-	public void setupScenary3() {
+	public void setupScenary3() throws FileNotFoundException, IOException, SpaceInNickException {
 		
 		aliensInvaders = new AliensInvaders();
 		
-		String score = "33";
+		String nick1 = "Rubencito1";
+		int score1 = 74;
+		int level1 = 9;
 		
-		SelectionSearchThread newThread = SelectionSearchThread(aliensInvaders, aliensInvaders.toArrayList(), score);
+		String nick2 = "Alondre";
+		int score2 = 33;
+		int level2 = 2;
+		
+		aliensInvaders.addPlayer(nick1, score1, level1);
+		aliensInvaders.addPlayer(nick2, score2, level2);
 	}
 	
-	/*
-	@Test
-	public void searchPlayers(String name) {
+	public void setupScenary4() throws FileNotFoundException, IOException, SpaceInNickException {
+		aliensInvaders = new AliensInvaders();
+		
+		String nick1 = "lolito";
+		int score1 = 65;
+		int level1 = 3;
+		
+		String nick2 = "TheGrf";
+		int score2 = 172;
+		int level2 = 14;
+		
+		String nick3 = "Papoc";
+		int score3 = 130;
+		int level3 = 14;
+		
+		aliensInvaders.addPlayer(nick1, score1, level1);
+		aliensInvaders.addPlayer(nick2, score2, level2);
+		aliensInvaders.addPlayer(nick3, score3, level3);
 	}
-	*/
 	
 	@Test
 	public void testAddPeople() throws NumberInNameException {
@@ -152,9 +169,9 @@ public class AliensInvadersTest {
 		
 		ArrayList<Player> players = aliensInvaders.toArrayList();
 		
-		assertEquals(2, players.size());
+		assertEquals(1, players.size());
 		
-		Player playerTest = players.get(1);
+		Player playerTest = players.get(0);
 		
 		assertEquals(aliensInvaders.getRealName(), playerTest.getName());
 		assertEquals(nick, playerTest.getNick());
@@ -178,7 +195,7 @@ public class AliensInvadersTest {
 		
 		ArrayList<Player> players = aliensInvaders.toArrayList();
 		
-		assertEquals(2, players.size());
+		assertEquals(0, players.size());
 	}
 	
 	@Test
@@ -197,33 +214,228 @@ public class AliensInvadersTest {
 		
 		ArrayList<Player> players = aliensInvaders.toArrayList();
 		
-		assertEquals(2, players.size());
-	}
-	
-	/*
-	@Test
-	public Player searchScore(int score) {
-		return null;
+		assertEquals(0, players.size());
 	}
 	
 	@Test
-	public boolean removePlayer(String name, int score) {
-		return false;
+	public void testBinarySearchByScore() throws FileNotFoundException, IOException, NumberInNameException, SpaceInNickException {
+		
+		setupScenary3();
+		
+		String nick = "Alondre";
+		int score = 33;
+		int level = 2;
+		
+		String scores = "33";
+		
+		ArrayList<Player> listPlayers = aliensInvaders.toArrayList();
+		
+		for (int i = 0; i < listPlayers.size(); i++) {
+
+			Player min = listPlayers.get(i);
+
+			for (int j = i+1; j < listPlayers.size(); j++) {
+
+				if(listPlayers.get(j).compare(String.valueOf(min.getScore())) < 0){
+
+					Player temp = listPlayers.get(j);
+					listPlayers.set(j, min);
+					min = temp;
+				}
+			}
+			listPlayers.set(i, min);
+		}
+		
+		String messageSearch = aliensInvaders.binarySearchByScore(listPlayers, scores);
+		
+		String messagePlayer = "Nickname: "+nick+" | Score : "+score+" | Level "+ level+"\n";
+		
+		assertEquals(messagePlayer, messageSearch);
 	}
 	
 	@Test
-	public int calculateScore(int score, int level) {
-		return 0;
+	public void testBinarySearchByScore2() throws FileNotFoundException, IOException, SpaceInNickException {
+		
+		setupScenary3();
+		
+		String scores = "66";
+		
+		ArrayList<Player> listPlayers = aliensInvaders.toArrayList();
+		
+		for (int i = 0; i < listPlayers.size(); i++) {
+
+			Player min = listPlayers.get(i);
+
+			for (int j = i+1; j < listPlayers.size(); j++) {
+
+				if(listPlayers.get(j).compare(String.valueOf(min.getScore())) < 0){
+
+					Player temp = listPlayers.get(j);
+					listPlayers.set(j, min);
+					min = temp;
+				}
+			}
+			listPlayers.set(i, min);
+		}
+		
+		String messageSearch = aliensInvaders.binarySearchByScore(listPlayers, scores);
+		
+		String messagePlayer = "";
+		
+		assertEquals(messagePlayer, messageSearch);
+	}
+	
+	@Test 
+	public void binarySearchByName() throws FileNotFoundException, IOException, SpaceInNickException {
+		
+		setupScenary3();
+		
+		String nick = "Alondre";
+		int score = 33;
+		int level = 2;
+		
+		ArrayList<Player> listPlayers = aliensInvaders.toArrayList();
+		
+		int changes = 1;
+
+		for(int i=1;i<listPlayers.size()-1 && changes > 0;i++) {
+
+			changes = 0;
+
+			for(int j=0;j<listPlayers.size()-i;j++) {
+
+				if(listPlayers.get(j).compareTo(listPlayers.get(j+1).getNick()) > 0) {
+					Player tem = listPlayers.get(j);
+					listPlayers.set(j,listPlayers.get(j+1));
+					listPlayers.set(j+1,tem);
+					changes++;
+				}
+			}
+		}
+		
+		String messageSearch = aliensInvaders.binarySearchByName(listPlayers, nick);
+		String messagePlayer = "Nickname: "+nick+" | Score : "+score+" | Level "+ level+"\n";
+		
+		assertEquals(messagePlayer, messageSearch);
+	}
+	
+	@Test 
+	public void binarySearchByName2() throws FileNotFoundException, IOException, SpaceInNickException {
+		
+		setupScenary3();
+		
+		String nick = "Carlos";
+		
+		ArrayList<Player> listPlayers = aliensInvaders.toArrayList();
+		
+		int changes = 1;
+
+		for(int i=1;i<listPlayers.size()-1 && changes > 0;i++) {
+
+			changes = 0;
+
+			for(int j=0;j<listPlayers.size()-i;j++) {
+
+				if(listPlayers.get(j).compareTo(listPlayers.get(j+1).getNick()) > 0) {
+					Player tem = listPlayers.get(j);
+					listPlayers.set(j,listPlayers.get(j+1));
+					listPlayers.set(j+1,tem);
+					changes++;
+				}
+			}
+		}
+		
+		String messageSearch = aliensInvaders.binarySearchByName(listPlayers, nick);
+		String messagePlayer = "";
+		
+		assertEquals(messagePlayer, messageSearch);
 	}
 	
 	@Test
-	public boolean verifyName(String name) {
-		return true;
+	public void testRemovePlayer() throws FileNotFoundException, IOException, SpaceInNickException {
+		
+		setupScenary4();
+		
+		String nick = "Papoc";
+		String score = "130";
+		String level = "14";
+		
+		Player playerToRemove = aliensInvaders.removePlayer(nick, score);
+		
+		ArrayList<Player> listPlayers = aliensInvaders.toArrayList();
+		
+		assertEquals(3, listPlayers.size());
+		assertEquals(nick, playerToRemove.getNick());
+		assertEquals(Integer.parseInt(score), playerToRemove.getScore());
+		assertEquals(Integer.parseInt(level), playerToRemove.getLevel());
 	}
 	
 	@Test
-	public boolean verifyScores(int score) {
-		return true;
+	public void testRemovePlayer2() throws FileNotFoundException, IOException, SpaceInNickException {
+		
+		setupScenary4();
+		
+		String nick = "lolito";
+		String score = "65";
+		String level = "3";
+		
+		Player playerToRemove = aliensInvaders.removePlayer(nick, score);
+		
+		ArrayList<Player> listPlayers = aliensInvaders.toArrayList();
+		
+		assertEquals(3, listPlayers.size());
+		assertEquals(nick, playerToRemove.getNick());
+		assertEquals(Integer.parseInt(score), playerToRemove.getScore());
+		assertEquals(Integer.parseInt(level), playerToRemove.getLevel());
 	}
-	*/
+	
+	@Test
+	public void testRemove() throws FileNotFoundException, IOException, SpaceInNickException {
+		
+		setupScenary4();
+		
+		String nick = "lolito";
+		String score = "65";
+		String level = "3";
+		
+		Player playerToRemove = aliensInvaders.removePlayer(nick, score);
+		
+		ArrayList<Player> listPlayers = aliensInvaders.toArrayList();
+		
+		assertEquals(3, listPlayers.size());
+		assertEquals(nick, playerToRemove.getNick());
+		assertEquals(Integer.parseInt(score), playerToRemove.getScore());
+		assertEquals(Integer.parseInt(level), playerToRemove.getLevel());
+		
+		aliensInvaders.removePlayer(playerToRemove);
+		
+		ArrayList<Player> listPlayers2 = aliensInvaders.toArrayList();
+		
+		assertEquals(2, listPlayers2.size());
+	}
+	
+	@Test
+	public void testRemove2() throws FileNotFoundException, IOException, SpaceInNickException {
+		
+		setupScenary4();
+		
+		String nick = "Papoc";
+		String score = "130";
+		String level = "14";
+		
+		Player playerToRemove = aliensInvaders.removePlayer(nick, score);
+		
+		ArrayList<Player> listPlayers = aliensInvaders.toArrayList();
+		
+		assertEquals(3, listPlayers.size());
+		assertEquals(nick, playerToRemove.getNick());
+		assertEquals(Integer.parseInt(score), playerToRemove.getScore());
+		assertEquals(Integer.parseInt(level), playerToRemove.getLevel());
+		
+		aliensInvaders.removePlayer(playerToRemove);
+		
+		ArrayList<Player> listPlayers2 = aliensInvaders.toArrayList();
+		
+		assertEquals(2, listPlayers2.size());
+	}
 }

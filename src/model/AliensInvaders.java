@@ -80,7 +80,6 @@ public class AliensInvaders implements SearchP, Calculate {
 	 */
 
 	public void addPlayer(String nick, int score, int level) throws FileNotFoundException, IOException, SpaceInNickException {
-		loadData();
 		
 		spaceIn(nick);
 
