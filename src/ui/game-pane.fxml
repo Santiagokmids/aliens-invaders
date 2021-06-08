@@ -6,6 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#moveShip" prefHeight="705.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -42,5 +43,6 @@
             <Font name="Malgun Gothic Bold" size="23.0" />
          </font>
       </Label>
+      <Rectangle fx:id="bullet" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="20.0" layoutX="265.0" layoutY="141.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
    </children>
 </Pane>

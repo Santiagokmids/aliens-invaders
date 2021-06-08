@@ -26,6 +26,7 @@ public class Alien {
 	private Alien up;
 	private Alien next;
 	private Alien prev;
+	private boolean visible;
 	
 	/**
 	 * <b>name:</b> Alien. <br>
@@ -49,6 +50,7 @@ public class Alien {
 		this.imageOne = imageOne;
 		this.imageTwo = imageTwo;
 		move = 0;
+		setVisible(true);
 	}
 
 	public double getX() {
@@ -163,5 +165,13 @@ public class Alien {
 
 	public void setPrev(Alien prev) {
 		this.prev = prev;
+	}
+
+	public boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 }
