@@ -22,10 +22,11 @@ public class Level {
 		this.aliens = aliens;
 	}
 	
-	public int getAlines() {
+	public int getAliens() {
 		return aliens;
 	}
-	public void setAlines(int aliens) {
+	
+	public void setAliens(int aliens) {
 		this.aliens = aliens;
 	}
 	

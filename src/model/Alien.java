@@ -11,10 +11,10 @@ import javafx.scene.image.Image;
 
 public class Alien {
 	
-	public final static int MOVE = 10;
 	public final static int MAXRIGHT = 150;
 	public final static int MAXLEFT = 79;
 	
+	private int move;
 	private double x;
 	private double y;
 	private double positionX;
@@ -48,6 +48,7 @@ public class Alien {
 		direction = Direction.RIGHT;
 		this.imageOne = imageOne;
 		this.imageTwo = imageTwo;
+		move = 0;
 	}
 
 	public double getX() {
@@ -67,9 +68,9 @@ public class Alien {
 	public void moveAlien() {
 		
 		if(direction == Direction.LEFT) {
-			x -= MOVE;
+			x -= move;
 		}else {
-			x += MOVE;
+			x += move;
 		}
 		
 		verify();
@@ -84,15 +85,23 @@ public class Alien {
 	public void verify() {
 		
 		if(x >= MAXRIGHT) {
-			positionY += MOVE;
+			positionY += move;
 			changeDirection();
 		}
 		if(x <= MAXLEFT) {
-			positionY += MOVE;
+			positionY += move;
 			changeDirection();
 		}
 	}
 	
+	public int getMove() {
+		return move;
+	}
+
+	public void setMove(int move) {
+		this.move = move;
+	}
+
 	/**
 	 * <b>name:</b> changeDirection. <br>
 	 * Change the direction of an alien. <br>

@@ -36,6 +36,9 @@ import javafx.stage.WindowEvent;
 import model.Alien;
 import model.AliensInvaders;
 import model.AttackShip;
+import model.EasyLevel;
+import model.HardLevel;
+import model.Level;
 import model.Player;
 import model.RecognShip;
 import model.Spacecraft;
@@ -186,18 +189,28 @@ public class AliensInvadersGUI {
 	private Circle currentCircle;
 
 	private long count;
+	
+	private int numberAliens;
 
 	private boolean knowShoot;
 
 	private long currentCount;
+	
+	private Level lvl;
+	
+	private int normalMovement;
+	
+	private EasyLevel easy;
+	
+	private HardLevel hard;
+	
+	private String dificult;
 
 	public final static int POSTITIONALIENTX = 79;
 
 	public final static int POSTITIONALIENTY = 62;
 
-	public final static int NUMBERALIENS = 5;
-
-	public final static int VELOCITY = 1000;
+	public final static int VELOCITY = 1200;
 
 	public final static int VELOCITYSLOW = 2600;
 
@@ -242,6 +255,10 @@ public class AliensInvadersGUI {
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
 		count = System.nanoTime();
+		
+		numberAliens = 5;
+		lvl = new Level(numberAliens);
+		
 		currentCount = 0;
 		firstAlien = null;
 		ballInMoveX = 0;
@@ -250,7 +267,9 @@ public class AliensInvadersGUI {
 		scores = 0;
 		levels = 1;
 		shootAliens = 0;
-		velocityLevel = 200;
+		velocityLevel = 0;
+		normalMovement = 10;
+		dificult = "";
 	}
 
 	@FXML
@@ -303,10 +322,30 @@ public class AliensInvadersGUI {
 
 		}
 	}
+	
+	public void choiseDificult() {
+		
+		if(comboBoxDificult.getValue() != null) {
+			
+			if(comboBoxDificult.getValue().equalsIgnoreCase("Novato")) {
+				easy = new EasyLevel(lvl.getAliens(),(normalMovement-5));
+				dificult = "novato";
+				
+			}else if(comboBoxDificult.getValue().equalsIgnoreCase("Leyenda")) {
+				hard = new HardLevel(lvl.getAliens(), (normalMovement+5), 5);
+				dificult = "leyenda";
+				
+			}else {
+				dificult = "cadete";
+			}
+		}
+	}
 
 	@FXML
 	void bottonShip1(MouseEvent event) throws IOException {
-
+		
+		choiseDificult();
+		
 		if(comboBoxDificult.getValue() == null) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
@@ -328,8 +367,10 @@ public class AliensInvadersGUI {
 
 			Image imageShip = new Image("images/ship1.png");
 			mainShip.setImage(imageShip);
+			mainShip.setVisible(true);
 
 			ship = new AttackShip(TypeSpacecraft.ATTACK_SHIP,mainShip.getLayoutX(), VELOCITY);
+			ship.setPosY(mainShip.getLayoutY());
 			mainPane.getChildren().clear();
 			mainPane.setTop(load);
 			circle.setVisible(false);
@@ -343,6 +384,8 @@ public class AliensInvadersGUI {
 
 	@FXML
 	void bottonShip2(MouseEvent event) throws IOException {
+		
+		choiseDificult();
 
 		if(comboBoxDificult.getValue() == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -350,6 +393,7 @@ public class AliensInvadersGUI {
 			alert.setHeaderText("No se puede continuar");
 			alert.setContentText("Debe selecionar una dificultad");
 			alert.showAndWait();
+			
 		}else {
 
 			verify = true;
@@ -365,9 +409,11 @@ public class AliensInvadersGUI {
 
 			Image imageShip = new Image("images/ship2.png");
 			mainShip.setImage(imageShip);
+			mainShip.setVisible(true);
 
 			ship = new RecognShip(TypeSpacecraft.RECOGNITION_SHIP,mainShip.getLayoutX(),2);
-
+			ship.setPosY(mainShip.getLayoutY());
+			
 			mainPane.getChildren().clear();
 			mainPane.setTop(load);
 			circle.setVisible(false);
@@ -394,8 +440,18 @@ public class AliensInvadersGUI {
 
 		if(firstAlien == null) {
 			firstAlien = new Alien(x, y, contX, contY, image1, image2);
-			moveAlien(firstAlien);
+			
+			if(dificult.equals("novato")) {
+				firstAlien.setMove(easy.getMovementSpeed()+velocityLevel);
+				
+			} else if(dificult.equals("leyenda")) {
+				firstAlien.setMove(hard.getMovementSpeed()+velocityLevel);
+				
+			}else {
+				firstAlien.setMove(normalMovement+velocityLevel);
+			}
 			createMatrix(x, y);
+			moveAlien(firstAlien);
 		}else {
 			createMatrix(x, y, contX, contY+100, image1, image2, firstAlien, i);
 		}
@@ -404,15 +460,25 @@ public class AliensInvadersGUI {
 	public void createMatrix(int x, int y, int contX, int contY, Image image1, Image image2, Alien current, int i) {
 
 		Alien alien = new Alien(POSTITIONALIENTX, POSTITIONALIENTY, contX, contY, image1, image2);
+		
+		if(dificult.equals("novato")) {
+			alien.setMove(easy.getMovementSpeed()+velocityLevel);
+			
+		}else if(dificult.equals("leyenda")) {
+			alien.setMove(hard.getMovementSpeed()+velocityLevel);
+			
+		}else {
+			alien.setMove(normalMovement+velocityLevel);
+		}
 
-		if(current != null && current.getDown() == null && i < NUMBERALIENS-1) {
+		if(current != null && current.getDown() == null && i < lvl.getAliens()-1) {
 
 			moveAlien(alien);
 			current.setDown(alien);
 			current.getDown().setUp(current);
 			createMatrix(x, y, contX+100, contY-100, image1, image2, current, i);
 
-		}else if(current != null && current.getNext() == null && i < NUMBERALIENS){
+		}else if(current != null && current.getNext() == null && i < lvl.getAliens()){
 
 			moveAlien(alien);
 			current.setNext(alien);
@@ -425,6 +491,8 @@ public class AliensInvadersGUI {
 	public void moveAlien(Alien alien) {
 
 		ImageView alienImageView = new ImageView();
+		
+		alienImageView.setVisible(true);
 
 		alienImageView.setImage(alien.getImageOne());
 
@@ -435,8 +503,8 @@ public class AliensInvadersGUI {
 
 		alienImageView.setLayoutX(alien.getPositionX());
 		alienImageView.setLayoutY(alien.getPositionY());
-
-		AlienThread thread = new AlienThread(this, alien, alienImageView, verify,velocityLevel);
+		
+		AlienThread thread = new AlienThread(this, alien, alienImageView, verify);
 
 		thread.start();
 
@@ -457,6 +525,17 @@ public class AliensInvadersGUI {
 	public void validationPosition(Alien alien, ImageView alienImageView) throws IOException {
 
 		if(alien.getPositionY() >= window.getHeight()-105 && alienImageView.isVisible()) {
+			verify = false;
+			gameOver();
+		}
+	}
+	
+	public void validationShip(Alien alien, ImageView alienImageView) throws IOException {
+
+		if((ship.getPosX() > alienImageView.getLayoutX() && ship.getPosX() < alienImageView.getLayoutX()+73) 
+			 &&	(ship.getPosY() > alienImageView.getLayoutY()-60 && ship.getPosY() < alienImageView.getLayoutY()+45) && alienImageView.isVisible()) {
+			
+			mainShip.setVisible(false);
 			verify = false;
 			gameOver();
 		}
@@ -642,7 +721,7 @@ public class AliensInvadersGUI {
 		moveBalls(circles);
 	}
 
-	public void moveBalls(Circle circles) {
+	public synchronized void moveBalls(Circle circles) {
 
 		new Thread() {
 			public void run() {
@@ -677,14 +756,61 @@ public class AliensInvadersGUI {
 		scores += 5;
 		score.setText(String.valueOf(scores));
 	}
+	
+	public void setShoot(int shoot) {
+		shootAliens = shoot;
+	}
+	
+	public void setVerify(boolean verify) {
+		this.verify = verify;
+	}
 
-	public void setLevels() {
-		if(shootAliens == 10){
+	public void setLevels() throws IOException {
+		
+		if(shootAliens % 10 == 0){
+			
+			verify = false;
+			
+			firstAlien = null;
+
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("game-pane.fxml"));
+
+			loader.setController(this);
+			Parent load = loader.load();
+
+			Image image = new Image("images/fondoGame.png");
+
+			imageBackGround.setImage(image);
+			
+			if(ship.getShip() == TypeSpacecraft.ATTACK_SHIP) {
+				Image imageShip = new Image("images/ship1.png");
+				mainShip.setImage(imageShip);
+				mainShip.setLayoutX(ship.getPosX());
+				
+			}else {
+				Image imageShip = new Image("images/ship2.png");
+				mainShip.setImage(imageShip);
+				mainShip.setLayoutX(ship.getPosX());
+			}
+			
+			mainPane.getChildren().clear();
+			mainPane.setTop(load);
+			circle.setVisible(false);
+			positionBallX = circle.getLayoutX();
+			positionBallY = circle.getLayoutY();
+			verify = true;
+			
 			levels += 1;
 			level.setText(String.valueOf(levels));
+			score.setText(String.valueOf(scores));
+			velocityLevel += 1;
+			
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
-			velocityLevel += 100;
 		}
+	}
+	
+	public int getShootAliens() {
+		return shootAliens;
 	}
 
 	public int getVelocity() {
@@ -695,7 +821,7 @@ public class AliensInvadersGUI {
 		image.setVisible(false);
 	}
 
-	public void setCircle(Circle circ) {
+	public synchronized void setCircle(Circle circ) {
 		circ.setVisible(false);
 	}
 
@@ -713,18 +839,6 @@ public class AliensInvadersGUI {
 
 	public void setBallInMoveY(double ballInMoveY) {
 		this.ballInMoveY = ballInMoveY;
-	}
-
-	public void removePlayer() {
-
-	}
-
-	public void loadData() {
-
-	}
-
-	public void saveData() {
-
 	}
 
 	@FXML
@@ -774,14 +888,6 @@ public class AliensInvadersGUI {
 			}
 		}
 		inicializateTableViewPlayer(aliensInvaders.toArrayList());
-	}
-
-	public void exportData() {
-
-	}
-
-	public void importData() {
-
 	}
 
 	public boolean getVerify() {
