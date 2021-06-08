@@ -12,14 +12,6 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fx:id="paneHall" fitHeight="862.0" fitWidth="562.0" pickOnBounds="true" preserveRatio="true" />
-      <TableView fx:id="tvHall" layoutX="49.0" layoutY="183.0" prefHeight="382.0" prefWidth="464.0" style="-fx-background-color: #042326;">
-        <columns>
-            <TableColumn fx:id="tcName" prefWidth="162.0" text="Nombre" />
-          <TableColumn fx:id="tcNick" prefWidth="131.0" text="Nick" />
-          <TableColumn fx:id="tcScore" prefWidth="84.0" text="Score" />
-            <TableColumn fx:id="tcLevel" prefWidth="86.0" text="Nivel" />
-        </columns>
-      </TableView>
       <Button layoutX="224.0" layoutY="577.0" mnemonicParsing="false" onAction="#loadBanner" prefHeight="48.0" prefWidth="115.0" style="-fx-background-color: black;" text="INICIO" textFill="#57cbab">
          <font>
             <Font name="Malgun Gothic Bold" size="20.0" />
@@ -53,6 +45,14 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <TableView fx:id="tvHall" layoutX="49.0" layoutY="183.0" prefHeight="382.0" prefWidth="464.0" style="-fx-background-color: #042326;">
+        <columns>
+            <TableColumn fx:id="tcName" prefWidth="162.0" text="Nombre" />
+          <TableColumn fx:id="tcNick" prefWidth="131.0" text="Nick" />
+          <TableColumn fx:id="tcScore" prefWidth="84.0" text="Score" />
+            <TableColumn fx:id="tcLevel" prefWidth="86.0" text="Nivel" />
+        </columns>
+      </TableView>
       <ComboBox fx:id="comboBoxSorting" layoutX="48.0" layoutY="131.0" onAction="#sortComboBox" prefWidth="150.0" />
    </children>
 </Pane>

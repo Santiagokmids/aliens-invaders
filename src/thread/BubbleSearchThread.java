@@ -8,7 +8,6 @@ import model.Player;
 public class BubbleSearchThread extends Sorting{
 
 	private AliensInvaders aliensInvaders;
-	private ArrayList<Player> listPlayers;
 	private String nick;
 	private String message;
 
@@ -24,22 +23,22 @@ public class BubbleSearchThread extends Sorting{
 
 		int changes = 1;
 
-		for(int i=1;i<listPlayers.size()-1 && changes > 0;i++) {
+		for(int i=1;i<getListPlayers().size()-1 && changes > 0;i++) {
 
 			changes = 0;
 
-			for(int j=0;j<listPlayers.size()-i;j++) {
+			for(int j=0;j<getListPlayers().size()-i;j++) {
 
-				if(listPlayers.get(j).compareTo(listPlayers.get(j+1).getNick()) > 0) {
-					Player tem = listPlayers.get(j);
-					listPlayers.set(j,listPlayers.get(j+1));
-					listPlayers.set(j+1,tem);
+				if(getListPlayers().get(j).compareTo(getListPlayers().get(j+1).getNick()) > 0) {
+					Player tem = getListPlayers().get(j);
+					getListPlayers().set(j,getListPlayers().get(j+1));
+					getListPlayers().set(j+1,tem);
 					changes++;
 				}
 			}
 		}
 		
-		message = aliensInvaders.binarySearchByName(listPlayers, nick);
+		message = aliensInvaders.binarySearchByName(getListPlayers(), nick);
 	}
 
 	public String getMessage() {

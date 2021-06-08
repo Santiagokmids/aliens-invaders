@@ -20,4 +20,8 @@ public class Sorting extends Thread{
 	public ArrayList<Player> getListPlayers() {
 		return listPlayers;
 	}
+
+	public void setListPlayers(ArrayList<Player> listPlayers) {
+		this.listPlayers = listPlayers;
+	}
 }
