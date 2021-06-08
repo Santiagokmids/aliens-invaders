@@ -38,7 +38,7 @@ public class BubbleSearchThread extends Sorting{
 			}
 		}
 		
-		message = aliensInvaders.binarySearchByName(getListPlayers(), nick);
+		message = aliensInvaders.binarySearch(getListPlayers(), nick);
 	}
 
 	public String getMessage() {

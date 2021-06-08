@@ -1,11 +1,9 @@
 package model;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -22,7 +20,7 @@ import exceptions.SpaceInNickException;
  * @author Luis Miguel Ossa Arias, https://github.com/Itsumohitoride <br>
  */
 
-public class AliensInvaders implements SearchP, Calculate {
+public class AliensInvaders implements BinarySearch, Calculate {
 
 	public final static String SAVE_PATH_FILE_PEOPLE = "data/dataPlayer.txt";
 
@@ -142,6 +140,15 @@ public class AliensInvaders implements SearchP, Calculate {
 		}
 	}
 	
+	/**
+	 * <b>name:</b> spaceIn. <br>
+	 * Search a space in the message. <br>
+	 * <b>post:</b> The spaces in the message has been searched. <br>
+	 * @param message is the string of the nick of a player. message != "" y message != null.
+	 * @throws SpaceInNickException <br>
+	 *         thrown if a exception produced by a space in the name.      
+	 */
+	
 	public void spaceIn(String message) throws SpaceInNickException{
 		
 		
@@ -175,19 +182,6 @@ public class AliensInvaders implements SearchP, Calculate {
 		}
 
 		return verify;
-	}
-
-	/**
-	 * <b>name:</b> calculateScore. <br>
-	 * Calculate the score of a player. <br>
-	 * <b>post:</b> The score of a player has been calculated. <br>
-	 * @param score is the initial score of a player. score != null.
-	 * @param level is the level of a player arrive. level != null.
-	 * @return <code>int</code> specifying score is the final score. 
-	 */
-
-	public int calculateScore(int score, int level) {
-		return 0;
 	}
 
 	/**
@@ -302,6 +296,14 @@ public class AliensInvaders implements SearchP, Calculate {
 			searchPlayers(player.getNext(),arrayPlayer);
 		}
 	}
+	
+	/**
+	 * <b>name:</b> searchPlayers. <br>
+	 * Create a message with the information of all the players. <br>
+	 * <b>post:</b> A message with the information of all the players has been created. <br>
+	 * @param player is an object player to find his information.
+	 * @return <code>String</code> specifying message is the String with all the information.
+	 */
 
 	public String searchPlayers(Player player) {
 		String message = "";
@@ -315,40 +317,6 @@ public class AliensInvaders implements SearchP, Calculate {
 	}
 
 	/**
-	 * <b>name:</b> importData. <br>
-	 * Import the information of players. <br>
-	 * <b>post:</b> The information of the players has been imported. <br>
-	 * @param fileName is the name of the URL for the file. fileName != "" y fileName != null.
-	 * @throws IOException <br>
-	 *         thrown if an exceptions produced by failed or interrupted I/O operations.
-	 * @throws SpaceInNickException 
-	 */
-
-	public void importData(String fileName) throws IOException, SpaceInNickException {
-
-		BufferedReader br = new BufferedReader(new FileReader(fileName));
-		String line = br.readLine();
-
-		while(line != null) {
-
-			String[] parts = line.split(",");
-
-			try {
-				int score = Integer.parseInt(parts[2]);
-				int level = Integer.parseInt(parts[3]);
-				realName = parts[0];
-				addPlayer(parts[1], score, level);
-				line = br.readLine();
-
-			}catch (NumberFormatException nfe) {
-				line = br.readLine();
-			}
-		}
-		br.close();
-	}
-
-
-	/**
 	 * <b>name:</b> calculate. <br>
 	 * Calculate the score of a player. <br>
 	 * <b>post:</b> The score of a player has been calculated. <br>
@@ -356,21 +324,25 @@ public class AliensInvaders implements SearchP, Calculate {
 	 */
 
 	@Override
-	public int calculate() {
-		return 0;
+	public int calculate(int score, int level) {
+
+		int scores = score+(level*10);
+		
+		return scores;
 	}
 
-
-
 	/**
-	 * <b>name:</b> searchP. <br>
-	 * Search a player. <br>
-	 * <b>post:</b> A player has searched. <br>
-	 * @return <code>People</code> specifying people is the player that has searched.
+	 * <b>name:</b> binarySearch. <br>
+	 * Search a player by the nick. <br>
+	 * <b>post:</b> A player has been searched by the nick. <br>
+	 * @param newList is the list of the players. 
+	 * @param nick is the nick of the player to search.
+	 * @return <code>String</code> specifying message is the String with the information of the player.
 	 */
 
-	public String binarySearchByScore(ArrayList<Player> newList, String toSearch) {
-
+	@Override
+	public String binarySearch(ArrayList<Player> newList, String toSearch) {
+		
 		ArrayList<Player> listPlayers = newList;
 		Player player = null;
 
@@ -383,7 +355,7 @@ public class AliensInvaders implements SearchP, Calculate {
 		while(i <= j && pos < 0) {
 			int m = (i+j)/2;
 
-			if(listPlayers.get(m).compare(toSearch) == 0) {
+			if(listPlayers.get(m).compareTo(toSearch) == 0) {
 				pos = m;
 
 				player = listPlayers.get(pos);
@@ -391,57 +363,28 @@ public class AliensInvaders implements SearchP, Calculate {
 				if(player != null) {
 					message += player.toString();
 					newList.remove(pos);
-					message += binarySearchByScore(newList, toSearch);
+					message += binarySearch(newList, toSearch);
 				}
 			}
-			else if(listPlayers.get(m).compare(toSearch) > 0) {
+			else if(listPlayers.get(m).compareTo(toSearch) > 0) {
 				j = m-1;
 			}
 			else {
 				i = m+1;
 			}
 		}
+		
 		return message;
 	}
-
-	public String binarySearchByName(ArrayList<Player> newList, String nick) {
-
-		ArrayList<Player> listPlayers = newList;
-
-		String message = "";
-
-		int pos = -1;
-		int i = 0;
-		int j = listPlayers.size()-1;
-		Player player = null;
-
-		while(i <= j && pos < 0) {
-			int m = (i+j)/2;
-
-			if(listPlayers.get(m).compareTo(nick) == 0) {
-				pos = m;
-
-				player = listPlayers.get(pos);
-				message += player.toString();
-
-				if(player != null) {
-					message += binarySearchByScore(newList, nick);
-				}
-			}
-			else if(listPlayers.get(m).compareTo(nick) > 0) {
-				j = m-1;
-			}
-			else {
-				i = m+1;
-			}
-		}
-		return message;
-	}
-
-	@Override
-	public Player searchP(String toSearch) {
-		return null;
-	}
+	
+	/**
+	 * <b>name:</b> removePlayer. <br>
+	 * Search a player by the nick and the score. <br>
+	 * <b>post:</b> A player has been searched by the name and the score. <br>
+	 * @param nick is the String of the nick of the player to search.
+	 * @param score is the String of the score of the player to search.
+	 * @return <code>Player</code> specifying player is the player searched.
+	 */
 
 	public Player removePlayer(String nick, String score) {
 
@@ -465,6 +408,13 @@ public class AliensInvaders implements SearchP, Calculate {
 
 		return player;
 	}
+	
+	/**
+	 * <b>name:</b> removePlayer. <br>
+	 * Remove a player from the binary tree. <br>
+	 * <b>post:</b> A player has been removed from the binary tree. <br>
+	 * @param player is the player to eliminate.
+	 */
 
 	public void removePlayer(Player player){
 
@@ -518,6 +468,14 @@ public class AliensInvaders implements SearchP, Calculate {
 			removePlayer(successor);
 		}
 	}
+	
+	/**
+	 * <b>name:</b> min. <br>
+	 * Search the minor player in the binary tree. <br>
+	 * <b>post:</b> The minor player in the binary tree has been searched. <br>
+	 * @param current is the player to compare.
+	 * @return <code>Player</code> specifying is the min player.
+	 */
 
 	private Player min(Player current){
 		if(current.getPrev() != null){

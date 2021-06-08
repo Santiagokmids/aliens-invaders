@@ -2,10 +2,11 @@ package thread;
 
 import java.util.ArrayList;
 
+import model.CompareTwoPlayers;
 import model.Player;
 import ui.AliensInvadersGUI;
 
-public class InsertionThread extends Sorting{
+public class InsertionThread extends Sorting implements CompareTwoPlayers{
 	
 	private AliensInvadersGUI aliensInvadersGUI;
 	
@@ -18,7 +19,7 @@ public class InsertionThread extends Sorting{
 	public void run() {
 		
 		for (int i = 1; i < getListPlayers().size(); i++) {
-			for (int j = i; j > 0 && getListPlayers().get(j-1).compareByNickScore(getListPlayers().get(j)) > 0; j--) {
+			for (int j = i; j > 0 && compareTwoPlayers(getListPlayers().get(j-1), getListPlayers().get(j)) > 0; j--) {
 				
 				Player temp = getListPlayers().get(j);
 				
@@ -27,5 +28,24 @@ public class InsertionThread extends Sorting{
 			}
 		}
 		aliensInvadersGUI.inicializateTableViewPlayer(getListPlayers());
+	}
+	
+	@Override
+	public int compareTwoPlayers(Player playerOne, Player playerTwo) {
+
+		int verify = playerOne.getNick().compareTo(playerTwo.getNick());
+		
+		if(verify == 0) {
+			
+			if(playerOne.getScore() == playerTwo.getScore()) {
+				verify = 0;
+			}else if(playerOne.getScore() > playerTwo.getScore()){
+				verify = 1;
+			}else if(playerOne.getScore() < playerTwo.getScore()) {
+				verify = -1;
+			}
+		}
+		
+		return verify;
 	}
 }

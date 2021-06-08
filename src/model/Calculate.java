@@ -16,5 +16,5 @@ public interface Calculate {
 	 * @return <code>int</code> specifying calculated is the score of the player.
 	 */
 	
-	public int calculate();
+	public int calculate(int score, int level);
 }

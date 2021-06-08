@@ -2,19 +2,17 @@ package thread;
 
 import java.util.ArrayList;
 
-import model.AliensInvaders;
+import model.BinarySearch;
 import model.Player;
 
-public class SelectionSearchThread extends Sorting{
+public class SelectionSearchThread extends Sorting implements BinarySearch{
 
-	private AliensInvaders aliensInvaders;
 	private String score;
 	private String message;
 
-	public SelectionSearchThread(AliensInvaders aliensInvaders, ArrayList<Player> listPlayers, String score) {
+	public SelectionSearchThread(ArrayList<Player> listPlayers, String score) {
 		
 		super(listPlayers);
-		this.aliensInvaders = aliensInvaders;
 		this.score = score;
 	}
 	
@@ -37,10 +35,47 @@ public class SelectionSearchThread extends Sorting{
 			getListPlayers().set(i, min);
 		}
 
-		message = aliensInvaders.binarySearchByScore(getListPlayers(), score);
+		message = binarySearch(getListPlayers(), score);
 	}
 
 	public String getMessage() {
+		return message;
+	}
+
+	@Override
+	public String binarySearch(ArrayList<Player> newList, String toSearch) {
+		
+		ArrayList<Player> listPlayers = newList;
+
+		String message = "";
+
+		int pos = -1;
+		int i = 0;
+		int j = listPlayers.size()-1;
+		Player player = null;
+
+		while(i <= j && pos < 0) {
+			int m = (i+j)/2;
+
+			if(listPlayers.get(m).compare(toSearch) == 0) {
+				pos = m;
+
+				player = listPlayers.get(pos);
+
+				if(player != null) {
+					message += player.toString();
+					newList.remove(pos);
+					message += binarySearch(newList, toSearch);
+				}
+			}
+			else if(listPlayers.get(m).compare(toSearch) > 0) {
+				j = m-1;
+			}
+			else {
+				i = m+1;
+			}
+		}
+		
 		return message;
 	}
 }
