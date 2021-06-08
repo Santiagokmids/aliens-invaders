@@ -22,26 +22,30 @@ public class BulletsThread extends Thread {
 	}
 
 	public void run() {
-
+		
 		while(verify) {
 
 			if(alien != null) {
 
-				boolean down = false;
 				current = alien;
 				Random alienToSelect = new Random();
-				int aleatorio = (int)(alienToSelect.nextDouble() * 9);
-
-				for (int i = 0; i < aleatorio; i++) {
-
-					if(current.getNext() != null && !down) {
+				int aleatorio = (int)(alienToSelect.nextDouble() * 10);
+				int cont = 0;
+				alien.getNext().getNext().getNext().getNext().setNext(null);
+				
+				for (int i = 0; i <= 5; i++) {
+					
+					if(cont < 5 && current.getNext() != null) {
+						cont++;
 						current = current.getNext();
 
-					}else if(current.getDown() != null && !down){
+					}else if(cont < 5 && current.getNext() == null ) {
+						cont++;
 						current = current.getDown();
-						down = true;
 
-					}else if(current.getPrev() != null && down) {
+					}
+					else if(cont >= 5 && current.getPrev() != null) {
+						cont++;
 						current = current.getPrev();
 					}
 				}

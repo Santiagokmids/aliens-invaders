@@ -32,7 +32,7 @@ public class AlienThread extends Thread{
 				public void run() {
 					
 					aliensInvadersGUI.updateAlien(alien.getPositionY(), alien.getPositionX()+alien.getX(), alienImageView);
-					aliensInvadersGUI.searchAlien(alienImageView.getLayoutX(), alienImageView.getLayoutY(),alienImageView);
+					aliensInvadersGUI.searchAlien(alienImageView.getLayoutX(), alienImageView.getLayoutY(),alienImageView,alien);
 					
 					if(alienImageView.isVisible()) {
 						

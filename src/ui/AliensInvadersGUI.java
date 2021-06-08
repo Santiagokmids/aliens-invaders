@@ -447,6 +447,8 @@ public class AliensInvadersGUI {
 
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
 			level.setText(String.valueOf(levels));
+			BulletsThread bulletThread = new BulletsThread(this, firstAlien,verify);
+			bulletThread.start();
 		}
 	}
 
@@ -492,19 +494,29 @@ public class AliensInvadersGUI {
 			alien.setMove(normalMovement+velocityLevel);
 		}
 
-		if(current != null && current.getDown() == null && i < lvl.getAliens()-1) {
+		if(current != null && current.getDown() == null && i < lvl.getAliens()) {
 
 			moveAlien(alien);
 			current.setDown(alien);
 			current.getDown().setUp(current);
+			if(current.getPrev() != null) {
+				current.getDown().setPrev(current.getPrev().getDown());
+			}
 			createMatrix(x, y, contX+100, contY-100, image1, image2, current, i);
 
-		}else if(current != null && current.getNext() == null && i < lvl.getAliens()){
-
-			moveAlien(alien);
-			current.setNext(alien);
-			current.getNext().setPrev(current);
-			createMatrix(x, y, contX, contY+100, image1, image2, current.getNext(), ++i);
+		}else if(current != null && current.getNext() == null){
+			
+			if(i < lvl.getAliens()-1) {
+				moveAlien(alien);
+				current.setNext(alien);
+				current.getNext().setPrev(current);
+				createMatrix(x, y, contX, contY+100, image1, image2, current.getNext(), ++i);
+			}else {
+				current.setNext(alien);
+				Alien alien1 = new Alien(POSTITIONALIENTX, POSTITIONALIENTY, contX, contY, image1, image2);
+				current.getNext().setDown(alien1);
+				current.getDown().setPrev(current.getPrev().getDown());
+			}
 
 		}
 	}
@@ -839,8 +851,8 @@ public class AliensInvadersGUI {
 
 	}
 
-	public void searchAlien(double x, double y, ImageView image) {
-		SearchAlienThread alien = new SearchAlienThread(this,firstAlien, x, y, ballInMoveX, ballInMoveY, image,verify,knowShoot,currentCircle);
+	public void searchAlien(double x, double y, ImageView image,Alien aliens) {
+		SearchAlienThread alien = new SearchAlienThread(this, x, y, ballInMoveX, ballInMoveY, image,verify,knowShoot,currentCircle,aliens);
 		alien.start();
 
 	}
