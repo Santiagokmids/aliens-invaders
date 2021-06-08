@@ -1,7 +1,9 @@
 package ui;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -50,7 +52,11 @@ import model.TypeSpacecraft;
 import thread.AlienThread;
 import thread.BubbleSearchThread;
 import thread.BubbleThread;
+
+import thread.ImportThread;
+
 import thread.BulletsThread;
+
 import thread.InsertionThread;
 import thread.SelectionSearchThread;
 import thread.SelectionThread;
@@ -558,6 +564,7 @@ public class AliensInvadersGUI {
 
 	@FXML
 	public void btnScores(ActionEvent event) throws IOException {
+		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("hallOfFame.fxml"));
 
 		loader.setController(this);
@@ -577,7 +584,7 @@ public class AliensInvadersGUI {
 
 		inicializateTableViewPlayer(aliensInvaders.toArrayList());
 	}
-
+	
 	@FXML
 	public void gameOver() throws IOException {
 
@@ -664,7 +671,9 @@ public class AliensInvadersGUI {
 				}
 
 				aliensInvaders.spaceIn(nickName.getText());
-
+				
+				scores = aliensInvaders.calculate(scores, levels);
+				
 				aliensInvaders.addPlayer(nickName.getText(), scores, levels);
 				loadBanner();
 
@@ -952,7 +961,7 @@ public class AliensInvadersGUI {
 	}
 
 	@FXML
-	public void importData(ActionEvent event) throws SpaceInNickException {
+	public void importData(ActionEvent event) throws SpaceInNickException, InterruptedException {
 
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Abrir un archivo");
@@ -964,17 +973,23 @@ public class AliensInvadersGUI {
 			alert.setTitle("Importar Jugadores");
 
 			try {
-
-				aliensInvaders.importData(f.getAbsolutePath());
+				
+				ImportThread importThread = new ImportThread(aliensInvaders,  new BufferedReader(new FileReader(f.getAbsolutePath())));
+				
+				importThread.start();
+				
+				importThread.join();
+				
 				alert.setContentText("Los jugadores han sido importados correctamente.");
 				alert.showAndWait();
-
+				
+				inicializateTableViewPlayer(aliensInvaders.toArrayList());
+				
 			} catch (IOException e) {
 				alert.setContentText("Los jugadores no pudieron ser importados.");
 				alert.showAndWait();
 			}
 		}
-		inicializateTableViewPlayer(aliensInvaders.toArrayList());
 	}
 
 	public boolean getVerify() {
@@ -1115,7 +1130,7 @@ public class AliensInvadersGUI {
 
 	public SelectionSearchThread selectionSort(String score) throws InterruptedException{
 
-		SelectionSearchThread selectionThread = new SelectionSearchThread(aliensInvaders, aliensInvaders.toArrayList(), score);
+		SelectionSearchThread selectionThread = new SelectionSearchThread(aliensInvaders.toArrayList(), score);
 
 		selectionThread.start();
 

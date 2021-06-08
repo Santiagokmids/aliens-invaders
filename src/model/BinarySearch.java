@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  * This class contains methods, attributes,  and relations of a aliens invaders.
  * @version 1
@@ -7,7 +9,7 @@ package model;
  * @author Luis Miguel Ossa Arias, https://github.com/Itsumohitoride <br>
  */
 
-public interface SearchP {
+public interface BinarySearch {
 	
 	/**
 	 * <b>name:</b> searchP. <br>
@@ -16,5 +18,5 @@ public interface SearchP {
 	 * @return <code>People</code> specifying people is the player that has searched.
 	 */
 	
-	public Player searchP(String toSearch);
+	public String binarySearch(ArrayList<Player> newList, String toSearch);
 }

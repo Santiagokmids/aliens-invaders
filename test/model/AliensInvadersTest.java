@@ -218,42 +218,6 @@ public class AliensInvadersTest {
 	}
 	
 	@Test
-	public void testBinarySearchByScore() throws FileNotFoundException, IOException, NumberInNameException, SpaceInNickException {
-		
-		setupScenary3();
-		
-		String nick = "Alondre";
-		int score = 33;
-		int level = 2;
-		
-		String scores = "33";
-		
-		ArrayList<Player> listPlayers = aliensInvaders.toArrayList();
-		
-		for (int i = 0; i < listPlayers.size(); i++) {
-
-			Player min = listPlayers.get(i);
-
-			for (int j = i+1; j < listPlayers.size(); j++) {
-
-				if(listPlayers.get(j).compare(String.valueOf(min.getScore())) < 0){
-
-					Player temp = listPlayers.get(j);
-					listPlayers.set(j, min);
-					min = temp;
-				}
-			}
-			listPlayers.set(i, min);
-		}
-		
-		String messageSearch = aliensInvaders.binarySearchByScore(listPlayers, scores);
-		
-		String messagePlayer = "Nickname: "+nick+" | Score : "+score+" | Level "+ level+"\n";
-		
-		assertEquals(messagePlayer, messageSearch);
-	}
-	
-	@Test
 	public void testBinarySearchByScore2() throws FileNotFoundException, IOException, SpaceInNickException {
 		
 		setupScenary3();
@@ -278,7 +242,7 @@ public class AliensInvadersTest {
 			listPlayers.set(i, min);
 		}
 		
-		String messageSearch = aliensInvaders.binarySearchByScore(listPlayers, scores);
+		String messageSearch = aliensInvaders.binarySearch(listPlayers, scores);
 		
 		String messagePlayer = "";
 		
@@ -313,7 +277,7 @@ public class AliensInvadersTest {
 			}
 		}
 		
-		String messageSearch = aliensInvaders.binarySearchByName(listPlayers, nick);
+		String messageSearch = aliensInvaders.binarySearch(listPlayers, nick);
 		String messagePlayer = "Nickname: "+nick+" | Score : "+score+" | Level "+ level+"\n";
 		
 		assertEquals(messagePlayer, messageSearch);
@@ -345,7 +309,7 @@ public class AliensInvadersTest {
 			}
 		}
 		
-		String messageSearch = aliensInvaders.binarySearchByName(listPlayers, nick);
+		String messageSearch = aliensInvaders.binarySearch(listPlayers, nick);
 		String messagePlayer = "";
 		
 		assertEquals(messagePlayer, messageSearch);
