@@ -13,11 +13,13 @@ public class BulletsThread extends Thread {
 	private boolean verify;
 	private Alien alien;
 	private Alien current;
+	private int attack;
 
-	public BulletsThread(AliensInvadersGUI aliensInvadersGUI,Alien alien,boolean verify) {
+	public BulletsThread(AliensInvadersGUI aliensInvadersGUI,Alien alien,boolean verify,int attack) {
 		this.aliensInvadersGUI = aliensInvadersGUI;
 		this.verify = verify;
 		this.alien = alien;
+		this.attack = attack;
 		current = null;
 	}
 
@@ -72,7 +74,7 @@ public class BulletsThread extends Thread {
 			verify = aliensInvadersGUI.getVerify();
 
 			try{
-				Thread.sleep(1500);
+				Thread.sleep(attack);
 			}catch(InterruptedException e) {
 
 			}

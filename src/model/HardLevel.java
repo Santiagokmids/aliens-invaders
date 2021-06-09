@@ -24,6 +24,7 @@ public class HardLevel extends Level {
 	public HardLevel(int aliens, int movementSpeed, int attackSpeed) {
 		super(aliens);
 		this.movementSpeed = movementSpeed;
+		this.attackSpeed = attackSpeed;
 	}
 
 	public int getMovementSpeed() {

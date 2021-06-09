@@ -18,12 +18,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></ImageView>
-      <Label layoutX="176.0" layoutY="379.0" prefHeight="79.0" prefWidth="70.0" text="Vidas: 1" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
-         <font>
-            <Font name="System Bold" size="22.0" />
-         </font>
-      </Label>
-      <Label layoutX="287.0" layoutY="377.0" prefHeight="85.0" prefWidth="70.0" text="Vidas: 2" textFill="WHITE" wrapText="true">
+      <Label layoutX="166.0" layoutY="379.0" prefHeight="79.0" prefWidth="70.0" text="Vidas: 1" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
@@ -39,5 +34,10 @@
          </font>
       </Label>
       <ComboBox fx:id="comboBoxDificult" layoutX="191.0" layoutY="519.0" prefWidth="150.0" />
+      <Label layoutX="279.0" layoutY="379.0" prefHeight="79.0" prefWidth="70.0" text="Vidas: 2" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

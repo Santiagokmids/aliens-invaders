@@ -166,6 +166,9 @@ public class AliensInvadersGUI {
 	@FXML
 	private Label score;
 
+	@FXML
+	private Label lifes;
+
 	private Stage window;
 
 	private boolean verify;
@@ -191,9 +194,9 @@ public class AliensInvadersGUI {
 	private double ballInMoveX;
 
 	private double ballInMoveY;
-	
+
 	private double bulletsX;
-	
+
 	private double bulletsY;
 
 	private int shootAliens;
@@ -346,7 +349,7 @@ public class AliensInvadersGUI {
 				dificult = "novato";
 
 			}else if(comboBoxDificult.getValue().equalsIgnoreCase("Leyenda")) {
-				hard = new HardLevel(lvl.getAliens(), (normalMovement+5), 5);
+				hard = new HardLevel(lvl.getAliens(),(normalMovement+5),1000);
 				dificult = "leyenda";
 
 			}else {
@@ -394,7 +397,17 @@ public class AliensInvadersGUI {
 
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
 			level.setText(String.valueOf(levels));
-			BulletsThread bulletThread = new BulletsThread(this, firstAlien,verify);
+			lifes.setText("1");
+
+			int atackSpeed = 0;
+
+			if(dificult.equals("leyenda") && hard != null) {
+				atackSpeed = hard.getAttackSpeed();
+
+			}else {
+				atackSpeed = 1500;
+			}
+			BulletsThread bulletThread = new BulletsThread(this, firstAlien,verify,atackSpeed);
 			bulletThread.start();
 		}
 	}
@@ -443,8 +456,19 @@ public class AliensInvadersGUI {
 
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
 			level.setText(String.valueOf(levels));
-			BulletsThread bulletThread = new BulletsThread(this, firstAlien,verify);
+			lifes.setText("2");
+
+			int atackSpeed = 0;
+
+			if(dificult.equals("leyenda") && hard != null) {
+				atackSpeed = hard.getAttackSpeed();
+
+			}else {
+				atackSpeed = 1500;
+			}
+			BulletsThread bulletThread = new BulletsThread(this, firstAlien,verify,atackSpeed);
 			bulletThread.start();
+
 		}
 	}
 
@@ -501,7 +525,7 @@ public class AliensInvadersGUI {
 			createMatrix(x, y, contX+100, contY-100, image1, image2, current, i);
 
 		}else if(current != null && current.getNext() == null){
-			
+
 			if(i < lvl.getAliens()-1) {
 				moveAlien(alien);
 				current.setNext(alien);
@@ -536,7 +560,7 @@ public class AliensInvadersGUI {
 		AlienThread thread = new AlienThread(this, alien, alienImageView, verify);
 
 		thread.start();
-		
+
 		window.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
@@ -558,15 +582,29 @@ public class AliensInvadersGUI {
 			gameOver();
 		}
 	}
-	
+
 	public void validationBullets() throws IOException {
 
-		if((bulletsX > mainShip.getLayoutX()-80 && bulletsX < mainShip.getLayoutX()+80) && (bulletsY > mainShip.getLayoutY()-35 && bulletsY < mainShip.getLayoutY()+20) && mainShip.isVisible()) {
+		if((bulletsX > mainShip.getLayoutX()-80 && bulletsX < mainShip.getLayoutX()+80) && (bulletsY > mainShip.getLayoutY()-35 && bulletsY < mainShip.getLayoutY()+18) && mainShip.isVisible()) {
 
-			mainShip.setVisible(false);
-			bullet.setVisible(false);
-			verify = false;
-			gameOver();
+			try {
+				int life = Integer.parseInt(lifes.getText());
+				life -= 1;
+				lifes.setText(String.valueOf(life));
+
+				mainShip.setVisible(false);
+				bullet.setVisible(false);
+				
+				if(life == 0) {
+					verify = false;
+					gameOver();
+					
+				}else {
+					mainShip.setVisible(true);
+				}
+				
+			}catch(NumberFormatException nfe){
+			}
 		}
 	}
 
@@ -583,7 +621,7 @@ public class AliensInvadersGUI {
 
 	@FXML
 	public void btnScores(ActionEvent event) throws IOException {
-		
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("hallOfFame.fxml"));
 
 		loader.setController(this);
@@ -603,18 +641,18 @@ public class AliensInvadersGUI {
 
 		inicializateTableViewPlayer(aliensInvaders.toArrayList());
 	}
-	
+
 	@FXML
 	public void gameOver() throws IOException {
-		
+
 		verify = false;
-		
+
 		mainPane.getChildren().remove(bullet);
-		
+
 		mainPane.getChildren().clear();
-		
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("gameover-pane.fxml"));
-		
+
 		loader.setController(this);
 		Parent load = loader.load();
 		bullet.setVisible(false);
@@ -695,9 +733,9 @@ public class AliensInvadersGUI {
 				}
 
 				aliensInvaders.spaceIn(nickName.getText());
-				
+
 				scores = aliensInvaders.calculate(scores, levels);
-				
+
 				aliensInvaders.addPlayer(nickName.getText(), scores, levels);
 				loadBanner();
 
@@ -794,13 +832,13 @@ public class AliensInvadersGUI {
 	}
 
 	public void selectAlien(Alien current) throws InterruptedException {
-		
+
 		Rectangle rectangles = new Rectangle();
 		rectangles.setLayoutX(bullet.getLayoutX());
 		rectangles.setLayoutY(bullet.getLayoutY());
 		rectangles.setWidth(bullet.getWidth());
 		rectangles.setHeight(bullet.getHeight());
-		
+
 		mainPane.getChildren().add(rectangles);
 
 		rectangles.setVisible(true);
@@ -808,12 +846,12 @@ public class AliensInvadersGUI {
 	}
 
 	public void moveBullet(Rectangle bullets, Alien alien) throws InterruptedException {
-		
+
 		if(alien != null && alien.getVisible()) {
-			
+
 			bullets.setLayoutX(alien.getPositionX()+40);
 			bullets.setLayoutX(alien.getPositionY()-10);
-			
+
 			bullets.setFill(javafx.scene.paint.Color.ROYALBLUE);
 			bullets.setLayoutX(alien.getPositionX());
 			bullets.setLayoutY(alien.getPositionY()+30);
@@ -834,7 +872,7 @@ public class AliensInvadersGUI {
 	public synchronized void moveRectangles(Rectangle bullets, Alien alien) {
 
 		if(alien.getVisible()) {
-			
+
 			new Thread() {
 				public void run() {
 					while(bullets.getLayoutY() < window.getHeight()+20 && verify) {
@@ -884,7 +922,7 @@ public class AliensInvadersGUI {
 		if(shootAliens % 10 == 0){
 
 			verify = false;
-			
+
 			firstAlien = null;
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("game-pane.fxml"));
@@ -921,8 +959,17 @@ public class AliensInvadersGUI {
 			velocityLevel += 1;
 
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
-			BulletsThread bulletThread = new BulletsThread(this, firstAlien,verify);
+			int atackSpeed = 0;
+
+			if(dificult.equals("Leyenda") && hard != null) {
+				atackSpeed = (hard.getAttackSpeed()-2);
+
+			}else {
+				atackSpeed = 1500;
+			}
+			BulletsThread bulletThread = new BulletsThread(this, firstAlien,verify,atackSpeed);
 			bulletThread.start();
+
 		}
 	}
 
@@ -995,18 +1042,18 @@ public class AliensInvadersGUI {
 			alert.setTitle("Importar Jugadores");
 
 			try {
-				
+
 				ImportThread importThread = new ImportThread(aliensInvaders,  new BufferedReader(new FileReader(f.getAbsolutePath())));
-				
+
 				importThread.start();
-				
+
 				importThread.join();
-				
+
 				alert.setContentText("Los jugadores han sido importados correctamente.");
 				alert.showAndWait();
-				
+
 				inicializateTableViewPlayer(aliensInvaders.toArrayList());
-				
+
 			} catch (IOException e) {
 				alert.setContentText("Los jugadores no pudieron ser importados.");
 				alert.showAndWait();
