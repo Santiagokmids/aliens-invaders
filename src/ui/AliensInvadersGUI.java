@@ -57,6 +57,57 @@ import thread.SelectionThread;
 import thread.SearchAlienThread;
 
 public class AliensInvadersGUI {
+	
+	@FXML
+    private ImageView backgroundPodium;
+
+    @FXML
+    private Label nick1;
+
+    @FXML
+    private Label score1;
+
+    @FXML
+    private Label level1;
+
+    @FXML
+    private Label nick3;
+
+    @FXML
+    private Label score3;
+
+    @FXML
+    private Label level3;
+
+    @FXML
+    private Label nick2;
+
+    @FXML
+    private Label score2;
+
+    @FXML
+    private Label level2;
+
+    @FXML
+    private Label nick5;
+
+    @FXML
+    private Label score5;
+
+    @FXML
+    private Label level5;
+
+    @FXML
+    private Label nick4;
+
+    @FXML
+    private Label score4;
+
+    @FXML
+    private Label level4;
+
+    @FXML
+    private ImageView imagePodium;
 
 	@FXML
 	private BorderPane mainPane;
@@ -1233,6 +1284,65 @@ public class AliensInvadersGUI {
 			BubbleThread bubbleThread = new BubbleThread(this, aliensInvaders.toArrayList());
 
 			bubbleThread.start();	
+		}
+	}
+	
+	@FXML
+    void bottonPodium(ActionEvent event) throws IOException {
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("podium-pane.fxml"));
+
+		loader.setController(this);
+		Parent load = loader.load();
+
+		Image image = new Image("/images/podium.png");
+		imagePodium.setImage(image);
+		Image image2 = new Image("/images/backGround.png");
+		backgroundPodium.setImage(image2);
+
+		mainPane.getChildren().clear();
+		mainPane.setTop(load);
+		
+		searchPodium();
+    }
+	
+	public void searchPodium() {
+
+		ArrayList<Player> newList = aliensInvaders.searchPodium();
+		
+		if(!newList.isEmpty() && newList.get(0) != null) {
+			
+			nick1.setText(newList.get(0).getNick());
+			score1.setText(String.valueOf("Score: "+newList.get(0).getScore()));
+			level1.setText(String.valueOf("Level: "+newList.get(0).getLevel()));
+			
+			if(newList.size() > 1 && newList.get(1) != null) {
+				
+				nick2.setText(newList.get(1).getNick());
+				score2.setText(String.valueOf("Score: "+newList.get(1).getScore()));
+				level2.setText(String.valueOf("Level: "+newList.get(1).getLevel()));
+				
+				if(newList.size() > 2 && newList.get(2) != null) {
+					
+					nick3.setText(newList.get(2).getNick());
+					score3.setText(String.valueOf("Score: "+newList.get(2).getScore()));
+					level3.setText(String.valueOf("Level: "+newList.get(2).getLevel()));
+					
+					if(newList.size() > 3 && newList.get(3) != null) {
+						
+						nick4.setText(newList.get(3).getNick());
+						score4.setText(String.valueOf("Score: "+newList.get(3).getScore()));
+						level4.setText(String.valueOf("Level: "+newList.get(3).getLevel()));
+						
+						if(newList.size() > 4 && newList.get(4) != null) {
+							
+							nick5.setText(newList.get(4).getNick());
+							score5.setText(String.valueOf("Score: "+newList.get(4).getScore()));
+							level5.setText(String.valueOf("Level: "+newList.get(4).getLevel()));
+						}
+					}
+				}
+			}
 		}
 	}
 }
