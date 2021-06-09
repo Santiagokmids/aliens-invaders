@@ -59,6 +59,57 @@ import thread.SearchAlienThread;
 public class AliensInvadersGUI {
 	
 	@FXML
+    private ImageView backgroundPodiumBad;
+
+    @FXML
+    private Label nick1Bad;
+
+    @FXML
+    private Label score1Bad;
+
+    @FXML
+    private Label level1Bad;
+
+    @FXML
+    private Label nick3Bad;
+
+    @FXML
+    private Label score3Bad;
+
+    @FXML
+    private Label level3Bad;
+
+    @FXML
+    private Label nick2Bad;
+
+    @FXML
+    private Label score2Bad;
+
+    @FXML
+    private Label level2Bad;
+
+    @FXML
+    private Label nick5Bad;
+
+    @FXML
+    private Label score5Bad;
+
+    @FXML
+    private Label level5Bad;
+
+    @FXML
+    private Label nick4Bad;
+
+    @FXML
+    private Label score4Bad;
+
+    @FXML
+    private Label level4Bad;
+
+    @FXML
+    private ImageView imagePodiumBad;
+	
+	@FXML
     private ImageView backgroundPodium;
 
     @FXML
@@ -324,6 +375,8 @@ public class AliensInvadersGUI {
 
 		numberAliens = 5;
 		lvl = new Level(numberAliens);
+		
+		aliensInvaders.loadData();
 
 		currentCount = 0;
 		firstAlien = null;
@@ -1339,6 +1392,68 @@ public class AliensInvadersGUI {
 							nick5.setText(newList.get(4).getNick());
 							score5.setText(String.valueOf("Score: "+newList.get(4).getScore()));
 							level5.setText(String.valueOf("Level: "+newList.get(4).getLevel()));
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	@FXML
+    void loadUnpodium(MouseEvent event) throws IOException {
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("unpodium-pane.fxml"));
+
+		loader.setController(this);
+		Parent load = loader.load();
+
+		Image image = new Image("/images/unPodium-pane.png");
+		imagePodiumBad.setImage(image);
+		Image image2 = new Image("/images/backGround.png");
+		backgroundPodiumBad.setImage(image2);
+
+		mainPane.getChildren().clear();
+		mainPane.setTop(load);
+		
+		aliensInvaders.loadUnpodium();
+		
+		loadTheBadsPlayer();
+		
+    }
+	
+	public void loadTheBadsPlayer() {
+		
+		ArrayList<Player> newList = aliensInvaders.loadTheBadsPlayer();
+		
+		if(!newList.isEmpty() && newList.get(0) != null) {
+			
+			nick1Bad.setText(newList.get(0).getNick());
+			score1Bad.setText(String.valueOf("Score: "+newList.get(0).getScore()));
+			level1Bad.setText(String.valueOf("Level: "+newList.get(0).getLevel()));
+			
+			if(newList.size() > 1 && newList.get(1) != null) {
+				
+				nick2Bad.setText(newList.get(1).getNick());
+				score2Bad.setText(String.valueOf("Score: "+newList.get(1).getScore()));
+				level2Bad.setText(String.valueOf("Level: "+newList.get(1).getLevel()));
+				
+				if(newList.size() > 2 && newList.get(2) != null) {
+					
+					nick3Bad.setText(newList.get(2).getNick());
+					score3Bad.setText(String.valueOf("Score: "+newList.get(2).getScore()));
+					level3Bad.setText(String.valueOf("Level: "+newList.get(2).getLevel()));
+					
+					if(newList.size() > 3 && newList.get(3) != null) {
+						
+						nick4Bad.setText(newList.get(3).getNick());
+						score4Bad.setText(String.valueOf("Score: "+newList.get(3).getScore()));
+						level4Bad.setText(String.valueOf("Level: "+newList.get(3).getLevel()));
+						
+						if(newList.size() > 4 && newList.get(4) != null) {
+							
+							nick5Bad.setText(newList.get(4).getNick());
+							score5Bad.setText(String.valueOf("Score: "+newList.get(4).getScore()));
+							level5Bad.setText(String.valueOf("Level: "+newList.get(4).getLevel()));
 						}
 					}
 				}

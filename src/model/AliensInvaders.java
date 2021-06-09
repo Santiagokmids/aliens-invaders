@@ -26,6 +26,7 @@ public class AliensInvaders implements BinarySearch, Calculate, CompareTwoPlayer
 
 	private Player first;
 	private Player firstBest;
+	private Player firstBad;
 	//private Level normalLevel;
 	//private Level easyLevel;
 	//private Level hardLevel;
@@ -215,9 +216,8 @@ public class AliensInvaders implements BinarySearch, Calculate, CompareTwoPlayer
 	public ArrayList<Player> toArrayList() {
 
 		ArrayList<Player> arrayPlayer = new ArrayList<>();
-
+		
 		if(first != null) {
-
 			Player current = first;
 
 			searchPlayers(current, arrayPlayer);
@@ -579,6 +579,42 @@ public class AliensInvaders implements BinarySearch, Calculate, CompareTwoPlayer
 			}
 		}
 
-		return 0;
+		return verify;
+	}
+	
+	public void loadUnpodium() {
+		
+		ArrayList<Player> newList = toArrayList();
+		
+		Player current = null;
+		
+		if(newList.get(0) != null) {
+			firstBad = newList.get(0);
+			
+			current = firstBad;
+		}
+		
+		for (int i = 1; i < 5 && i < newList.size(); i++) {
+			
+			if(current != null && newList.get(i) != null) {
+				
+				current.setNext(newList.get(i));
+				current = current.getNext();
+			}
+		}
+	}
+	
+	public ArrayList<Player> loadTheBadsPlayer() {
+		
+		ArrayList<Player> newList = new ArrayList<>();
+		Player current = firstBad;
+		
+		for (int i = 0; i < 5; i++) {
+			if(current != null) {
+				newList.add(current);
+				current = current.getNext();
+			}
+		}
+		return newList;
 	}
 }
