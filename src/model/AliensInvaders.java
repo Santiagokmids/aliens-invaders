@@ -20,11 +20,12 @@ import exceptions.SpaceInNickException;
  * @author Luis Miguel Ossa Arias, https://github.com/Itsumohitoride <br>
  */
 
-public class AliensInvaders implements BinarySearch, Calculate {
+public class AliensInvaders implements BinarySearch, Calculate, CompareTwoPlayers {
 
 	public final static String SAVE_PATH_FILE_PEOPLE = "data/dataPlayer.txt";
 
 	private Player first;
+	private Player firstBest;
 	//private Level normalLevel;
 	//private Level easyLevel;
 	//private Level hardLevel;
@@ -78,7 +79,7 @@ public class AliensInvaders implements BinarySearch, Calculate {
 	 */
 
 	public void addPlayer(String nick, int score, int level) throws FileNotFoundException, IOException, SpaceInNickException {
-		
+
 		spaceIn(nick);
 
 		Player player = new Player(realName, nick,score,level);
@@ -117,7 +118,7 @@ public class AliensInvaders implements BinarySearch, Calculate {
 		}
 		saveData();
 	}
-	
+
 	/**
 	 * <b>name:</b> isNumeric. <br>
 	 * Convert all the parts of the string into a single char. <br>
@@ -139,7 +140,7 @@ public class AliensInvaders implements BinarySearch, Calculate {
 			throw new NumberInNameException();
 		}
 	}
-	
+
 	/**
 	 * <b>name:</b> spaceIn. <br>
 	 * Search a space in the message. <br>
@@ -148,21 +149,21 @@ public class AliensInvaders implements BinarySearch, Calculate {
 	 * @throws SpaceInNickException <br>
 	 *         thrown if a exception produced by a space in the name.      
 	 */
-	
+
 	public void spaceIn(String message) throws SpaceInNickException{
-		
-		
+
+
 		boolean verify = true;
-		
+
 		for (int i = 0; i < message.length() && verify; i++) {
-			
+
 			if(Character.toString(message.charAt(i)).equals(" ")) {
 				verify = false;
 				throw new SpaceInNickException();
 			}
 		}
 	}
-	
+
 	/**
 	 * <b>name:</b> charOneByOne. <br>
 	 * Verify if a string is a number. <br>
@@ -296,7 +297,7 @@ public class AliensInvaders implements BinarySearch, Calculate {
 			searchPlayers(player.getNext(),arrayPlayer);
 		}
 	}
-	
+
 	/**
 	 * <b>name:</b> searchPlayers. <br>
 	 * Create a message with the information of all the players. <br>
@@ -327,7 +328,7 @@ public class AliensInvaders implements BinarySearch, Calculate {
 	public int calculate(int score, int level) {
 
 		int scores = score+(level*10);
-		
+
 		return scores;
 	}
 
@@ -342,7 +343,7 @@ public class AliensInvaders implements BinarySearch, Calculate {
 
 	@Override
 	public String binarySearch(ArrayList<Player> newList, String toSearch) {
-		
+
 		ArrayList<Player> listPlayers = newList;
 		Player player = null;
 
@@ -373,10 +374,10 @@ public class AliensInvaders implements BinarySearch, Calculate {
 				i = m+1;
 			}
 		}
-		
+
 		return message;
 	}
-	
+
 	/**
 	 * <b>name:</b> removePlayer. <br>
 	 * Search a player by the nick and the score. <br>
@@ -408,7 +409,7 @@ public class AliensInvaders implements BinarySearch, Calculate {
 
 		return player;
 	}
-	
+
 	/**
 	 * <b>name:</b> removePlayer. <br>
 	 * Remove a player from the binary tree. <br>
@@ -468,7 +469,7 @@ public class AliensInvaders implements BinarySearch, Calculate {
 			removePlayer(successor);
 		}
 	}
-	
+
 	/**
 	 * <b>name:</b> min. <br>
 	 * Search the minor player in the binary tree. <br>
@@ -486,6 +487,65 @@ public class AliensInvaders implements BinarySearch, Calculate {
 		}
 	}
 
+	public ArrayList<Player> searchPodium() {
+
+		boolean stop = false;
+		Player player = null;
+		int cont = 2;
+		Player current = null;
+		int verify = 0;
+		
+		ArrayList<Player> newlist = new ArrayList<>();
+
+		ArrayList<Player> listPlayer = toArrayList();
+
+		if(!listPlayer.isEmpty() && listPlayer.get(listPlayer.size()-1) != null) {
+			firstBest = new Player(listPlayer.get(listPlayer.size()-1).getName(), listPlayer.get(listPlayer.size()-1).getNick(), listPlayer.get(listPlayer.size()-1).getScore(), listPlayer.get(listPlayer.size()-1).getLevel());
+			current = firstBest;
+			newlist.add(firstBest);
+		}
+
+		while(cont <= 5 && !listPlayer.isEmpty()) {
+
+			stop = true;
+
+			while(stop  && listPlayer.size() > (cont-1) && listPlayer.get(listPlayer.size()-cont) != null && verify != cont-1) {
+				
+				player = new Player(listPlayer.get(listPlayer.size()-cont).getName(), listPlayer.get(listPlayer.size()-cont).getNick(), listPlayer.get(listPlayer.size()-cont).getScore(), listPlayer.get(listPlayer.size()-cont).getLevel());
+
+				verify = cont-1;
+				
+				newlist.add(player);
+				
+				if(compareTwoPlayers(player, current) < 0) {
+
+					if(current.getPrev() == null) {
+						current.setPrev(player);
+						player.setParent(current);
+						stop = false;
+
+					}else {
+						current = current.getPrev();
+					}
+
+				}else {
+					if(current.getNext() == null) {
+						current.setNext(player);
+						player.setParent(current);
+						stop = false;
+					}
+					else {
+						current = current.getNext();
+					}
+				}
+			}
+			
+			cont++;
+		}
+
+		return newlist;
+	}
+
 	public void shootMonster(){
 
 	}
@@ -496,5 +556,29 @@ public class AliensInvaders implements BinarySearch, Calculate {
 
 	public void setRealName(String realName) {
 		this.realName = realName;
+	}
+
+	@Override
+	public int compareTwoPlayers(Player playerOne, Player playerTwo) {
+
+		int verify = 0;
+
+		if(playerOne.getScore() > playerTwo.getScore()) {
+			verify = 1;
+		}else if(playerOne.getScore() < playerTwo.getScore()) {
+			verify = -1;
+		}
+
+		if(verify == 0) {
+			if(playerOne.getLevel() == playerTwo.getLevel()) {
+				verify = 0;
+			}else if(playerOne.getLevel() > playerTwo.getLevel()){
+				verify = 1;
+			}else if(playerOne.getLevel() < playerTwo.getLevel()) {
+				verify = -1;
+			}
+		}
+
+		return 0;
 	}
 }

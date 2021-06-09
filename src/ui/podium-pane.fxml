@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.PointLight?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Cylinder?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="552.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="backgroundPodium" fitHeight="717.0" fitWidth="562.0" layoutX="-5.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="219.0" layoutY="571.0" mnemonicParsing="false" onAction="#loadBanner" prefHeight="48.0" prefWidth="115.0" style="-fx-background-color: black;" text="INICIO" textFill="#57cbab">
+         <font>
+            <Font name="Malgun Gothic Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Cylinder height="100" layoutX="277.0" layoutY="469.0" radius="20" rotate="50.0" scaleX="3.0" scaleY="0.2">
+         <rotationAxis>
+            <Point3D x="1.0" />
+         </rotationAxis>
+      </Cylinder>
+      <Cylinder height="100" layoutX="277.0" layoutY="449.0" radius="20" rotate="36.0" scaleX="2.0" scaleY="0.2">
+         <rotationAxis>
+            <Point3D x="1.0" />
+         </rotationAxis>
+      </Cylinder>
+      <Cylinder height="100" layoutX="380.0" layoutY="440.0" radius="20" rotate="44.0" scaleX="2.3" scaleY="0.2">
+         <rotationAxis>
+            <Point3D x="1.0" />
+         </rotationAxis>
+      </Cylinder>
+      <Cylinder height="100" layoutX="380.0" layoutY="420.0" radius="20" rotate="33.0" scaleX="1.6" scaleY="0.19">
+         <rotationAxis>
+            <Point3D x="1.0" />
+         </rotationAxis>
+      </Cylinder>
+      <Cylinder height="100" layoutX="170.0" layoutY="444.0" radius="20" rotate="44.0" scaleX="2.3" scaleY="0.2">
+         <rotationAxis>
+            <Point3D x="1.0" />
+         </rotationAxis>
+      </Cylinder>
+      <Cylinder height="100" layoutX="170.0" layoutY="424.0" radius="20" rotate="33.0" scaleX="1.6" scaleY="0.19">
+         <rotationAxis>
+            <Point3D x="1.0" />
+         </rotationAxis>
+      </Cylinder>
+      <Cylinder height="100" layoutX="467.0" layoutY="405.0" radius="20" rotate="40.0" scaleX="2.0" scaleY="0.2">
+         <rotationAxis>
+            <Point3D x="1.0" />
+         </rotationAxis>
+      </Cylinder>
+      <Cylinder height="100" layoutX="467.0" layoutY="385.0" radius="20" rotate="25.0" scaleX="1.4" scaleY="0.19">
+         <rotationAxis>
+            <Point3D x="1.0" />
+         </rotationAxis>
+      </Cylinder>
+      <Cylinder height="100" layoutX="79.0" layoutY="415.0" radius="20" rotate="40.0" scaleX="2.0" scaleY="0.2">
+         <rotationAxis>
+            <Point3D x="1.0" />
+         </rotationAxis>
+      </Cylinder>
+      <Cylinder height="100" layoutX="79.0" layoutY="395.0" radius="20" rotate="25.0" scaleX="1.4" scaleY="0.19">
+         <rotationAxis>
+            <Point3D x="1.0" />
+         </rotationAxis>
+      </Cylinder>
+      <PointLight color="CHARTREUSE" layoutX="14.0" layoutY="669.0" lightOn="true" />
+      <Label fx:id="nick1" alignment="CENTER" contentDisplay="CENTER" layoutX="233.0" layoutY="365.0" text="??????????" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="score1" layoutX="234.0" layoutY="385.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="level1" layoutX="242.0" layoutY="409.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="nick3" layoutX="351.0" layoutY="348.0" text="?????????" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="score3" layoutX="346.0" layoutY="368.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="level3" layoutX="351.0" layoutY="388.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="nick2" layoutX="141.0" layoutY="348.0" text="?????????" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="score2" layoutX="136.0" layoutY="368.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="level2" layoutX="141.0" layoutY="388.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="nick5" layoutX="441.0" layoutY="316.0" text="?????????" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="score5" layoutX="440.0" layoutY="333.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="level5" layoutX="445.0" layoutY="353.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="nick4" layoutX="53.0" layoutY="324.0" text="?????????" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="score4" layoutX="52.0" layoutY="341.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="level4" layoutX="57.0" layoutY="361.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imagePodium" fitHeight="194.0" fitWidth="419.0" layoutX="68.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</Pane>

@@ -25,5 +25,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Button layoutX="161.0" layoutY="444.0" mnemonicParsing="false" onAction="#bottonPodium" prefHeight="57.0" prefWidth="240.0" style="-fx-background-color: black; -fx-background-radius: 15; -fx-border-color: white; -fx-border-radius: 15;" text="Podio" textFill="#57cbab">
+         <font>
+            <Font name="Malgun Gothic Bold" size="25.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+      </Button>
    </children>
 </Pane>
