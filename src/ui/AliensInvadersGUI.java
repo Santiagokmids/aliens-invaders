@@ -6,9 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
-
-import javax.sql.rowset.spi.SyncResolver;
 
 import exceptions.NumberInNameException;
 import exceptions.SpaceInNickException;
@@ -52,11 +49,8 @@ import model.TypeSpacecraft;
 import thread.AlienThread;
 import thread.BubbleSearchThread;
 import thread.BubbleThread;
-
 import thread.ImportThread;
-
 import thread.BulletsThread;
-
 import thread.InsertionThread;
 import thread.SelectionSearchThread;
 import thread.SelectionThread;
@@ -197,6 +191,10 @@ public class AliensInvadersGUI {
 	private double ballInMoveX;
 
 	private double ballInMoveY;
+	
+	private double bulletsX;
+	
+	private double bulletsY;
 
 	private int shootAliens;
 
@@ -219,10 +217,6 @@ public class AliensInvadersGUI {
 	private HardLevel hard;
 
 	private String dificult;
-
-	private double posShipX;
-
-	private double posShipY;
 
 	public final static int POSTITIONALIENTX = 79;
 
@@ -281,6 +275,8 @@ public class AliensInvadersGUI {
 		firstAlien = null;
 		ballInMoveX = 0;
 		ballInMoveY = 0;
+		bulletsX = 0;
+		bulletsY = 0;
 		knowShoot = false;
 		scores = 0;
 		levels = 1;
@@ -562,10 +558,21 @@ public class AliensInvadersGUI {
 			gameOver();
 		}
 	}
+	
+	public void validationBullets() throws IOException {
 
-	public void validationShip(Alien alien, ImageView alienImageView) throws IOException {
+		if((bulletsX > mainShip.getLayoutX()-80 && bulletsX < mainShip.getLayoutX()+80) && (bulletsY > mainShip.getLayoutY()-35 && bulletsY < mainShip.getLayoutY()+20) && mainShip.isVisible()) {
 
-		if((ship.getPosX() > alienImageView.getLayoutX() && ship.getPosX() < alienImageView.getLayoutX()+73) 
+			mainShip.setVisible(false);
+			bullet.setVisible(false);
+			verify = false;
+			gameOver();
+		}
+	}
+
+	public void validationShip(ImageView alienImageView) throws IOException {
+
+		if((ship.getPosX() > alienImageView.getLayoutX()-73 && ship.getPosX() < alienImageView.getLayoutX()+73) 
 				&&	(ship.getPosY() > alienImageView.getLayoutY()-60 && ship.getPosY() < alienImageView.getLayoutY()+45) && alienImageView.isVisible()) {
 
 			mainShip.setVisible(false);
@@ -599,12 +606,18 @@ public class AliensInvadersGUI {
 	
 	@FXML
 	public void gameOver() throws IOException {
-
+		
+		verify = false;
+		
+		mainPane.getChildren().remove(bullet);
+		
+		mainPane.getChildren().clear();
+		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("gameover-pane.fxml"));
-
+		
 		loader.setController(this);
 		Parent load = loader.load();
-
+		bullet.setVisible(false);
 		Image image = new Image("/images/insertName.png");
 		insertName.setImage(image);
 		Image image2 = new Image("/images/gameOver.png");
@@ -612,7 +625,6 @@ public class AliensInvadersGUI {
 		Image image3 = new Image("/images/backGround.png");
 		backGround.setImage(image3);
 
-		mainPane.getChildren().clear();
 		mainPane.setTop(load);
 
 		scoreOver.setText(String.valueOf(scores));
@@ -707,13 +719,9 @@ public class AliensInvadersGUI {
 		count = System.currentTimeMillis();
 		if((event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) && ship.getPosX() >= 12) {
 			ship.moveLeft();
-			posShipX = ship.getPosX();
-			posShipY = ship.getPosY();
 
 		}if((event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) && ship.getPosX() <= 462){
 			ship.moveRight();
-			posShipX = ship.getPosX();
-			posShipY = ship.getPosY();
 
 		}if(ship.getShip() == TypeSpacecraft.ATTACK_SHIP) {
 
@@ -743,8 +751,6 @@ public class AliensInvadersGUI {
 		}
 
 		mainShip.setLayoutX(ship.getPosX());
-		posShipX = mainShip.getLayoutX();
-		posShipY = mainShip.getLayoutY();
 	}
 
 	public void moveBall(Circle circles) throws InterruptedException {
@@ -794,7 +800,7 @@ public class AliensInvadersGUI {
 		rectangles.setLayoutY(bullet.getLayoutY());
 		rectangles.setWidth(bullet.getWidth());
 		rectangles.setHeight(bullet.getHeight());
-
+		
 		mainPane.getChildren().add(rectangles);
 
 		rectangles.setVisible(true);
@@ -806,11 +812,11 @@ public class AliensInvadersGUI {
 		if(alien != null && alien.getVisible()) {
 			
 			bullets.setLayoutX(alien.getPositionX()+40);
-			bullets.setLayoutX(alien.getPositionY()-40);
+			bullets.setLayoutX(alien.getPositionY()-10);
 			
 			bullets.setFill(javafx.scene.paint.Color.ROYALBLUE);
-			bullets.setLayoutX(alien.getPositionX()+40);
-			bullets.setLayoutY(alien.getPositionY()+20);
+			bullets.setLayoutX(alien.getPositionX());
+			bullets.setLayoutY(alien.getPositionY()+30);
 
 			moveRectangles(bullets,alien);
 		}
@@ -836,6 +842,8 @@ public class AliensInvadersGUI {
 							public void run() {
 								synchronized (this) {
 									bullets.setLayoutY((bullets.getLayoutY()+5));
+									bulletsX = bullets.getLayoutX();
+									bulletsY = bullets.getLayoutY();
 								}
 							}
 						});
@@ -876,7 +884,7 @@ public class AliensInvadersGUI {
 		if(shootAliens % 10 == 0){
 
 			verify = false;
-
+			
 			firstAlien = null;
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("game-pane.fxml"));
@@ -913,6 +921,8 @@ public class AliensInvadersGUI {
 			velocityLevel += 1;
 
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
+			BulletsThread bulletThread = new BulletsThread(this, firstAlien,verify);
+			bulletThread.start();
 		}
 	}
 

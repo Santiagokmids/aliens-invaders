@@ -33,18 +33,23 @@ public class BulletsThread extends Thread {
 				int cont = 0;
 				alien.getNext().getNext().getNext().getNext().setNext(null);
 				
-				for (int i = 0; i <= 5; i++) {
+				for (int i = 0; i <= aleatorio; i++) {
 					
-					if(cont < 5 && current.getNext() != null) {
-						cont++;
-						current = current.getNext();
+					if(cont < 5) {
+						 if(current.getNext() != null) {
+							 cont++;
+							 current = current.getNext();
+						 }else {
+							 cont++;
+							 current = current.getDown();
+						 }
 
-					}else if(cont < 5 && current.getNext() == null ) {
+					}else if(cont == 5 && current.getNext() == null && current.getDown() != null) {
 						cont++;
 						current = current.getDown();
 
 					}
-					else if(cont >= 5 && current.getPrev() != null) {
+					else if(cont > 4 && current.getPrev() != null) {
 						cont++;
 						current = current.getPrev();
 					}
@@ -54,9 +59,9 @@ public class BulletsThread extends Thread {
 				public void run() {
 
 					if(current.getVisible()) {
-
 						try {
 							aliensInvadersGUI.selectAlien(current);
+							verify = aliensInvadersGUI.getVerify();
 						} catch (InterruptedException e) {
 						}
 					}
@@ -67,7 +72,7 @@ public class BulletsThread extends Thread {
 			verify = aliensInvadersGUI.getVerify();
 
 			try{
-				Thread.sleep(2000);
+				Thread.sleep(1500);
 			}catch(InterruptedException e) {
 
 			}

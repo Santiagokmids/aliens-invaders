@@ -44,8 +44,9 @@ public class AlienThread extends Thread{
 						}
 					}
 					try {
-						aliensInvadersGUI.validationShip(alien, alienImageView);
+						aliensInvadersGUI.validationShip(alienImageView);
 						aliensInvadersGUI.validationPosition(alien, alienImageView);
+						aliensInvadersGUI.validationBullets();
 					} catch (IOException e) {
 					}
 				}
