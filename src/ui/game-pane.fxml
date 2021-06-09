@@ -23,12 +23,12 @@
             <Cursor fx:constant="OPEN_HAND" />
          </cursor>
       </Button>
-      <Label layoutX="140.0" layoutY="14.0" text="SCORE:" textFill="WHITE">
+      <Label layoutX="195.0" layoutY="14.0" text="SCORE:" textFill="WHITE">
          <font>
             <Font name="Malgun Gothic Bold" size="23.0" />
          </font>
       </Label>
-      <Label fx:id="score" alignment="CENTER" layoutX="217.0" layoutY="14.0" prefHeight="33.0" prefWidth="52.0" text="0" textFill="WHITE">
+      <Label fx:id="score" alignment="CENTER" layoutX="272.0" layoutY="14.0" prefHeight="33.0" prefWidth="52.0" text="0" textFill="WHITE">
          <font>
             <Font name="Malgun Gothic Bold" size="23.0" />
          </font>
@@ -44,15 +44,5 @@
          </font>
       </Label>
       <Rectangle fx:id="bullet" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="20.0" layoutX="265.0" layoutY="141.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
-      <Label layoutX="276.0" layoutY="14.0" text="VIDAS:" textFill="WHITE">
-         <font>
-            <Font name="Malgun Gothic Bold" size="23.0" />
-         </font>
-      </Label>
-      <Label fx:id="lifes" alignment="CENTER" layoutX="353.0" layoutY="12.0" prefHeight="33.0" prefWidth="52.0" text="0" textFill="WHITE">
-         <font>
-            <Font name="Malgun Gothic Bold" size="23.0" />
-         </font>
-      </Label>
    </children>
 </Pane>

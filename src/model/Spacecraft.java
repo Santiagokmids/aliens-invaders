@@ -12,6 +12,7 @@ public class Spacecraft {
 	private TypeSpacecraft ship;
 	private Double posX;
 	private Double posY;
+	private int velocityMovement;
 	
 	/**
 	 * <b>name:</b> Spacecraft. <br>
@@ -24,6 +25,7 @@ public class Spacecraft {
 	public Spacecraft(TypeSpacecraft ship, double x) {
 		this.ship = ship;
 		setPosX(x);
+		velocityMovement = 10;
 	}
 
 	public TypeSpacecraft getShip() {
@@ -45,7 +47,7 @@ public class Spacecraft {
 	 */
 	
 	public void moveLeft() {
-		posX = posX - 10;
+		posX = posX - getVelocityMovement();
 	}
 	
 	/**
@@ -55,7 +57,7 @@ public class Spacecraft {
 	 */
 	
 	public void moveRight() {
-		posX = posX + 10;
+		posX = posX + getVelocityMovement();
 	}
 
 	public Double getPosY() {
@@ -64,5 +66,13 @@ public class Spacecraft {
 
 	public void setPosY(Double posY) {
 		this.posY = posY;
+	}
+
+	public int getVelocityMovement() {
+		return velocityMovement;
+	}
+
+	public void setVelocityMovement(int velocityMovement) {
+		this.velocityMovement = velocityMovement;
 	}
 }

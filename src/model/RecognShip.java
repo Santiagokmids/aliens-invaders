@@ -9,7 +9,7 @@ package model;
 
 public class RecognShip extends Spacecraft{
 	
-	private int live;
+	private int speed;
 	
 	/**
 	 * <b>name:</b> RecognShip. <br>
@@ -20,16 +20,16 @@ public class RecognShip extends Spacecraft{
 	 * @param live
 	 */
 	
-	public RecognShip(TypeSpacecraft ship, double x, int live) {
+	public RecognShip(TypeSpacecraft ship, double x, int speed) {
 		super(ship,x);
-		this.live = live;
+		setVelocityMovement(speed);;
 	}
 
-	public int getLive() {
-		return live;
+	public int getSpeed() {
+		return speed;
 	}
 
-	public void setLive(int live) {
-		this.live = live;
+	public void setSpeed(int speed) {
+		this.speed = speed;
 	}
 }

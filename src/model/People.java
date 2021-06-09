@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Luis Miguel Ossa Arias, https://github.com/Itsumohitoride <br>
  */
 
-public class People implements Serializable{
+public abstract class People implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private String name;

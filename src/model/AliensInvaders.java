@@ -26,10 +26,6 @@ public class AliensInvaders implements BinarySearch, Calculate, CompareTwoPlayer
 
 	private Player first;
 	private Player firstBest;
-	//private Level normalLevel;
-	//private Level easyLevel;
-	//private Level hardLevel;
-
 	private String realName;
 
 	/**
@@ -39,18 +35,6 @@ public class AliensInvaders implements BinarySearch, Calculate, CompareTwoPlayer
 	 */
 
 	public AliensInvaders() {
-	}
-
-	/**
-	 * <b>name:</b> searchPlayers. <br>
-	 * Search a player. <br>
-	 * <b>post:</b> A player has searched. <br>
-	 * @param name is the name of the player to search. name != "" y name. != null.
-	 * @return <code>Player</code> specifying player is the player that has searched.
-	 */
-
-	public Player searchPlayers(String name) {
-		return null;
 	}
 
 	/**
@@ -183,18 +167,6 @@ public class AliensInvaders implements BinarySearch, Calculate, CompareTwoPlayer
 		}
 
 		return verify;
-	}
-
-	/**
-	 * <b>name:</b> verifyScores. <br>
-	 * Verify the score of a player. <br>
-	 * <b>post:</b> The score of a player has been check. <br>
-	 * @param score is the score of a player. score != null.
-	 * @return <code>boolean</code> specifying verify is the result of the process.
-	 */
-
-	public boolean verifyScores(int score) {
-		return true;
 	}
 
 	public Player getFirst() {
@@ -544,10 +516,6 @@ public class AliensInvaders implements BinarySearch, Calculate, CompareTwoPlayer
 		}
 
 		return newlist;
-	}
-
-	public void shootMonster(){
-
 	}
 
 	public String getRealName() {

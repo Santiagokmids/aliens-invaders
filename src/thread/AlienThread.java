@@ -46,7 +46,10 @@ public class AlienThread extends Thread{
 					try {
 						aliensInvadersGUI.validationShip(alienImageView);
 						aliensInvadersGUI.validationPosition(alien, alienImageView);
-						aliensInvadersGUI.validationBullets();
+						synchronized (aliensInvadersGUI) {
+							aliensInvadersGUI.validationBullets();
+						}
+						
 					} catch (IOException e) {
 					}
 				}

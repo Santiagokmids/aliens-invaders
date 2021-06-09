@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import model.Player;
 
-public class Sorting extends Thread{
+public abstract class Sorting extends Thread{
 	
 	private ArrayList<Player> listPlayers;
 	

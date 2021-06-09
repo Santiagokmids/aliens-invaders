@@ -57,57 +57,57 @@ import thread.SelectionThread;
 import thread.SearchAlienThread;
 
 public class AliensInvadersGUI {
-	
+
 	@FXML
-    private ImageView backgroundPodium;
+	private ImageView backgroundPodium;
 
-    @FXML
-    private Label nick1;
+	@FXML
+	private Label nick1;
 
-    @FXML
-    private Label score1;
+	@FXML
+	private Label score1;
 
-    @FXML
-    private Label level1;
+	@FXML
+	private Label level1;
 
-    @FXML
-    private Label nick3;
+	@FXML
+	private Label nick3;
 
-    @FXML
-    private Label score3;
+	@FXML
+	private Label score3;
 
-    @FXML
-    private Label level3;
+	@FXML
+	private Label level3;
 
-    @FXML
-    private Label nick2;
+	@FXML
+	private Label nick2;
 
-    @FXML
-    private Label score2;
+	@FXML
+	private Label score2;
 
-    @FXML
-    private Label level2;
+	@FXML
+	private Label level2;
 
-    @FXML
-    private Label nick5;
+	@FXML
+	private Label nick5;
 
-    @FXML
-    private Label score5;
+	@FXML
+	private Label score5;
 
-    @FXML
-    private Label level5;
+	@FXML
+	private Label level5;
 
-    @FXML
-    private Label nick4;
+	@FXML
+	private Label nick4;
 
-    @FXML
-    private Label score4;
+	@FXML
+	private Label score4;
 
-    @FXML
-    private Label level4;
+	@FXML
+	private Label level4;
 
-    @FXML
-    private ImageView imagePodium;
+	@FXML
+	private ImageView imagePodium;
 
 	@FXML
 	private BorderPane mainPane;
@@ -217,9 +217,6 @@ public class AliensInvadersGUI {
 	@FXML
 	private Label score;
 
-	@FXML
-	private Label lifes;
-
 	private Stage window;
 
 	private boolean verify;
@@ -245,7 +242,7 @@ public class AliensInvadersGUI {
 	private double ballInMoveX;
 
 	private double ballInMoveY;
-
+	
 	private double bulletsX;
 
 	private double bulletsY;
@@ -255,14 +252,16 @@ public class AliensInvadersGUI {
 	private Circle currentCircle;
 
 	private long count;
-
+	
 	private int numberAliens;
 
 	private boolean knowShoot;
 
 	private long currentCount;
-
+	
 	private Level lvl;
+	
+	private Rectangle currentRec;
 
 	private int normalMovement;
 
@@ -327,14 +326,15 @@ public class AliensInvadersGUI {
 
 		currentCount = 0;
 		firstAlien = null;
+		
 		ballInMoveX = 0;
 		ballInMoveY = 0;
-		bulletsX = 0;
-		bulletsY = 0;
+		
 		knowShoot = false;
 		scores = 0;
 		levels = 1;
 		shootAliens = 0;
+		
 		velocityLevel = 0;
 		normalMovement = 10;
 		dificult = "";
@@ -448,7 +448,6 @@ public class AliensInvadersGUI {
 
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
 			level.setText(String.valueOf(levels));
-			lifes.setText("1");
 
 			int atackSpeed = 0;
 
@@ -492,7 +491,7 @@ public class AliensInvadersGUI {
 			mainShip.setImage(imageShip);
 			mainShip.setVisible(true);
 
-			ship = new RecognShip(TypeSpacecraft.RECOGNITION_SHIP,mainShip.getLayoutX(),2);
+			ship = new RecognShip(TypeSpacecraft.RECOGNITION_SHIP,mainShip.getLayoutX(),15);
 			ship.setPosY(mainShip.getLayoutY());
 
 			mainPane.getChildren().clear();
@@ -507,7 +506,6 @@ public class AliensInvadersGUI {
 
 			createMatrix(POSTITIONALIENTX, POSTITIONALIENTY);
 			level.setText(String.valueOf(levels));
-			lifes.setText("2");
 
 			int atackSpeed = 0;
 
@@ -635,27 +633,13 @@ public class AliensInvadersGUI {
 	}
 
 	public void validationBullets() throws IOException {
+		
+		if((bulletsX > mainShip.getLayoutX()-90 && bulletsX < mainShip.getLayoutX()+90) && (bulletsY > mainShip.getLayoutY()-35 && 
+				bulletsY < mainShip.getLayoutY()+18) && mainShip.isVisible()) {
 
-		if((bulletsX > mainShip.getLayoutX()-80 && bulletsX < mainShip.getLayoutX()+80) && (bulletsY > mainShip.getLayoutY()-35 && bulletsY < mainShip.getLayoutY()+18) && mainShip.isVisible()) {
-
-			try {
-				int life = Integer.parseInt(lifes.getText());
-				life -= 1;
-				lifes.setText(String.valueOf(life));
-
-				mainShip.setVisible(false);
-				bullet.setVisible(false);
-				
-				if(life == 0) {
-					verify = false;
-					gameOver();
-					
-				}else {
-					mainShip.setVisible(true);
-				}
-				
-			}catch(NumberFormatException nfe){
-			}
+			mainShip.setVisible(false);
+			currentRec.setVisible(false);
+			gameOver();
 		}
 	}
 
@@ -882,13 +866,15 @@ public class AliensInvadersGUI {
 
 	}
 
-	public void selectAlien(Alien current) throws InterruptedException {
+	public synchronized void selectAlien(Alien current) throws InterruptedException {
 
+		mainShip.setVisible(true);
 		Rectangle rectangles = new Rectangle();
 		rectangles.setLayoutX(bullet.getLayoutX());
 		rectangles.setLayoutY(bullet.getLayoutY());
 		rectangles.setWidth(bullet.getWidth());
 		rectangles.setHeight(bullet.getHeight());
+		currentRec = rectangles;
 
 		mainPane.getChildren().add(rectangles);
 
@@ -1286,10 +1272,10 @@ public class AliensInvadersGUI {
 			bubbleThread.start();	
 		}
 	}
-	
+
 	@FXML
-    void bottonPodium(ActionEvent event) throws IOException {
-		
+	void bottonPodium(ActionEvent event) throws IOException {
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("podium-pane.fxml"));
 
 		loader.setController(this);
@@ -1302,40 +1288,40 @@ public class AliensInvadersGUI {
 
 		mainPane.getChildren().clear();
 		mainPane.setTop(load);
-		
+
 		searchPodium();
-    }
-	
+	}
+
 	public void searchPodium() {
 
 		ArrayList<Player> newList = aliensInvaders.searchPodium();
-		
+
 		if(!newList.isEmpty() && newList.get(0) != null) {
-			
+
 			nick1.setText(newList.get(0).getNick());
 			score1.setText(String.valueOf("Score: "+newList.get(0).getScore()));
 			level1.setText(String.valueOf("Level: "+newList.get(0).getLevel()));
-			
+
 			if(newList.size() > 1 && newList.get(1) != null) {
-				
+
 				nick2.setText(newList.get(1).getNick());
 				score2.setText(String.valueOf("Score: "+newList.get(1).getScore()));
 				level2.setText(String.valueOf("Level: "+newList.get(1).getLevel()));
-				
+
 				if(newList.size() > 2 && newList.get(2) != null) {
-					
+
 					nick3.setText(newList.get(2).getNick());
 					score3.setText(String.valueOf("Score: "+newList.get(2).getScore()));
 					level3.setText(String.valueOf("Level: "+newList.get(2).getLevel()));
-					
+
 					if(newList.size() > 3 && newList.get(3) != null) {
-						
+
 						nick4.setText(newList.get(3).getNick());
 						score4.setText(String.valueOf("Score: "+newList.get(3).getScore()));
 						level4.setText(String.valueOf("Level: "+newList.get(3).getLevel()));
-						
+
 						if(newList.size() > 4 && newList.get(4) != null) {
-							
+
 							nick5.setText(newList.get(4).getNick());
 							score5.setText(String.valueOf("Score: "+newList.get(4).getScore()));
 							level5.setText(String.valueOf("Level: "+newList.get(4).getLevel()));
