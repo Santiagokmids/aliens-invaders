@@ -458,6 +458,13 @@ public class AliensInvaders implements BinarySearch, Calculate, CompareTwoPlayer
 			return current;
 		}
 	}
+	
+	/**
+	 * <b>name:</b> searchPodium. <br>
+	 * Search the players in the podium. <br>
+	 * <b>post:</b> The players of the podium has been searched. <br>
+	 * @return <code>ArrayList<Player></code> specifying the newList is the list of the podium players.
+	 */
 
 	public ArrayList<Player> searchPodium() {
 
@@ -525,6 +532,15 @@ public class AliensInvaders implements BinarySearch, Calculate, CompareTwoPlayer
 	public void setRealName(String realName) {
 		this.realName = realName;
 	}
+	
+	/**
+	 * <b>name:</b> compareTwoPlayers. <br>
+	 * Compare two players. <br>
+	 * <b>post:</b> Two players has been compared. <br>
+	 * @param playerOne is the first player to compare. playerOne != null.
+	 * @param playerTwo is the second player to compare. playerTwo != null.
+	 * @return <code>int</code> specifying verify is the number of the comparison of two players.
+	 */
 
 	@Override
 	public int compareTwoPlayers(Player playerOne, Player playerTwo) {
@@ -550,6 +566,12 @@ public class AliensInvaders implements BinarySearch, Calculate, CompareTwoPlayer
 		return verify;
 	}
 	
+	/**
+	 * <b>name:</b> loadUnpodium. <br>
+	 * Create a linked list of the bad players. <br>
+	 * <b>post:</b> A linked list of the bad players has been created. <br>
+	 */
+	
 	public void loadUnpodium() {
 		
 		ArrayList<Player> newList = toArrayList();
@@ -571,6 +593,13 @@ public class AliensInvaders implements BinarySearch, Calculate, CompareTwoPlayer
 			}
 		}
 	}
+	
+	/**
+	 * <b>name:</b> loadTheBadsPlayer. <br>
+	 * Create an arraylist of the bad players. <br>
+	 * <b>post:</b> An arraylist of the bad players has been created. <br>
+	 * @return <code>ArrayList<Player></code> specifying newList is the list of the bad players.
+	 */
 	
 	public ArrayList<Player> loadTheBadsPlayer() {
 		
