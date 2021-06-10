@@ -12,7 +12,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="552.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="backgroundPodium" fitHeight="717.0" fitWidth="562.0" layoutX="-5.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="backgroundPodiumBad" fitHeight="717.0" fitWidth="562.0" layoutX="-5.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="219.0" layoutY="571.0" mnemonicParsing="false" onAction="#loadBanner" prefHeight="48.0" prefWidth="115.0" style="-fx-background-color: black;" text="INICIO" textFill="#57cbab">
          <font>
             <Font name="Malgun Gothic Bold" size="20.0" />
@@ -72,84 +72,81 @@
          </rotationAxis>
       </Cylinder>
       <PointLight color="CHARTREUSE" layoutX="14.0" layoutY="669.0" lightOn="true" />
-      <Label fx:id="nick1" alignment="CENTER" contentDisplay="CENTER" layoutX="233.0" layoutY="365.0" text="??????????" textFill="WHITE">
+      <Label fx:id="nick1Bad" alignment="CENTER" contentDisplay="CENTER" layoutX="233.0" layoutY="365.0" text="??????????" textFill="WHITE">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="score1" layoutX="234.0" layoutY="385.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="score1Bad" layoutX="234.0" layoutY="385.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="level1" layoutX="242.0" layoutY="409.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="level1Bad" layoutX="242.0" layoutY="409.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="nick3" layoutX="351.0" layoutY="348.0" text="?????????" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="nick3Bad" layoutX="351.0" layoutY="348.0" text="?????????" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="score3" layoutX="346.0" layoutY="368.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="score3Bad" layoutX="346.0" layoutY="368.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="level3" layoutX="351.0" layoutY="388.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="level3Bad" layoutX="351.0" layoutY="388.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="nick2" layoutX="141.0" layoutY="348.0" text="?????????" textFill="WHITE">
+      <Label fx:id="nick2Bad" layoutX="141.0" layoutY="348.0" text="?????????" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="score2" layoutX="136.0" layoutY="368.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="score2Bad" layoutX="136.0" layoutY="368.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="level2" layoutX="141.0" layoutY="388.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="level2Bad" layoutX="141.0" layoutY="388.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="nick5" layoutX="441.0" layoutY="316.0" text="?????????" textFill="WHITE">
+      <Label fx:id="nick5Bad" layoutX="441.0" layoutY="316.0" text="?????????" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="score5" layoutX="440.0" layoutY="333.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="score5Bad" layoutX="440.0" layoutY="333.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="level5" layoutX="445.0" layoutY="353.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="level5Bad" layoutX="445.0" layoutY="353.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="nick4" layoutX="53.0" layoutY="324.0" text="?????????" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="nick4Bad" layoutX="53.0" layoutY="324.0" text="?????????" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="score4" layoutX="52.0" layoutY="341.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="score4Bad" layoutX="52.0" layoutY="341.0" text="Score: ???" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="level4" layoutX="57.0" layoutY="361.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="level4Bad" layoutX="57.0" layoutY="361.0" text="Level: ??" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <ImageView fx:id="imagePodium" fitHeight="194.0" fitWidth="419.0" layoutX="68.0" layoutY="66.0" onMouseClicked="#loadUnpodium" pickOnBounds="true" preserveRatio="true">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></ImageView>
+      <ImageView fx:id="imagePodiumBad" fitHeight="194.0" fitWidth="419.0" layoutX="119.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </Pane>
