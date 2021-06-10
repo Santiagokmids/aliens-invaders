@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import exceptions.HighScoreException;
 import exceptions.NumberInNameException;
 import exceptions.SpaceInNickException;
 
@@ -297,9 +298,13 @@ public class AliensInvaders implements BinarySearch, Calculate, CompareTwoPlayer
 	 */
 
 	@Override
-	public int calculate(int score, int level) {
+	public int calculate(int score, int level) throws HighScoreException{
 
 		int scores = score+(level*10);
+		
+		if(scores > 999) {
+			throw new HighScoreException();
+		}
 
 		return scores;
 	}

@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.HighScoreException;
+
 /**
  * This class contains methods, attributes,  and relations of a aliens invaders.
  * @version 1
@@ -16,5 +18,5 @@ public interface Calculate {
 	 * @return <code>int</code> specifying calculated is the score of the player.
 	 */
 	
-	public int calculate(int score, int level);
+	public int calculate(int score, int level) throws HighScoreException;
 }

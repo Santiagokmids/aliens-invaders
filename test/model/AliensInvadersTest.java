@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import exceptions.HighScoreException;
 import exceptions.NumberInNameException;
 import exceptions.SpaceInNickException;
 
@@ -401,5 +402,21 @@ public class AliensInvadersTest {
 		ArrayList<Player> listPlayers2 = aliensInvaders.toArrayList();
 		
 		assertEquals(2, listPlayers2.size());
+	}
+	
+	@Test
+	public void testCalculate() {
+		
+		boolean verify = false;
+		
+		setupScenary1();
+		
+		try {
+			aliensInvaders.calculate(920, 80);
+		} catch (HighScoreException e) {
+			verify = true;
+		}
+		
+		assertTrue(verify);
 	}
 }

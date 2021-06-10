@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import exceptions.HighScoreException;
 import exceptions.NumberInNameException;
 import exceptions.SpaceInNickException;
 import javafx.application.Platform;
@@ -820,7 +821,11 @@ public class AliensInvadersGUI {
 
 				aliensInvaders.spaceIn(nickName.getText());
 
-				scores = aliensInvaders.calculate(scores, levels);
+				try {
+					scores = aliensInvaders.calculate(scores, levels);
+				} catch (HighScoreException e) {
+					scores = 999;
+				}
 
 				aliensInvaders.addPlayer(nickName.getText(), scores, levels);
 				loadBanner();
