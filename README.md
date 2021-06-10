@@ -6,7 +6,7 @@
 
 * Operating system: Windows 10
 
-* File with project documentation: https://bit.ly/3zjDojJ
+* File with project documentation: https://bit.ly/2Tf1ZG2
 
 * Project carried out by: 
 
