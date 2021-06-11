@@ -23,7 +23,7 @@ public class BubbleSearchThread extends Sorting{
 
 		int changes = 1;
 
-		for(int i=1;i<getListPlayers().size()-1 && changes > 0;i++) {
+		for(int i=1;i<getListPlayers().size() && changes > 0;i++) {
 
 			changes = 0;
 

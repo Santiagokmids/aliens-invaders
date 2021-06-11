@@ -21,12 +21,11 @@ public class BubbleThread extends Sorting implements CompareTwoPlayers{
 		
 		int changes = 1;
 
-		for(int i=1;i<getListPlayers().size()-1 && changes > 0;i++) {
-
+		for(int i=1;i<getListPlayers().size() && changes > 0;i++) {
 			changes = 0;
 
 			for(int j=0;j<getListPlayers().size()-i;j++) {
-
+				
 				if(compareTwoPlayers(getListPlayers().get(j), getListPlayers().get(j+1)) > 0) {
 					Player tem = getListPlayers().get(j);
 					getListPlayers().set(j,getListPlayers().get(j+1));

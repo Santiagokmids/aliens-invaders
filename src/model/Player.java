@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 
 public class Player extends People implements Serializable, CompareTo{
-	
+
 	private static final long serialVersionUID = 1;
 
 	private String nick;
@@ -19,7 +19,7 @@ public class Player extends People implements Serializable, CompareTo{
 	private Player prev;
 	private Player next;
 	private Player parent;
-	
+
 	/**
 	 * <b>name:</b> Player. <br>
 	 * Create an object player. <br>
@@ -29,7 +29,7 @@ public class Player extends People implements Serializable, CompareTo{
 	 * @param score is the score of a player in the game. score != null.
 	 * @param level is the level of the game the player arrived at. level != null.
 	 */
-	
+
 	public Player(String name, String nick,int score, int level) {
 		super(name);
 		this.setNick(nick);
@@ -76,7 +76,7 @@ public class Player extends People implements Serializable, CompareTo{
 	public void setPrev(Player prev) {
 		this.prev = prev;
 	}
-	
+
 	public Player getParent() {
 		return parent;
 	}
@@ -84,21 +84,21 @@ public class Player extends People implements Serializable, CompareTo{
 	public void setParent(Player parent) {
 		this.parent = parent;
 	}
-	
+
 	/**
 	 * <b>name:</b> toString. <br>
 	 * Create a message with the specification of the player. <br>
 	 * <b>post:</b> A message with the specification of the player has been created.
 	 */
-	
+
 	public String toString() {
 		String message = "";
-		
+
 		message = "Nickname: "+nick+" | Score : "+score+" | Level "+ level+"\n";
-		
+
 		return message;
 	}
-	
+
 	/**
 	 * <b>name:</b> compareTo. <br>
 	 * Compare two integers. <br>
@@ -108,16 +108,26 @@ public class Player extends People implements Serializable, CompareTo{
 
 	@Override
 	public int compareTo(String nick) {
-		
+
 		int verify = getNick().compareTo(nick);
-		
+
 		return verify;
 	}
-	
+
 	public int compare(String score) {
 		
-		int verify = String.valueOf(getScore()).compareTo(score);
-				
+		int verify = 0;
+		
+		int scores = Integer.parseInt(score);
+		
+		if(getScore() == scores) {
+			verify = 0;
+		}else if(getScore() > scores){
+			verify = 1;
+		}else if(getScore() < scores) {
+			verify = -1;
+		}
+
 		return verify;
 	}
 }

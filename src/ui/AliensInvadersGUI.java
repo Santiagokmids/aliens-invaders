@@ -687,8 +687,8 @@ public class AliensInvadersGUI {
 
 	public synchronized void validationBullets() throws IOException {
 
-		if((bulletsX > mainShip.getLayoutX()-105 && bulletsX < mainShip.getLayoutX()+105) && (bulletsY > mainShip.getLayoutY()-32 && 
-				bulletsY < mainShip.getLayoutY()+30) && mainShip.isVisible() && currentRec.isVisible()) {
+		if((bulletsX > mainShip.getLayoutX()-90 && bulletsX < mainShip.getLayoutX()+90) && (bulletsY > mainShip.getLayoutY()-32 && 
+				bulletsY < mainShip.getLayoutY()+20) && mainShip.isVisible() && currentRec.isVisible()) {
 
 			currentRec.setVisible(false);
 			mainShip.setVisible(false);
@@ -1166,6 +1166,7 @@ public class AliensInvadersGUI {
 			alert.setContentText("Tiene que ingreasar uno de los dos campos.");
 			alert.showAndWait();
 			searchByScore.setText("");
+			
 		}else if(!searchByScore.getText().isEmpty() && !searchByName.getText().isEmpty()){
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("ERROR");
@@ -1173,6 +1174,7 @@ public class AliensInvadersGUI {
 			alert.setContentText("Ingrese solo unos de los dos campos.");
 			alert.showAndWait();
 			searchByScore.setText("");
+			
 		}else if(!searchByScore.getText().isEmpty() && searchByName.getText().isEmpty()) {
 
 			long start = System.nanoTime();
@@ -1321,7 +1323,6 @@ public class AliensInvadersGUI {
 		}else if(comboBoxSorting.getValue() == D) {
 
 			BubbleThread bubbleThread = new BubbleThread(this, aliensInvaders.toArrayList());
-
 			bubbleThread.start();	
 		}
 	}
