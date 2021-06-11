@@ -6,6 +6,8 @@
 
 * Operating system: Windows 10
 
+* Video about the program: https://www.youtube.com/watch?v=ahvnFORVdn0
+
 * File with project documentation: https://bit.ly/2Tf1ZG2
 
 * Project carried out by: 
